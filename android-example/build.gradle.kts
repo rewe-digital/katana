@@ -23,7 +23,8 @@ android {
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.0")
+    implementation("com.github.rewe-digital-incubator.katana:katana-core:1.0")
+    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.0")
     implementation("androidx.appcompat:appcompat:1.0.0")
     implementation("com.squareup.leakcanary:leakcanary-android:1.6.2")
 }
