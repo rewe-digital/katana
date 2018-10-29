@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Katana Android Example</string>
+    <string name="greeting">Hi there, how you doin\'?</string>
+    <string name="click_me">Click me</string>
+</resources>
