@@ -1,3 +1,5 @@
+[![Release](https://jitpack.io/v/rewe-digital-incubator/katana.svg)](https://jitpack.io/#rewe-digital-incubator/katana)
+
 # Because a Katana is better than a dagger! ;)
 
 Katana is a lightweight, minimalistic dependency injection framework (similar to the service locator pattern) for Kotlin
@@ -186,6 +188,22 @@ val a: A by component.inject()
 Katana provides a bit of information about dependency declarations and injections during runtime which might help in
 debugging DI-related issues. To enable logging pass an implementation of `Katana.Logger` to the `Katana.logger`
 property of the `Katana` singleton.
+
+## Installation
+
+Katana is published via [JitPack](https://jitpack.io/#rewe-digital-incubator/katana). First add the JitPack repository
+as described in JitPack's documentation, then add the following dependencies:
+
+```gradle
+dependencies {
+    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.0'
+    // Additionally add this dependency for Android-specific extensions to Katana
+    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.0'
+}
+```
+
+**Note** that the package name is `org.rewedigital.katana` and differs from the artifact names due to how JitPack works.
+We will fix this in a future release.
 
 ## License
 
