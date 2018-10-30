@@ -5,7 +5,7 @@
 Katana is a lightweight, minimalistic dependency injection framework (similar to the service locator pattern) for Kotlin
 on the JVM, designed especially with Android in mind.
 
-* Extremely lightweight footprint (only ~60kb), plain Kotlin, no third-party dependencies
+* Extremely lightweight footprint (only ~60kb and 113 methods after ProGuard), plain Kotlin, no third-party dependencies
 * It's [fast](./speed-comparison)
 * "Less is more", therefore:
   * No global singleton state. Likelihood of memory leaks is greatly reduced unless **YOU** are doing something wrong ;P 
