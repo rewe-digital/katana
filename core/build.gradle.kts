@@ -5,9 +5,17 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    testImplementation("org.jetbrains.spek:spek-api:1.2.1")
-    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.2.1")
-    testImplementation("org.amshove.kluent:kluent:1.42")
+    testRuntime(kotlin("test"))
+    testRuntime(kotlin("reflect"))
+    testImplementation("org.jetbrains.spek:spek-api:1.2.1") {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.2.1") {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+    testImplementation("org.amshove.kluent:kluent:1.42") {
+        exclude(group = "org.jetbrains.kotlin")
+    }
     testImplementation("org.junit.platform:junit-platform-runner:1.3.1")
 }
 
