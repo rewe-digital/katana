@@ -6,7 +6,7 @@ buildscript {
 
 plugins {
     id("com.android.application") version "3.2.1"
-    kotlin("android") version "1.2.60"
+    kotlin("android") version "1.3.0"
 }
 
 android {
@@ -23,8 +23,8 @@ android {
 }
 
 dependencies {
-    implementation("com.github.rewe-digital-incubator.katana:katana-core:1.0")
-    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.0")
+    implementation("com.github.rewe-digital-incubator.katana:katana-core:1.0.1")
+    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.0.1")
     implementation("androidx.appcompat:appcompat:1.0.0")
     implementation("com.squareup.leakcanary:leakcanary-android:1.6.2")
 }
