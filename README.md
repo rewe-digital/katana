@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/rewe-digital-incubator/katana.svg)](https://jitpack.io/#rewe-digital-incubator/katana)
+[![Build Status](https://travis-ci.org/rewe-digital-incubator/katana.svg?branch=master)](https://travis-ci.org/rewe-digital-incubator/katana) [![Release](https://jitpack.io/v/rewe-digital-incubator/katana.svg)](https://jitpack.io/#rewe-digital-incubator/katana)
 
 # Because a Katana is better than a dagger! ;)
 
