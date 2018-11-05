@@ -23,16 +23,16 @@ tasks.withType<Jar> {
     baseName = "katana-core"
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
+val sourcesJar by tasks.registering(Jar::class) {
     classifier = "sources"
-    from(java.sourceSets["main"].allSource)
+    from(sourceSets["main"].allSource)
 }
 
 publishing {
     (publications) {
-        "mavenJava"(MavenPublication::class) {
+        register("mavenJava", MavenPublication::class) {
             from(components["java"])
-            artifact(sourcesJar)
+            artifact(sourcesJar.get())
             artifactId = "katana-core"
         }
     }
