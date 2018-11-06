@@ -2,7 +2,7 @@
 
 # Because a Katana is better than a dagger! ;)
 
-Katana is a lightweight, minimalistic dependency injection framework (similar to the service locator pattern) for Kotlin
+Katana is a lightweight, minimalistic dependency injection library (similar to the service locator pattern) for Kotlin
 on the JVM, designed especially with Android in mind.
 
 * Extremely lightweight footprint (only ~60kb and 113 methods after ProGuard), plain Kotlin, no third-party dependencies

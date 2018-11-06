@@ -49,7 +49,7 @@ fun createComponent(modules: Iterable<Module> = emptyList(),
  * This is an important aspect of Katana! As long as the same Component reference is used for injection, the same
  * singleton instances are reused. Once the Component is eligible for garbage collection so are the instances hold by
  * this component. The developer is responsible for holding a Component reference and releasing it when necessary. This
- * design was chosen in contrast to other DI frameworks that for instance work with a global, singleton state to prevent
+ * design was chosen in contrast to other DI libraries that for instance work with a global, singleton state to prevent
  * accidental memory leaks.
  *
  * However great care should be taken when dependent Components are specified via `dependsOn` at [createComponent]. If
