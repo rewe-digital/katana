@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_exit_button_label">Bye</string>
+    <string name="main_button1_label">Button 1</string>
+    <string name="main_button1_message">You clicked the first button</string>
+    <string name="main_button2_label">Button 2</string>
+    <string name="main_button2_message">You clicked the second button</string>
+    <string name="main_leak_label">Turn your device. There should be no memory leak after the orientation change!</string>
+</resources>

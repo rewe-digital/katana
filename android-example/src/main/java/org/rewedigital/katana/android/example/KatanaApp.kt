@@ -1,6 +1,7 @@
 package org.rewedigital.katana.android.example
 
 import android.app.Application
+import android.os.StrictMode
 import com.squareup.leakcanary.LeakCanary
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.Katana
@@ -14,10 +15,20 @@ class KatanaApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        //<editor-fold desc="Setup leak detection">
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDeath()
+                .build()
+        )
+
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return
         }
         LeakCanary.install(this)
+        //</editor-fold>
 
         // Installing logger for Katana
         Katana.logger = KatanaAndroidLogger
