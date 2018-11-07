@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/rewe-digital-incubator/katana.svg?branch=master)](https://travis-ci.org/rewe-digital-incubator/katana) [![Release](https://jitpack.io/v/rewe-digital-incubator/katana.svg)](https://jitpack.io/#rewe-digital-incubator/katana)
 
-# Because a Katana is better than a dagger! ;)
+# Katana
 
 Katana is a lightweight, minimalistic dependency injection library (similar to the service locator pattern) for Kotlin
 on the JVM, designed especially with Android in mind.
@@ -204,6 +204,12 @@ dependencies {
 
 **Note** that the package name is `org.rewedigital.katana` and differs from the artifact names due to how JitPack works.
 We will fix this in a future release.
+
+## Further reading
+
+* [Why we need yet another dependency injection framework for Kotlin & Android](https://medium.com/@caffeine81/why-we-need-yet-another-dependency-injection-framework-for-kotlin-android-f8162174ea4)
+* [Leak free dependency injection in Android](https://medium.com/@caffeine81/leak-free-dependency-injection-in-android-adaf65643dbf)
+* [Slides](https://drive.google.com/file/d/1hDslldu2vOa-sdIEjVAPY51ZYX_Imlt6/view) of a talk about Katana at the Kotlin User Group Cologne
 
 ## License
 
