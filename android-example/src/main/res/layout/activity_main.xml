@@ -9,6 +9,12 @@
     tools:context="org.rewedigital.katana.android.example.main.view.MainActivity">
 
     <Button
+        android:id="@+id/remoteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_remote_button_label" />
+
+    <Button
         android:id="@+id/exitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -18,7 +18,8 @@ class KatanaApp : Application() {
         //<editor-fold desc="Setup leak detection">
         StrictMode.setVmPolicy(
             StrictMode.VmPolicy.Builder()
-                .detectAll()
+                .detectActivityLeaks()
+                .detectLeakedClosableObjects()
                 .penaltyLog()
                 .penaltyDeath()
                 .build()

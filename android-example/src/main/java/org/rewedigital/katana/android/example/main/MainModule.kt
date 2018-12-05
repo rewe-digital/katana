@@ -39,7 +39,7 @@ fun createMainModule(activity: MainActivity) = createModule {
 
     bind<MainPresenter> { singleton { MainPresenterImpl(get(), get(), get()) } }
 
-    bind<MainInteractor> { singleton { MainInteractorImpl(get(), get()) } }
+    bind<MainInteractor> { singleton { MainInteractorImpl(get(), get(), get()) } }
 
     bind<MainNavigator> { singleton { MainNavigatorImpl(get()) } }
 }
