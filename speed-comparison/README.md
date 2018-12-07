@@ -1,4 +1,6 @@
-Speed comparison of the three DI libraries Katana, [Koin](https://github.com/Ekito/koin) and [Kodein](https://github.com/Kodein-Framework/Kodein-DI). 
+Speed comparison of the three DI libraries Katana, [Koin](https://github.com/Ekito/koin) and [Kodein](https://github.com/Kodein-Framework/Kodein-DI).
+
+Also see this independent [comparison](https://github.com/Sloy/android-dependency-injection-performance).
 
 ## Test setup
 
