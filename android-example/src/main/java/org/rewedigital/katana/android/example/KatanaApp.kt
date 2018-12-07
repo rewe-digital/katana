@@ -7,7 +7,7 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.Katana
 import org.rewedigital.katana.android.KatanaAndroidLogger
 import org.rewedigital.katana.android.example.inject.androidModule
-import org.rewedigital.katana.android.example.inject.createApplicationModule
+import org.rewedigital.katana.android.modules.createApplicationModule
 import org.rewedigital.katana.createComponent
 
 class KatanaApp : Application() {

@@ -2,15 +2,16 @@ package org.rewedigital.katana.android.example.inject
 
 import android.content.Context
 import android.content.res.Resources
+import org.rewedigital.katana.android.modules.APPLICATION_CONTEXT
 import org.rewedigital.katana.createModule
 
 /**
  * This module may provide Android specific classes like [Resources],
  * [android.content.SharedPreferences], system services etc.
  *
- * @see createApplicationModule
+ * @see org.rewedigital.katana.android.modules.createApplicationModule
  */
 val androidModule = createModule {
 
-    bind<Resources> { factory { get<Context>(APP_CONTEXT).resources } }
+    bind<Resources> { factory { get<Context>(APPLICATION_CONTEXT).resources } }
 }
