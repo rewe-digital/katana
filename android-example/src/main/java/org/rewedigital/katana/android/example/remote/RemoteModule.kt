@@ -3,7 +3,7 @@ package org.rewedigital.katana.android.example.remote
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import org.rewedigital.katana.createModule
+import org.rewedigital.katana.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 

@@ -15,6 +15,7 @@ import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.main.Modules
 import org.rewedigital.katana.android.example.main.createMainModule
 import org.rewedigital.katana.android.example.main.presenter.MainPresenter
+import org.rewedigital.katana.android.modules.createActivityModule
 import org.rewedigital.katana.createComponent
 import org.rewedigital.katana.inject
 
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(),
 
     // Component is created and referenced only from this Activity
     override val component = createComponent(
-        modules = listOf(createMainModule(this)) + Modules.modules,
+        modules = listOf(createActivityModule(this), createMainModule(this)) + Modules.modules,
         dependsOn = listOf(KatanaApp.applicationComponent)
     )
     private val presenter: MainPresenter by inject()
