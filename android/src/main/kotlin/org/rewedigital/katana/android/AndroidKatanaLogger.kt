@@ -8,7 +8,7 @@ import org.rewedigital.katana.Katana
  *
  * @see Katana.logger
  */
-object KatanaAndroidLogger : Katana.Logger {
+object AndroidKatanaLogger : Katana.Logger {
 
     private const val TAG = "KATANA"
 
@@ -32,3 +32,6 @@ object KatanaAndroidLogger : Katana.Logger {
         }
     }
 }
+
+@Deprecated(message = "Use AndroidKatanaLogger.", replaceWith = ReplaceWith("AndroidKatanaLogger"))
+typealias KatanaAndroidLogger = AndroidKatanaLogger
