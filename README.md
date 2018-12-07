@@ -196,9 +196,9 @@ as described in JitPack's documentation, then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.0.1'
+    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.0.2'
     // Additionally add this dependency for Android-specific extensions to Katana
-    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.0.1'
+    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.0.2'
 }
 ```
 
