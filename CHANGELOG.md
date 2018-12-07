@@ -3,7 +3,7 @@
 _2018-12-07_
 
 * Convert module DSL functions to extension functions for better code highlighting/readability.
-  This is a breaking change as `bind()`, `factory()` etc. now have to be imported!
+  This is a **breaking change** as `bind()`, `factory()` etc. now have to be imported!
 
 ## Version 1.0.2
 
