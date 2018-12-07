@@ -8,7 +8,7 @@ plugins {
 
 allprojects {
     group = "org.rewedigital.katana"
-    version = "1.0.2"
+    version = "1.1.0"
 
     repositories {
         jcenter()

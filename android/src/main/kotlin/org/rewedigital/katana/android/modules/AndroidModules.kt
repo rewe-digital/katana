@@ -3,7 +3,9 @@ package org.rewedigital.katana.android.modules
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import org.rewedigital.katana.bind
 import org.rewedigital.katana.createModule
+import org.rewedigital.katana.singleton
 
 const val APPLICATION = "APPLICATION"
 const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"
