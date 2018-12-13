@@ -1,5 +1,10 @@
 package org.rewedigital.katana
 
+import org.rewedigital.katana.Katana.Logger
+import org.rewedigital.katana.Katana.logger
+import org.rewedigital.katana.environment.DefaultEnvironmentContext
+import org.rewedigital.katana.environment.EnvironmentContext
+
 /**
  * Global Katana configuration object.
  *
@@ -24,4 +29,6 @@ object Katana {
      * Pass an implementation of [Logger] here to enable Katana's logging functionality
      */
     var logger: Logger? = null
+
+    var environmentContext: EnvironmentContext = DefaultEnvironmentContext
 }
