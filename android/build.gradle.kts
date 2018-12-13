@@ -1,25 +1,32 @@
 plugins {
-    kotlin("jvm")
+    id("com.android.library")
+    id("com.github.dcendents.android-maven")
+    kotlin("android")
+}
+
+android {
+    compileSdkVersion(28)
+
+    defaultConfig {
+        minSdkVersion(1)
+        targetSdkVersion(28)
+    }
 }
 
 dependencies {
     implementation(project(":core"))
-    compileOnly("com.google.android:android:4.1.1.4")
-}
-
-tasks.withType<Jar> {
-    baseName = "katana-android"
+    implementation("androidx.collection:collection:1.0.0")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
     classifier = "sources"
-    from(sourceSets["main"].allSource)
+    from(project.android.sourceSets["main"].java.srcDirs)
 }
 
 publishing {
     (publications) {
         register("mavenJava", MavenPublication::class) {
-            from(components["java"])
+            artifact("$buildDir/outputs/aar/android-release.aar")
             artifact(sourcesJar.get())
             artifactId = "katana-android"
         }

@@ -1,5 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:3.1.3")
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+    }
+}
+
 plugins {
     base
     kotlin("jvm") version "1.3.11" apply false
@@ -11,6 +23,7 @@ allprojects {
     version = "1.1.0"
 
     repositories {
+        google()
         jcenter()
     }
 
