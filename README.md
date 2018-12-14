@@ -189,21 +189,23 @@ Katana provides a bit of information about dependency declarations and injection
 debugging DI-related issues. To enable logging pass an implementation of `Katana.Logger` to the `Katana.logger`
 property of the `Katana` singleton.
 
-## Installation
+## Installation & Setup
 
 Katana is published via [JitPack](https://jitpack.io/#rewe-digital-incubator/katana). First add the JitPack repository
 as described in JitPack's documentation, then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.1.0'
-    // Additionally add this dependency for Android-specific extensions to Katana
-    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.1.0'
+    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.2.0'
+    // Use this dependency when you use Katana on Android
+    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.2.0'
 }
 ```
 
 **Note** that the package name is `org.rewedigital.katana` and differs from the artifact names due to how JitPack works.
 We will fix this in a future release.
+
+Also have a look at the Android-specific [setup steps](android/README.md).
 
 ## Further reading
 
