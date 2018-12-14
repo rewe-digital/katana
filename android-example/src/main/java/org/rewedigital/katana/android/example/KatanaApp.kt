@@ -5,7 +5,8 @@ import android.os.StrictMode
 import com.squareup.leakcanary.LeakCanary
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.Katana
-import org.rewedigital.katana.android.KatanaAndroidLogger
+import org.rewedigital.katana.android.AndroidKatanaLogger
+import org.rewedigital.katana.android.environment.AndroidEnvironmentContext
 import org.rewedigital.katana.android.example.inject.androidModule
 import org.rewedigital.katana.android.modules.createApplicationModule
 import org.rewedigital.katana.createComponent
@@ -32,7 +33,9 @@ class KatanaApp : Application() {
         //</editor-fold>
 
         // Installing logger for Katana
-        Katana.logger = KatanaAndroidLogger
+        Katana.logger = AndroidKatanaLogger
+        // Specify Android environment for optimized usage on Android
+        Katana.environmentContext = AndroidEnvironmentContext
 
         applicationComponent = createComponent(
             createApplicationModule(this),

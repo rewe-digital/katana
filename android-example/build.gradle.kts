@@ -18,18 +18,17 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.1.0"
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("com.github.rewe-digital-incubator.katana:katana-core:1.1.0")
-    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.1.0")
+    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.2.0")
     implementation("androidx.appcompat:appcompat:1.0.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
     implementation("com.squareup.retrofit2:retrofit:2.5.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.5.0")
