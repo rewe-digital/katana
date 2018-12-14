@@ -35,7 +35,7 @@ class KatanaApp : Application() {
         // Installing logger for Katana
         Katana.logger = AndroidKatanaLogger
         // Specify Android environment for optimized usage on Android
-        Katana.environmentContext = AndroidEnvironmentContext
+        Katana.environmentContext = AndroidEnvironmentContext()
 
         applicationComponent = createComponent(
             createApplicationModule(this),

@@ -15,8 +15,11 @@ This artifact provides an `AndroidEnvironmentContext`, which optimizes Katana's 
 **before** any Katana modules and components are created.
 
 ```kotlin
-Katana.environmentContext = AndroidEnvironmentContext
+Katana.environmentContext = AndroidEnvironmentContext()
 ```
+
+By default this context improves memory consumption at the cost of speed. If memory is not a concern but speed is,
+use `AndroidEnvironmentContext(profile = SPEED)`.
 
 ## ProGuard
 

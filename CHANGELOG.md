@@ -1,3 +1,10 @@
+## Version 1.2.1
+
+_2018-12-14_
+
+* Add `MEMORY` and `SPEED` profiles to `AndroidEnvironmentContext`.
+  Either choose between optimization of memory consumption or execution speed.
+
 ## Version 1.2.0
 
 _2018-12-14_

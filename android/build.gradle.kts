@@ -15,6 +15,7 @@ android {
 
 dependencies {
     api(project(":core"))
+    api(kotlin("stdlib", version = "1.3.11"))
     api("androidx.collection:collection:1.0.0")
     api("androidx.fragment:fragment:1.0.0")
 }

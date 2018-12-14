@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.2.0")
+    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.2.1")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1")
@@ -44,6 +44,7 @@ dependencies {
 }
 
 repositories {
+    mavenLocal()
     maven("https://jitpack.io")
     google()
     jcenter()
