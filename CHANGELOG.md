@@ -1,3 +1,12 @@
+## Version 1.2.0
+
+_2018-12-14_
+
+* Add pluggable `EnvironmentContext` for optimizing Katana for specific runtime environments.
+  See [Android implementation](android/README.md).
+* [Android](android) artifact is now an Android library (AAR) with a dependency on [AndroidX](https://developer.android.com/jetpack/androidx/).
+* Android artifact provides module factory functions for support `Fragments`.
+
 ## Version 1.1.0
 
 _2018-12-07_
