@@ -17,3 +17,7 @@ This artifact provides an `AndroidEnvironmentContext`, which optimizes Katana's 
 ```kotlin
 Katana.environmentContext = AndroidEnvironmentContext
 ```
+
+## ProGuard
+
+Katana does not require any specific ProGuard configuration 😎.
