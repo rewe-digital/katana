@@ -13,9 +13,9 @@ each block.
 
 | Library | Version |
 | ------- | ------- |
-| Katana  | 1.0     |
-| Koin    | 1.0.1   |
-| Kodein  | 5.3.0   |
+| Katana  | 1.2.0   |
+| Koin    | 1.0.2   |
+| Kodein  | 6.0.1   |
 
 For fairness towards Kodein the [erased](http://kodein.org/Kodein-DI/?5.2/getting-started#_flavour) version of Kodein
 was used for this comparison. It should be faster since it doesn't use reflection.
@@ -31,9 +31,9 @@ All times in nanoseconds.
 
 | Library | Setup (average) | Setup (median) | Execution (average) | Execution (median) |
 | ------- | ---------------:| --------------:| -------------------:| ------------------:|
-| Katana  |      969.184897 |          739.0 |          335.026703 |              254.0 |
-| Kodein  |     1503.760371 |         1181.0 |          938.642026 |              727.0 |
-| Koin    |     4817.431590 |         3891.0 |         8180.667081 |             6531.0 |
+| Katana  |     1026.766894 |          766.0 |          355.977582 |              276.0 |
+| Kodein  |     1621.426234 |         1149.0 |          970.987781 |              729.0 |
+| Koin    |     5155.923505 |         3968.0 |         7035.575007 |             5653.0 |
 
 ## How to build and run comparison
 
@@ -41,5 +41,5 @@ From the root folder of the project run:
 
 ```
 ./gradlew :speed-comparison:build
-java -jar ./speed-comparison/build/libs/speed-comparison-fat-1.0-SNAPSHOT.jar
+java -jar ./speed-comparison/build/libs/speed-comparison-fat-1.2.0.jar
 ```

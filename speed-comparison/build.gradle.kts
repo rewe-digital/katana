@@ -5,8 +5,8 @@ plugins {
 dependencies {
     compile(project(":core"))
     compile("org.nield:kotlin-statistics:1.1.3")
-    compile("org.koin:koin-core:1.0.1")
-    compile("org.kodein.di:kodein-di-erased-jvm:5.3.0")
+    compile("org.koin:koin-core:1.0.2")
+    compile("org.kodein.di:kodein-di-erased-jvm:6.0.1")
 }
 
 val fatJar = task("fatJar", type = Jar::class) {
