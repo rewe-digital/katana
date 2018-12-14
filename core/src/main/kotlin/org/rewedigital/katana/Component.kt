@@ -66,7 +66,7 @@ fun createComponent(modules: Iterable<Module> = emptyList(),
 class Component internal constructor(internal val declarations: Declarations,
                                      dependsOn: Iterable<Component>) {
 
-    private val instances = Katana.environmentContext.mapFactory<Key, Any>()()
+    private val instances = Katana.environmentContext.mapFactory().create<Key, Any>()
     val context = ComponentContext.of(this, dependsOn)
 
     init {
@@ -189,7 +189,7 @@ class ComponentContext internal constructor(private val thisComponent: Component
 }
 
 private fun Iterable<Declarations>.fold(each: ((Declaration<*>) -> Unit)? = null): Declarations =
-    fold(Katana.environmentContext.mapFactory<Key, Declaration<*>>()()) { acc, currDeclarations ->
+    fold(Katana.environmentContext.mapFactory().create()) { acc, currDeclarations ->
         currDeclarations.entries.forEach { entry ->
             val existingDeclaration = acc[entry.key]
             existingDeclaration?.let {

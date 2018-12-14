@@ -30,7 +30,7 @@ annotation class ModuleDslMarker
 @ModuleDslMarker
 class Module internal constructor(val name: String? = null) {
 
-    internal val declarations = Katana.environmentContext.mapFactory<Key, Declaration<*>>()()
+    internal val declarations = Katana.environmentContext.mapFactory().create<Key, Declaration<*>>()
 }
 
 inline fun <reified T> Module.bind(name: String? = null,

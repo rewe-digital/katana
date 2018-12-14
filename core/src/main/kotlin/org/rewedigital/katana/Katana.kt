@@ -1,6 +1,7 @@
 package org.rewedigital.katana
 
 import org.rewedigital.katana.Katana.Logger
+import org.rewedigital.katana.Katana.environmentContext
 import org.rewedigital.katana.Katana.logger
 import org.rewedigital.katana.environment.DefaultEnvironmentContext
 import org.rewedigital.katana.environment.EnvironmentContext
@@ -8,9 +9,13 @@ import org.rewedigital.katana.environment.EnvironmentContext
 /**
  * Global Katana configuration object.
  *
- * Currently only provides the possibility to specify a [Logger].
+ * Provides the possibility to specify a [Logger] via [logger] and an [EnvironmentContext] via [environmentContext]
+ * for configuring Katana for a specific runtime environment.
  *
+ * @see Logger
  * @see logger
+ * @see EnvironmentContext
+ * @see environmentContext
  */
 object Katana {
 
@@ -30,5 +35,11 @@ object Katana {
      */
     var logger: Logger? = null
 
+    /**
+     * Configures Katana for a specific runtime environment.
+     *
+     * This property must be set very early in the application lifecycle. Preferably before any modules and components
+     * are created.
+     */
     var environmentContext: EnvironmentContext = DefaultEnvironmentContext
 }
