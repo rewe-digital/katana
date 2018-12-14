@@ -13,9 +13,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation("androidx.collection:collection:1.0.0")
-    implementation("androidx.fragment:fragment:1.0.0")
+    api(project(":core"))
+    api("androidx.collection:collection:1.0.0")
+    api("androidx.fragment:fragment:1.0.0")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
