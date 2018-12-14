@@ -1,4 +1,5 @@
 plugins {
+    id("digital.wup.android-maven-publish") version "3.6.2"
     id("com.android.library")
     kotlin("android")
 }
@@ -24,9 +25,9 @@ val sourcesJar by tasks.registering(Jar::class) {
 }
 
 publishing {
-    (publications) {
-        register("mavenJava", MavenPublication::class) {
-            artifact("$buildDir/outputs/aar/android-release.aar")
+    publications {
+        register("mavenAar", MavenPublication::class) {
+            from(components["android"])
             artifact(sourcesJar.get())
             artifactId = "katana-android"
         }

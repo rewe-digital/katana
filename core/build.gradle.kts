@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    api(kotlin("stdlib"))
 
     testRuntime(kotlin("test"))
     testRuntime(kotlin("reflect"))
@@ -16,7 +16,7 @@ dependencies {
     testImplementation("org.amshove.kluent:kluent:1.42") {
         exclude(group = "org.jetbrains.kotlin")
     }
-    testImplementation("org.junit.platform:junit-platform-runner:1.3.1")
+    testImplementation("org.junit.platform:junit-platform-runner:1.3.2")
 }
 
 tasks.withType<Jar> {
@@ -29,7 +29,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 }
 
 publishing {
-    (publications) {
+    publications {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
             artifact(sourcesJar.get())
