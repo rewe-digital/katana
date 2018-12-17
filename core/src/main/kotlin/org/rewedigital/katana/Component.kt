@@ -79,7 +79,7 @@ class Component internal constructor(internal val declarations: Declarations,
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key): T? {
+    internal fun <T> thisComponentInjectByKey(key: Key): Injection<T>? {
         val declaration = declarations[key]
         if (declaration == null) {
             return null
@@ -101,7 +101,7 @@ class Component internal constructor(internal val declarations: Declarations,
                     EAGER_SINGLETON -> instances[key]
                         ?: throw KatanaException("Eager singleton was not properly initialized")
                 }
-                return instance as T
+                return Injection(instance as T)
             } catch (e: KatanaException) {
                 throw e
             } catch (e: Exception) {
@@ -160,11 +160,15 @@ class ComponentContext internal constructor(private val thisComponent: Component
                                             private val dependsOn: Iterable<Component>) {
 
     fun <T> injectByKey(key: Key): T {
-        val injection: T? = thisComponent.thisComponentInjectByKey(key)
+        val injection = thisComponent.thisComponentInjectByKey<T>(key)
         return when {
-            injection != null -> injection
-            else -> dependsOn.find { component -> component.canInject(key) }?.injectByKey(key) as T
-        } ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
+            injection != null -> injection.value
+            else -> {
+                val component = dependsOn.find { component -> component.canInject(key) }
+                    ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
+                component.injectByKey(key) as T
+            }
+        }
     }
 
     fun canInject(key: Key): Boolean =
@@ -207,3 +211,5 @@ private val Key.stringIdentifier
         is ClassKey<*> -> "class ${clazz.name}"
         is NameKey -> "name $name"
     }
+
+internal class Injection<T>(val value: T)

@@ -160,5 +160,18 @@ class InjectionTests : Spek(
                 component.injectNow<A2>()
                 component.injectNow<B2>()
             }
+
+            it("permit injection of null values") {
+                val module = createModule {
+
+                    bind<A?> { factory { null } }
+                }
+
+                val component = createComponent(module)
+
+                val injection: A? = component.injectNow()
+
+                injection shouldEqual null
+            }
         }
     })

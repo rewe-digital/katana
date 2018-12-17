@@ -5,9 +5,9 @@ import org.amshove.kluent.shouldThrow
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.xit
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
-import org.rewedigital.katana.OverrideException
 
 @RunWith(JUnitPlatform::class)
 class ComponentDependsOnTests : Spek(
@@ -112,6 +112,38 @@ class ComponentDependsOnTests : Spek(
                 }
 
                 fn shouldThrow OverrideException::class
+            }
+
+            it("should inject null values over multiple component tiers") {
+
+                val module = createModule {
+
+                    bind<MyComponent?> { factory { null } }
+                }
+
+                val component = createComponent(module)
+                val component2 = createComponent(component)
+
+                val injection: MyComponent? = component2.injectNow()
+
+                injection shouldEqual null
+            }
+
+            // TODO: Fix this
+            xit("should allow \"empty\" component when it only has transitive dependencies") {
+
+                val module = createModule {
+
+                    bind<String> { factory { "Hello world" } }
+                }
+
+                val component = createComponent(module)
+                val component2 = createComponent(component)
+                val component3 = createComponent(component2)
+
+                val injection: String = component3.injectNow()
+
+                injection shouldEqual "Hello world"
             }
         }
     })
