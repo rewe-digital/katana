@@ -79,10 +79,10 @@ class Component internal constructor(internal val declarations: Declarations,
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key): T {
+    internal fun <T> thisComponentInjectByKey(key: Key): T? {
         val declaration = declarations[key]
         if (declaration == null) {
-            throw InjectionException("No binding found for ${key.stringIdentifier}")
+            return null
         } else {
             try {
                 Logger.info { "Injecting dependency for ${key.stringIdentifier}" }
@@ -159,11 +159,13 @@ class Component internal constructor(internal val declarations: Declarations,
 class ComponentContext internal constructor(private val thisComponent: Component,
                                             private val dependsOn: Iterable<Component>) {
 
-    fun <T> injectByKey(key: Key): T =
-        when {
-            thisComponent.thisComponentCanInject(key) -> thisComponent.thisComponentInjectByKey(key)
-            else -> dependsOn.find { component -> component.canInject(key) }?.injectByKey(key)
+    fun <T> injectByKey(key: Key): T {
+        val injection: T? = thisComponent.thisComponentInjectByKey(key)
+        return when {
+            injection != null -> injection
+            else -> dependsOn.find { component -> component.canInject(key) }?.injectByKey(key) as T
         } ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
+    }
 
     fun canInject(key: Key): Boolean =
         when {

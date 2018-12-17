@@ -13,11 +13,11 @@ each block.
 
 | Library | Version |
 | ------- | ------- |
-| Katana  | 1.2.0   |
+| Katana  | 1.2.2   |
 | Koin    | 1.0.2   |
 | Kodein  | 6.0.1   |
 
-For fairness towards Kodein the [erased](http://kodein.org/Kodein-DI/?5.2/getting-started#_flavour) version of Kodein
+For fairness towards Kodein the [erased](http://kodein.org/Kodein-DI/?6.0.1/getting-started#_flavour) version of Kodein
 was used for this comparison. It should be faster since it doesn't use reflection.
 
 ## Test environment
@@ -31,9 +31,9 @@ All times in nanoseconds.
 
 | Library | Setup (average) | Setup (median) | Execution (average) | Execution (median) |
 | ------- | ---------------:| --------------:| -------------------:| ------------------:|
-| Katana  |     1026.766894 |          766.0 |          355.977582 |              276.0 |
-| Kodein  |     1621.426234 |         1149.0 |          970.987781 |              729.0 |
-| Koin    |     5155.923505 |         3968.0 |         7035.575007 |             5653.0 |
+| Katana  |     1091.379567 |          750.0 |          292.525516 |              182.0 |
+| Kodein  |     1854.426664 |         1223.0 |         1024.958585 |              719.0 |
+| Koin    |     5604.019308 |         4078.0 |         7404.213953 |             5668.0 |
 
 ## How to build and run comparison
 

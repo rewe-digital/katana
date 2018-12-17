@@ -1,3 +1,9 @@
+## Version 1.2.2
+
+_2018-12-17_
+
+* Improve injection performance
+
 ## Version 1.2.1
 
 _2018-12-14_
