@@ -17,9 +17,9 @@ val koinTimings = mutableListOf<Timings>()
 val kodeinTimings = mutableListOf<Timings>()
 
 fun main(args: Array<String>) {
-    (0 until ITERATIONS).forEach {
-        println("Iteration: $it")
+    println("Running $ITERATIONS iterations. Please stand by...")
 
+    repeat(ITERATIONS) {
         val katana = KatanaSubject()
         katanaTimings.add(measure(katana))
 
@@ -61,9 +61,9 @@ fun measureCall(body: () -> Unit): Long {
 
 fun Iterable<Timings>.results() =
     Results(setupAverage = map { it.setup }.average(),
-                                              setupMedian = map { it.setup }.median(),
-                                              executionAverage = map { it.execution }.average(),
-                                              executionMedian = map { it.execution }.median())
+            setupMedian = map { it.setup }.median(),
+            executionAverage = map { it.execution }.average(),
+            executionMedian = map { it.execution }.median())
 
 fun Results.print() {
     println("setup (average):     $setupAverage ns")
