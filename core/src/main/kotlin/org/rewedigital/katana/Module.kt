@@ -33,9 +33,24 @@ class Module internal constructor(val name: String? = null) {
     internal val declarations = Katana.environmentContext.mapFactory().create<Key, Declaration<*>>()
 }
 
+/**
+ * Declares a dependency binding.
+ *
+ * @param name Optional name of binding
+ * @param internal If `true` binding is only available in current module
+ * @param body Body of binding declaration
+ *
+ * @see factory
+ * @see singleton
+ * @see eagerSingleton
+ */
 inline fun <reified T> Module.bind(name: String? = null,
+                                   internal: Boolean = false,
                                    body: BindingDsl<T>.() -> Module) =
-    body.invoke(BindingDsl(this, T::class.java, name))
+    body.invoke(BindingDsl(module = this,
+                           clazz = T::class.java,
+                           name = name,
+                           internal = internal))
 
 /**
  * Provides syntax for declaring how the dependency is provided, either via a [factory] or as a [singleton].
@@ -43,7 +58,8 @@ inline fun <reified T> Module.bind(name: String? = null,
 @ModuleDslMarker
 class BindingDsl<T>(private val module: Module,
                     private val clazz: Class<T>,
-                    private val name: String?) {
+                    private val name: String?,
+                    private val internal: Boolean) {
 
     internal fun declaration(type: Type,
                              provider: Provider<T>): Module {
@@ -54,7 +70,8 @@ class BindingDsl<T>(private val module: Module,
                         moduleName = module.name,
                         clazz = clazz,
                         name = name,
-                        provider = provider)
+                        provider = provider,
+                        internal = internal)
 
         val existingDeclaration = module.declarations[key]
         if (existingDeclaration != null) {
@@ -70,20 +87,20 @@ class BindingDsl<T>(private val module: Module,
  * Provides the dependency via a factory. A new instance will be created every time the dependency is requested.
  */
 fun <T> BindingDsl<T>.factory(body: ProviderDsl.() -> T): Module =
-    declaration(FACTORY) { component -> body.invoke(ProviderDsl(component)) }
+    declaration(FACTORY) { context -> body.invoke(ProviderDsl(context)) }
 
 /**
  * Provides the dependency as a singleton. Only one instance (per component) will be created.
  */
 fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): Module =
-    declaration(SINGLETON) { component -> body.invoke(ProviderDsl(component)) }
+    declaration(SINGLETON) { context -> body.invoke(ProviderDsl(context)) }
 
 /**
  * Provides the dependency as an eager singleton. Only once instance (per component) will be created.
  * The instance will be created when the [Component] is created and not lazily the first time it's requested.
  */
 fun <T> BindingDsl<T>.eagerSingleton(body: ProviderDsl.() -> T): Module =
-    declaration(EAGER_SINGLETON) { component -> body.invoke(ProviderDsl(component)) }
+    declaration(EAGER_SINGLETON) { context -> body.invoke(ProviderDsl(context)) }
 
 /**
  * Provides syntax for injecting transitive dependencies via [get] within the provider body.
@@ -98,7 +115,7 @@ class ProviderDsl(val context: ComponentContext)
  * current component) to be able to inject transitive dependencies within a module.
  */
 inline fun <reified T> ProviderDsl.get(name: String? = null) =
-    context.injectNow<T>(name)
+    context.injectNow<T>(name = name, internal = true)
 
 /**
  * Provides a [Lazy] version of dependency. Should only be required to circumvent a circular dependency cycle.

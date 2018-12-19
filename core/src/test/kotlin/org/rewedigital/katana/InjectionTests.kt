@@ -173,5 +173,30 @@ class InjectionTests : Spek(
 
                 injection shouldEqual null
             }
+
+            it("permit internal module bindings") {
+                val module = createModule {
+
+                    bind<String>(name = "internal", internal = true) { factory { "Hello world" } }
+
+                    bind<MyComponent> { factory { MyComponentB<String>(get("internal")) } }
+                }
+
+                val component = createComponent(module)
+
+                component.canInject<String>("internal") shouldEqual false
+                component.canInject<MyComponent>() shouldEqual true
+
+                val injection = component.injectNow<MyComponent>()
+
+                injection shouldBeInstanceOf MyComponentB::class
+                (injection as MyComponentB<*>).value shouldEqual "Hello world"
+
+                val fn = {
+                    component.injectNow<String>("internal")
+                }
+
+                fn shouldThrow InjectionException::class
+            }
         }
     })

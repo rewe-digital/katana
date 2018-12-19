@@ -1,5 +1,6 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
 import org.jetbrains.spek.api.Spek
@@ -127,6 +128,29 @@ class ComponentDependsOnTests : Spek(
                 val injection: MyComponent? = component2.injectNow()
 
                 injection shouldEqual null
+            }
+
+            it("should not inject internal bindings over multiple component tiers") {
+                val module = createModule {
+
+                    bind<String>(name = "internal", internal = true) { factory { "Hello world" } }
+
+                    bind<MyComponent> { factory { MyComponentB<String>(get("internal")) } }
+                }
+
+                val component = createComponent(module)
+                val component2 = createComponent(component)
+
+                component2.canInject<String>("internal") shouldEqual false
+                component2.canInject<MyComponent>() shouldEqual true
+
+                component2.injectNow<MyComponent>() shouldBeInstanceOf MyComponentB::class
+
+                val fn = {
+                    component2.injectNow<String>("internal")
+                }
+
+                fn shouldThrow InjectionException::class
             }
 
             // TODO: Fix this

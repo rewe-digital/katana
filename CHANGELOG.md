@@ -1,3 +1,10 @@
+## Version 1.2.3
+
+_2018-12-19_
+
+* Permit injection of `null` values
+* Permit internal module bindings
+
 ## Version 1.2.2
 
 _2018-12-17_

@@ -8,7 +8,8 @@ data class Declaration<T>(val key: Key,
                           val moduleName: String?,
                           val clazz: Class<T>,
                           val name: String?,
-                          val provider: Provider<T>) {
+                          val provider: Provider<T>,
+                          val internal: Boolean) {
 
     enum class Type { FACTORY, SINGLETON, EAGER_SINGLETON }
 

@@ -79,9 +79,9 @@ class Component internal constructor(internal val declarations: Declarations,
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key): Injection<T>? {
+    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean): Injection<T>? {
         val declaration = declarations[key]
-        if (declaration == null) {
+        if (declaration == null || (declaration.internal && !internal)) {
             return null
         } else {
             try {
@@ -110,8 +110,8 @@ class Component internal constructor(internal val declarations: Declarations,
         }
     }
 
-    internal fun thisComponentCanInject(key: Key) =
-        declarations.containsKey(key)
+    internal fun thisComponentCanInject(key: Key, internal: Boolean) =
+        declarations.filter { if (!internal) !it.value.internal else true }.containsKey(key)
 
     internal fun canInject(key: Key) =
         context.canInject(key)
@@ -159,8 +159,8 @@ class Component internal constructor(internal val declarations: Declarations,
 class ComponentContext internal constructor(private val thisComponent: Component,
                                             private val dependsOn: Iterable<Component>) {
 
-    fun <T> injectByKey(key: Key): T {
-        val injection = thisComponent.thisComponentInjectByKey<T>(key)
+    fun <T> injectByKey(key: Key, internal: Boolean = false): T {
+        val injection = thisComponent.thisComponentInjectByKey<T>(key, internal)
         return when {
             injection != null -> injection.value
             else -> {
@@ -171,21 +171,21 @@ class ComponentContext internal constructor(private val thisComponent: Component
         }
     }
 
-    fun canInject(key: Key): Boolean =
+    fun canInject(key: Key, internal: Boolean = false): Boolean =
         when {
-            thisComponent.thisComponentCanInject(key) -> true
+            thisComponent.thisComponentCanInject(key = key, internal = internal) -> true
             else -> dependsOn.any { component -> component.canInject(key) }
         }
 
-    inline fun <reified T> canInject(name: String? = null) =
-        canInject(Key.of(T::class.java, name))
+    inline fun <reified T> canInject(name: String? = null, internal: Boolean = false) =
+        canInject(key = Key.of(T::class.java, name), internal = internal)
 
-    inline fun <reified T> inject(name: String? = null) = lazy {
-        injectNow<T>(name)
+    inline fun <reified T> inject(name: String? = null, internal: Boolean = false) = lazy {
+        injectNow<T>(name = name, internal = internal)
     }
 
-    inline fun <reified T> injectNow(name: String? = null) =
-        injectByKey<T>(Key.of(T::class.java, name))
+    inline fun <reified T> injectNow(name: String? = null, internal: Boolean = false) =
+        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
 
     internal companion object {
 
