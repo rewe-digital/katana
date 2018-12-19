@@ -198,8 +198,8 @@ private fun Iterable<Declarations>.fold(each: ((Declaration<*>) -> Unit)? = null
     fold(Katana.environmentContext.mapFactory().create()) { acc, currDeclarations ->
         currDeclarations.entries.forEach { entry ->
             val existingDeclaration = acc[entry.key]
-            existingDeclaration?.let {
-                throw OverrideException(entry.value, it)
+            existingDeclaration?.let { declaration ->
+                if (!declaration.internal) throw OverrideException(entry.value, declaration)
             }
             each?.invoke(entry.value)
         }

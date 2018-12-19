@@ -13,7 +13,7 @@ dependencies {
     testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.2.1") {
         exclude(group = "org.jetbrains.kotlin")
     }
-    testImplementation("org.amshove.kluent:kluent:1.42") {
+    testImplementation("org.amshove.kluent:kluent:1.44") {
         exclude(group = "org.jetbrains.kotlin")
     }
     testImplementation("org.junit.platform:junit-platform-runner:1.3.2")
