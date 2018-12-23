@@ -1,10 +1,10 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.junit.Assert.fail
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 
@@ -87,12 +87,11 @@ class OverrideTests : Spek(
                     bind<MyComponentB<String>> { factory { MyComponentB(get("internal")) } }
                 }
 
-                // TODO: Use shouldNotThrow when fixed: https://github.com/MarkusAmshove/Kluent/issues/128
-                try {
+                val fn = {
                     createComponent(module1, module2)
-                } catch (e: OverrideException) {
-                    fail("Should not throw OverrideException")
                 }
+
+                fn shouldNotThrow OverrideException::class
             }
         }
     })
