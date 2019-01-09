@@ -1,3 +1,10 @@
+## Version 1.2.4
+
+_2019-01-09_
+
+* Fix wrong `OverrideException` for internal module declarations
+* Permit `null` values of (eager) singletons
+
 ## Version 1.2.3
 
 _2018-12-19_
