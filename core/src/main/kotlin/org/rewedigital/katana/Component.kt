@@ -66,7 +66,7 @@ fun createComponent(modules: Iterable<Module> = emptyList(),
 class Component internal constructor(internal val declarations: Declarations,
                                      dependsOn: Iterable<Component>) {
 
-    private val instances = Katana.environmentContext.mapFactory().create<Key, Any>()
+    private val instances = Katana.environmentContext.mapFactory().create<Key, Instance<*>>()
     val context = ComponentContext.of(this, dependsOn)
 
     init {
@@ -74,34 +74,43 @@ class Component internal constructor(internal val declarations: Declarations,
         declarations.values
             .filter { it.type == EAGER_SINGLETON }
             .forEach { declaration ->
-                instances[declaration.key] = declaration.provider(context) as Any
+                declaration.provider(context).let { newInstance ->
+                    instances[declaration.key] = Instance(newInstance)
+                }
             }
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean): Injection<T>? {
+    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean): Instance<T>? {
         val declaration = declarations[key]
         if (declaration == null || (declaration.internal && !internal)) {
             return null
         } else {
             try {
                 Logger.info { "Injecting dependency for ${key.stringIdentifier}" }
-                val instance = when (declaration.type) {
-                    FACTORY -> declaration.provider(context).also {
+                return when (declaration.type) {
+                    FACTORY -> declaration.provider(context).let { newInstance ->
                         Logger.debug { "Created instance for ${key.stringIdentifier}" }
+                        Instance(newInstance as T)
                     }
                     SINGLETON -> {
-                        instances[key].also {
+                        instances[key]?.let { instance ->
                             Logger.debug { "Returning existing singleton instance for ${key.stringIdentifier}" }
-                        } ?: declaration.provider(context).also { newInstance ->
+                            instance as Instance<T>
+                        } ?: declaration.provider(context).let { newInstance ->
                             Logger.debug { "Created singleton instance for ${key.stringIdentifier}" }
-                            instances[key] = newInstance as Any
+                            Instance(newInstance as T).also {
+                                instances[key] = it
+                            }
                         }
                     }
-                    EAGER_SINGLETON -> instances[key]
-                        ?: throw KatanaException("Eager singleton was not properly initialized")
+                    EAGER_SINGLETON -> instances[key].let { instance ->
+                        when (instance) {
+                            null -> throw KatanaException("Eager singleton was not properly initialized")
+                            else -> instance as Instance<T>
+                        }
+                    }
                 }
-                return Injection(instance as T)
             } catch (e: KatanaException) {
                 throw e
             } catch (e: Exception) {
@@ -160,9 +169,9 @@ class ComponentContext internal constructor(private val thisComponent: Component
                                             private val dependsOn: Iterable<Component>) {
 
     fun <T> injectByKey(key: Key, internal: Boolean = false): T {
-        val injection = thisComponent.thisComponentInjectByKey<T>(key, internal)
+        val instance = thisComponent.thisComponentInjectByKey<T>(key, internal)
         return when {
-            injection != null -> injection.value
+            instance != null -> instance.value
             else -> {
                 val component = dependsOn.find { component -> component.canInject(key) }
                     ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
@@ -212,4 +221,4 @@ private val Key.stringIdentifier
         is NameKey -> "name $name"
     }
 
-internal class Injection<T>(val value: T)
+internal class Instance<T>(val value: T)

@@ -198,5 +198,37 @@ class InjectionTests : Spek(
 
                 fn shouldThrow InjectionException::class
             }
+
+            it("singleton injection should allow null values") {
+                var invocations = 0
+                val module = createModule {
+
+                    bind<String?>("singleton") { singleton { invocations++; null } }
+                }
+
+                val component = createComponent(module)
+
+                component.canInject<String?>("singleton") shouldEqual true
+                component.injectNow<String?>("singleton") shouldEqual null
+                component.injectNow<String?>("singleton") shouldEqual null
+
+                invocations shouldEqual 1
+            }
+
+            it("eagerSingleton injection should allow null values") {
+                var invocations = 0
+                val module = createModule {
+
+                    bind<String?>("eagerSingleton") { eagerSingleton { invocations++; null } }
+                }
+
+                val component = createComponent(module)
+
+                component.canInject<String?>("eagerSingleton") shouldEqual true
+                component.injectNow<String?>("eagerSingleton") shouldEqual null
+                component.injectNow<String?>("eagerSingleton") shouldEqual null
+
+                invocations shouldEqual 1
+            }
         }
     })
