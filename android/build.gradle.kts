@@ -4,6 +4,10 @@ plugins {
     kotlin("android")
 }
 
+apply(from = "../publishing.gradle.kts")
+@Suppress("UNCHECKED_CAST")
+val addCommonPomAttributes = extra["addCommonPomAttributes"] as (MavenPublication) -> Unit
+
 android {
     compileSdkVersion(28)
 
@@ -31,6 +35,7 @@ publishing {
             from(components["android"])
             artifact(sourcesJar.get())
             artifactId = "katana-android"
+            addCommonPomAttributes(this)
         }
     }
 }

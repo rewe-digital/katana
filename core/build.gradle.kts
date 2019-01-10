@@ -2,6 +2,10 @@ plugins {
     kotlin("jvm")
 }
 
+apply(from = "../publishing.gradle.kts")
+@Suppress("UNCHECKED_CAST")
+val addCommonPomAttributes = extra["addCommonPomAttributes"] as (MavenPublication) -> Unit
+
 dependencies {
     api(kotlin("stdlib"))
 
@@ -34,6 +38,7 @@ publishing {
             from(components["java"])
             artifact(sourcesJar.get())
             artifactId = "katana-core"
+            addCommonPomAttributes(this)
         }
     }
 }
