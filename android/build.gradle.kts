@@ -1,4 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
+    id("org.jetbrains.dokka")
     id("digital.wup.android-maven-publish") version "3.6.2"
     id("com.android.library")
     kotlin("android")
@@ -24,9 +27,20 @@ dependencies {
     api("androidx.fragment:fragment:1.0.0")
 }
 
+val dokka = tasks.withType(DokkaTask::class) {
+    outputFormat = "javadoc"
+    outputDirectory = "$buildDir/dokkaJavadoc"
+}
+
 val sourcesJar by tasks.registering(Jar::class) {
     classifier = "sources"
     from(project.android.sourceSets["main"].java.srcDirs)
+}
+
+val javaDoc by tasks.registering(Jar::class) {
+    dependsOn(dokka)
+    classifier = "javadoc"
+    from("$buildDir/dokkaJavadoc")
 }
 
 publishing {
@@ -34,6 +48,7 @@ publishing {
         register("mavenAar", MavenPublication::class) {
             from(components["android"])
             artifact(sourcesJar.get())
+            artifact(javaDoc.get())
             artifactId = "katana-android"
             addCommonPomAttributes(this)
         }

@@ -15,6 +15,7 @@ plugins {
     base
     kotlin("jvm") version "1.3.11" apply false
     `maven-publish`
+    id("org.jetbrains.dokka") version "0.9.17"
 }
 
 allprojects {

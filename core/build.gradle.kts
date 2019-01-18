@@ -1,4 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
+    id("org.jetbrains.dokka")
     kotlin("jvm")
 }
 
@@ -27,9 +30,20 @@ tasks.withType<Jar> {
     baseName = "katana-core"
 }
 
+val dokka = tasks.withType(DokkaTask::class) {
+    outputFormat = "javadoc"
+    outputDirectory = "$buildDir/dokkaJavadoc"
+}
+
 val sourcesJar by tasks.registering(Jar::class) {
     classifier = "sources"
     from(sourceSets["main"].allSource)
+}
+
+val javaDoc by tasks.registering(Jar::class) {
+    dependsOn(dokka)
+    classifier = "javadoc"
+    from("$buildDir/dokkaJavadoc")
 }
 
 publishing {
@@ -37,6 +51,7 @@ publishing {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
             artifact(sourcesJar.get())
+            artifact(javaDoc.get())
             artifactId = "katana-core"
             addCommonPomAttributes(this)
         }
