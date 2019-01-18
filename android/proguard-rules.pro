@@ -1,0 +1,2 @@
+-dontobfuscate
+-keep class org.rewedigital.katana.** { *; }

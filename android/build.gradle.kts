@@ -18,6 +18,13 @@ android {
         minSdkVersion(14)
         targetSdkVersion(28)
     }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+        }
+    }
 }
 
 dependencies {
