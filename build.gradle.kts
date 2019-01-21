@@ -16,6 +16,7 @@ plugins {
     kotlin("jvm") version "1.3.11" apply false
     `maven-publish`
     id("org.jetbrains.dokka") version "0.9.17"
+    id("com.jfrog.bintray") version "1.8.4"
 }
 
 allprojects {
@@ -29,19 +30,5 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.6"
-    }
-}
-
-subprojects {
-    apply {
-        plugin("org.gradle.maven-publish")
-    }
-
-    publishing {
-        repositories {
-            maven {
-                // TODO
-            }
-        }
     }
 }

@@ -1,8 +1,12 @@
+import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
+import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
+    id("com.jfrog.bintray")
     id("org.jetbrains.dokka")
     kotlin("jvm")
+    `maven-publish`
 }
 
 apply(from = "../publishing.gradle.kts")
@@ -48,7 +52,7 @@ val javaDoc by tasks.registering(Jar::class) {
 
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
+        create<MavenPublication>("katana-core") {
             from(components["java"])
             artifact(sourcesJar.get())
             artifact(javaDoc.get())
@@ -56,4 +60,26 @@ publishing {
             addCommonPomAttributes(this)
         }
     }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API_KEY")
+    override = false
+    publish = true
+
+    setPublications("katana-core")
+
+    pkg(delegateClosureOf<PackageConfig> {
+        repo = "katana"
+        name = "katana-core"
+        userOrg = "rewe-digital"
+        websiteUrl = "https://github.com/rewe-digital-incubator/katana"
+        vcsUrl = "https://github.com/rewe-digital-incubator/katana"
+        setLicenses("MIT")
+
+        version(delegateClosureOf<VersionConfig> {
+            name = "${project.version}"
+        })
+    })
 }

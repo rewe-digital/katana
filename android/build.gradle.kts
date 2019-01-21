@@ -1,10 +1,14 @@
+import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
+import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     id("org.jetbrains.dokka")
     id("digital.wup.android-maven-publish") version "3.6.2"
     id("com.android.library")
+    id("com.jfrog.bintray")
     kotlin("android")
+    `maven-publish`
 }
 
 apply(from = "../publishing.gradle.kts")
@@ -53,7 +57,7 @@ val javaDoc by tasks.registering(Jar::class) {
 
 publishing {
     publications {
-        register("mavenAar", MavenPublication::class) {
+        create<MavenPublication>("katana-android") {
             from(components["android"])
             artifact(sourcesJar.get())
             artifact(javaDoc.get())
@@ -61,4 +65,26 @@ publishing {
             addCommonPomAttributes(this)
         }
     }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_API_KEY")
+    override = false
+    publish = true
+
+    setPublications("katana-android")
+
+    pkg(delegateClosureOf<PackageConfig> {
+        repo = "katana"
+        name = "katana-android"
+        userOrg = "rewe-digital"
+        websiteUrl = "https://github.com/rewe-digital-incubator/katana"
+        vcsUrl = "https://github.com/rewe-digital-incubator/katana"
+        setLicenses("MIT")
+
+        version(delegateClosureOf<VersionConfig> {
+            name = "${project.version}"
+        })
+    })
 }
