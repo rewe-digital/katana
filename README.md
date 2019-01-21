@@ -191,19 +191,19 @@ property of the `Katana` singleton.
 
 ## Installation & Setup
 
-Katana is published via [JitPack](https://jitpack.io/#rewe-digital-incubator/katana). First add the JitPack repository
-as described in JitPack's documentation, then add the following dependencies:
+Katana is published on [JCenter](https://bintray.com/bintray/jcenter). If you haven't already done it, add JCenter as
+a repository to your project. Then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.rewe-digital-incubator.katana:katana-core:1.2.4'
+    implementation 'org.rewedigital.katana:katana-core:1.2.5'
     // Use this dependency when you use Katana on Android
-    implementation 'com.github.rewe-digital-incubator.katana:katana-android:1.2.4'
+    implementation 'org.rewedigital.katana:katana-android:1.2.5'
 }
 ```
 
-**Note** that the package name is `org.rewedigital.katana` and differs from the artifact names due to how JitPack works.
-We will fix this in a future release.
+All artifacts are signed with a GPG key for `opensource@rewe-digital.com`. You can download the public key
+[here](https://bintray.com/rewe-digital). The fingerprint is `0772 2AB2 25D7 BC94 54C2  1ED2 3AC1 25FD 1FB3 DA35`.
 
 Also have a look at the Android-specific [setup steps](android/README.md).
 
@@ -218,7 +218,7 @@ Also have a look at the Android-specific [setup steps](android/README.md).
 
 The MIT license (MIT)
 
-Copyright (c) 2018 REWE Digital GmbH
+Copyright (c) 2019 REWE Digital GmbH
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
