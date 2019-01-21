@@ -1,3 +1,10 @@
+## Version 1.2.5
+
+_2019-01-21_
+
+* First version deployed on [JCenter](https://bintray.com/bintray/jcenter)
+* No code changes
+
 ## Version 1.2.4
 
 _2019-01-09_
