@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "3.2.1"
+    id("com.android.application") version "3.3.0"
     kotlin("android") version "1.3.11"
 }
 
@@ -18,14 +18,14 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.2.4"
+        versionName = "1.2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("com.github.rewe-digital-incubator.katana:katana-android:1.2.4")
+    implementation("org.rewedigital.katana:katana-android:1.2.5")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0")
@@ -35,7 +35,7 @@ dependencies {
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     implementation("com.squareup.moshi:moshi:1.8.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
-    implementation("com.squareup.leakcanary:leakcanary-android:1.6.2")
+    implementation("com.squareup.leakcanary:leakcanary-android:1.6.3")
 
     androidTestImplementation("androidx.test.espresso:espresso-core:3.1.1")
     androidTestImplementation("androidx.test:runner:1.1.1")
@@ -45,7 +45,6 @@ dependencies {
 
 repositories {
     mavenLocal()
-    maven("https://jitpack.io")
     google()
     jcenter()
 }
