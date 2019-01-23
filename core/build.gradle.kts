@@ -7,6 +7,7 @@ plugins {
     id("org.jetbrains.dokka")
     kotlin("jvm")
     `maven-publish`
+    jacoco
 }
 
 apply(from = "../publishing.gradle.kts")
@@ -33,6 +34,15 @@ dependencies {
 tasks.withType<Jar> {
     baseName = "katana-core"
 }
+
+val jacoco = tasks.withType<JacocoReport> {
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = false
+        csv.isEnabled = false
+    }
+}
+tasks.getByName("check").dependsOn(jacoco)
 
 val dokka = tasks.withType(DokkaTask::class) {
     outputFormat = "javadoc"
