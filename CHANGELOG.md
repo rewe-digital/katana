@@ -1,3 +1,9 @@
+## Version 1.2.6
+
+_2019-01-25_
+
+* Update Kotlin version to 1.3.20
+
 ## Version 1.2.5
 
 _2019-01-21_
