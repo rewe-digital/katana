@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.KatanaApp
 import org.rewedigital.katana.android.example.R
@@ -37,8 +38,8 @@ class MainActivity : AppCompatActivity(),
 
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.remoteButton).setOnClickListener { presenter.onRemoteButtonClick() }
-        findViewById<Button>(R.id.exitButton).setOnClickListener { presenter.onExitButtonClick() }
+        remoteButton.setOnClickListener { presenter.onRemoteButtonClick() }
+        exitButton.setOnClickListener { presenter.onExitButtonClick() }
 
         presenter.onCreate()
     }

@@ -6,7 +6,8 @@ buildscript {
 
 plugins {
     id("com.android.application") version "3.3.0"
-    kotlin("android") version "1.3.11"
+    kotlin("android") version "1.3.20"
+    kotlin("android.extensions") version "1.3.20"
 }
 
 android {
@@ -18,14 +19,14 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.2.5"
+        versionName = "1.2.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.2.5")
+    implementation("org.rewedigital.katana:katana-android:1.2.6")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0")
