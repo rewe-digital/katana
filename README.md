@@ -207,6 +207,11 @@ All artifacts are signed with a GPG key for `opensource@rewe-digital.com`. You c
 
 Also have a look at the Android-specific [setup steps](android/README.md).
 
+## Help & contribution
+
+If you found a bug or want to suggest a feature, please create an [issue](https://github.com/rewe-digital-incubator/katana/issues/new).  
+If you need help, visit our Slack [channel](https://kotlinlang.slack.com/messages/katana).
+
 ## Further reading
 
 * [Why we need yet another dependency injection framework for Kotlin & Android](https://medium.com/@caffeine81/why-we-need-yet-another-dependency-injection-framework-for-kotlin-android-f8162174ea4)
