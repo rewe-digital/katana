@@ -9,6 +9,7 @@ import org.rewedigital.katana.internal.Logger
  * Defines a component.
  *
  * @see Component
+ * @see Component.plus
  */
 fun createComponent(vararg modules: Module) =
     createComponent(modules = modules.asIterable())
@@ -25,6 +26,7 @@ fun createComponent(vararg components: Component) =
  * Defines a component.
  *
  * @see Component
+ * @see Component.plus
  */
 fun createComponent(modules: Iterable<Module> = emptyList(),
                     dependsOn: Iterable<Component> = emptyList()): Component {
@@ -158,7 +160,44 @@ class Component internal constructor(internal val declarations: Declarations,
      */
     inline fun <reified T> injectNow(name: String? = null) =
         context.injectNow<T>(name)
+
+    /**
+     * Alternative syntax for creating a child component that depends on current component
+     * plus additional modules.
+     *
+     * @see createComponent
+     */
+    operator fun plus(modules: Iterable<Module>) =
+        createComponent(modules = modules,
+                        dependsOn = listOf(this))
+
+    /**
+     * Alternative syntax for creating a child component that depends on current component
+     * plus additional module.
+     *
+     * @see createComponent
+     */
+    operator fun plus(module: Module) = this + listOf(module)
 }
+
+/**
+ * Alternative syntax for creating a child component that depends on current components
+ * plus additional modules.
+ *
+ * @see createComponent
+ */
+operator fun Iterable<Component>.plus(modules: Iterable<Module>) =
+    createComponent(modules = modules,
+                    dependsOn = this)
+
+/**
+ * Alternative syntax for creating a child component that depends on current components
+ * plus additional module.
+ *
+ * @see createComponent
+ */
+operator fun Iterable<Component>.plus(module: Module) =
+    this + listOf(module)
 
 /**
  * ComponentContext is used internally to represent the total set of [Components][Component] and thus possible

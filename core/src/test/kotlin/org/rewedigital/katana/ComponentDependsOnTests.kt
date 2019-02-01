@@ -153,6 +153,53 @@ class ComponentDependsOnTests : Spek(
                 fn shouldThrow InjectionException::class
             }
 
+            it("plus operator should work as expected") {
+
+                val module1 = createModule {
+
+                    bind<String> { factory { "Hello world" } }
+                }
+
+                val module2 = createModule {
+
+                    bind<Int> { factory { 1234 } }
+                }
+
+                val module3 = createModule {
+
+                    bind<Int>("NAME") { factory { 4321 } }
+                }
+
+                val module4 = createModule {
+
+                    bind<Int>("NAME2") { factory { 1337 } }
+                }
+
+                val component1 = createComponent(module1)
+                val component2 = component1 + listOf(module2)
+                val component3 = component1 + module2
+
+                component2.injectNow<String>() shouldEqual "Hello world"
+                component2.injectNow<Int>() shouldEqual 1234
+
+                component3.injectNow<String>() shouldEqual "Hello world"
+                component3.injectNow<Int>() shouldEqual 1234
+
+                val component4 = createComponent(module3)
+                val component5 = listOf(component2, component4) + listOf(module4)
+                val component6 = listOf(component2, component4) + module4
+
+                component5.injectNow<String>() shouldEqual "Hello world"
+                component5.injectNow<Int>() shouldEqual 1234
+                component5.injectNow<Int>("NAME") shouldEqual 4321
+                component5.injectNow<Int>("NAME2") shouldEqual 1337
+
+                component6.injectNow<String>() shouldEqual "Hello world"
+                component6.injectNow<Int>() shouldEqual 1234
+                component6.injectNow<Int>("NAME") shouldEqual 4321
+                component6.injectNow<Int>("NAME2") shouldEqual 1337
+            }
+
             // TODO: Fix this
             xit("should allow \"empty\" component when it only has transitive dependencies") {
 
