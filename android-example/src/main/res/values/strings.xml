@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Katana Android Example</string>
+    <string name="fragment_example">Fragment example</string>
+    <string name="first_fragment">First fragment %1$s %2$s</string>
+    <string name="second_fragment">Second fragment %1$s</string>
 </resources>
