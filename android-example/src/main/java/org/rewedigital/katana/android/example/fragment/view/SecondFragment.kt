@@ -11,7 +11,7 @@ import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.inject.Container
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
-import org.rewedigital.katana.createComponent
+import org.rewedigital.katana.injectNow
 
 /**
  * See [FirstFragment] first.
@@ -36,12 +36,9 @@ class SecondFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        component = createComponent(
-            dependsOn = listOf((activity as KatanaTrait).component),
-            modules = listOf(secondFragmentModule)
-        )
+        component = (activity as KatanaTrait).component + secondFragmentModule
 
-        container = component.injectNow()
+        container = injectNow()
 
         view?.textView?.text = context?.getString(
             R.string.second_fragment,

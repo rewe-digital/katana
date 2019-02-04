@@ -8,5 +8,5 @@ const val FRAGMENT_DEPENDENCY1 = "FRAGMENT_DEPENDENCY1"
 
 val firstFragmentModule = createModule {
 
-    bind<String>(name = FRAGMENT_DEPENDENCY1) { factory { "FRAGMENT_DEPENDENCY1" } }
+    bind<String>(FRAGMENT_DEPENDENCY1) { factory { "FRAGMENT_DEPENDENCY1" } }
 }

@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.2.6")
+    implementation("org.rewedigital.katana:katana-android:1.2.7")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")

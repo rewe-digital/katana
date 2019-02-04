@@ -10,7 +10,7 @@ const val FRAGMENT_DEPENDENCY2 = "FRAGMENT_DEPENDENCY2"
 
 val secondFragmentModule = createModule {
 
-    bind<String>(name = "FRAGMENT_DEPENDENCY2") { factory { "FRAGMENT_DEPENDENCY2" } }
+    bind<String>(FRAGMENT_DEPENDENCY2) { factory { "FRAGMENT_DEPENDENCY2" } }
 
     bind<Container> { factory { Container(get(SOME_DEPENDENCY), get(FRAGMENT_DEPENDENCY2)) } }
 }

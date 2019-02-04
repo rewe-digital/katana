@@ -8,5 +8,5 @@ const val SOME_DEPENDENCY = "SOME_DEPENDENCY"
 
 val fragmentActivityModule = createModule {
 
-    bind<String>(name = SOME_DEPENDENCY) { factory { "SOME_DEPENDENCY" } }
+    bind<String>(SOME_DEPENDENCY) { factory { "SOME_DEPENDENCY" } }
 }
