@@ -9,6 +9,10 @@ import org.rewedigital.katana.android.example.fragment.fragmentActivityModule
 import org.rewedigital.katana.android.modules.createActivityModule
 import org.rewedigital.katana.createComponent
 
+/**
+ * @see FirstFragment
+ * @see SecondFragment
+ */
 class FragmentActivity : AppCompatActivity(),
                          KatanaTrait {
 

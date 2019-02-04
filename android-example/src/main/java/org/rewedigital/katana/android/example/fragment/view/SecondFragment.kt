@@ -9,23 +9,22 @@ import kotlinx.android.synthetic.main.fragment_first.view.*
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
+import org.rewedigital.katana.android.example.fragment.inject.Container
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
 import org.rewedigital.katana.createComponent
 
 /**
+ * See [FirstFragment] first.
+ * This is an alternative approach to the Fragment/Activity relation issue.
+ *
  * @see FirstFragment
+ * @see secondFragmentModule
  */
 class SecondFragment : Fragment(),
                        KatanaTrait {
 
-    override val component: Component by lazy {
-        createComponent(
-            dependsOn = listOf((activity as KatanaTrait).component),
-            modules = listOf(secondFragmentModule)
-        )
-    }
-
-    private lateinit var fragmentDependency: String
+    override lateinit var component: Component
+    private lateinit var container: Container
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +36,17 @@ class SecondFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentDependency = component.injectNow("FRAGMENT_DEPENDENCY2")
+        component = createComponent(
+            dependsOn = listOf((activity as KatanaTrait).component),
+            modules = listOf(secondFragmentModule)
+        )
 
-        view?.textView?.text = context?.getString(R.string.second_fragment, fragmentDependency)
+        container = component.injectNow()
+
+        view?.textView?.text = context?.getString(
+            R.string.second_fragment,
+            container.activityDependency,
+            container.fragmentDependency
+        )
     }
 }
