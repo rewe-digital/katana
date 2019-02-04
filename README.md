@@ -196,9 +196,9 @@ a repository to your project. Then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'org.rewedigital.katana:katana-core:1.2.6'
+    implementation 'org.rewedigital.katana:katana-core:1.2.7'
     // Use this dependency when you use Katana on Android
-    implementation 'org.rewedigital.katana:katana-android:1.2.6'
+    implementation 'org.rewedigital.katana:katana-android:1.2.7'
 }
 ```
 

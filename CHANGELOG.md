@@ -1,3 +1,16 @@
+## Version 1.2.7
+
+_2019-02-04_
+
+* Implement `+` operator for `Component`, allowing different syntax for creating child components:
+  ```kotlin
+  val childComponent = component + childModule
+  // or
+  val childComponent = component + listOf(childModule1, childModule2)
+  // or
+  val childComponent = listOf(component1, component2) + childModule
+  ```
+
 ## Version 1.2.6
 
 _2019-01-25_
