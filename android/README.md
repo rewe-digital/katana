@@ -5,6 +5,8 @@ This artifact provides:
 
   * An `AndroidEnvironmentContext` for optimizing Katana's behaviour on Android.
     See `Katana.environmentContext`.
+    
+  * `KatanaFragment` and `KatanaFragmentDelegate` for simplifying usage of Katana with Fragments.
 
   * Android specific Katana logger implementation `AndroidKatanaLogger`.
 

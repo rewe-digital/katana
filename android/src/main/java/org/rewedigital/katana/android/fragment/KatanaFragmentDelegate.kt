@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 /**
  * Usually Katana components of Fragments depend on components of the parent Activity.
  *
- * Since Fragments are instantiated *before* Activities, the component initialization must be
+ * Since Fragments are instantiated **before** Activities, the component initialization must be
  * delayed until the Activity was created.
  *
  * The delegate simplifies this procedure a bit. A delegate is for example created in the init block
