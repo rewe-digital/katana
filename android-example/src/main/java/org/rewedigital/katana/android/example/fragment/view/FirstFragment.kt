@@ -18,7 +18,7 @@ import org.rewedigital.katana.injectNow
 
 /**
  * Showcasing usage of Katana in a Fragment which has a dependency relation to the parent Activity.
- * Since the Activity is instantiated *after* the Fragment instance, we need to take special care
+ * Since the Activity is instantiated **after** the Fragment instance, we need to take special care
  * of this situation.
  *
  * @see KatanaFragmentDelegate
