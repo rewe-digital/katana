@@ -12,6 +12,8 @@ import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.FRAGMENT_DEPENDENCY1
 import org.rewedigital.katana.android.example.fragment.SOME_DEPENDENCY
 import org.rewedigital.katana.android.example.fragment.firstFragmentModule
+import org.rewedigital.katana.android.fragment.KatanaFragmentDelegate
+import org.rewedigital.katana.android.fragment.fragmentDelegate
 import org.rewedigital.katana.injectNow
 
 /**
@@ -19,18 +21,29 @@ import org.rewedigital.katana.injectNow
  * Since the Activity is instantiated *after* the Fragment instance, we need to take special care
  * of this situation.
  *
+ * @see KatanaFragmentDelegate
  * @see SecondFragment
  */
 class FirstFragment : Fragment(),
                       KatanaTrait {
 
-    // Component must be initialized lazily because it has a dependency to parent Activity
-    override val component: Component by lazy {
-        (activity as KatanaTrait).component + firstFragmentModule
-    }
+    private val fragmentDelegate: KatanaFragmentDelegate<FirstFragment>
 
+    override lateinit var component: Component
     private lateinit var activityDependency: String
     private lateinit var fragmentDependency: String
+
+    init {
+        fragmentDelegate = fragmentDelegate { activity ->
+            component = (activity as KatanaTrait).component + firstFragmentModule
+
+            activityDependency = injectNow(SOME_DEPENDENCY)
+            fragmentDependency = injectNow(FRAGMENT_DEPENDENCY1)
+
+            view?.textView?.text =
+                context?.getString(R.string.first_fragment, activityDependency, fragmentDependency)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,13 +55,6 @@ class FirstFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // Injection must happen here, after Activity was created!
-        // Accessing `component` before this lifecycle method will result in an error.
-
-        activityDependency = injectNow(SOME_DEPENDENCY)
-        fragmentDependency = injectNow(FRAGMENT_DEPENDENCY1)
-
-        view?.textView?.text =
-            context?.getString(R.string.first_fragment, activityDependency, fragmentDependency)
+        fragmentDelegate.onActivityCreated()
     }
 }

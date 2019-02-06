@@ -1,3 +1,10 @@
+## Version 1.2.8
+
+_2019-02-06_
+
+* Add `KatanaFragmentDelegate` and `KatanaFragment` classes to Android artifact
+  for simplifying usage of Katana with Fragments.
+
 ## Version 1.2.7
 
 _2019-02-04_

@@ -1,16 +1,17 @@
 package org.rewedigital.katana.android.example.fragment.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_second.view.*
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.inject.Container
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
+import org.rewedigital.katana.android.fragment.KatanaFragment
 import org.rewedigital.katana.injectNow
 
 /**
@@ -19,8 +20,9 @@ import org.rewedigital.katana.injectNow
  *
  * @see FirstFragment
  * @see secondFragmentModule
+ * @see KatanaFragment
  */
-class SecondFragment : Fragment(),
+class SecondFragment : KatanaFragment(),
                        KatanaTrait {
 
     override lateinit var component: Component
@@ -33,9 +35,7 @@ class SecondFragment : Fragment(),
     ): View? =
         inflater.inflate(R.layout.fragment_second, container, false)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onInject(activity: Activity) {
         component = (activity as KatanaTrait).component + secondFragmentModule
 
         container = injectNow()
