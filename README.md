@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/rewe-digital-incubator/katana.svg?branch=master)](https://travis-ci.com/rewe-digital-incubator/katana) [![codecov](https://codecov.io/gh/rewe-digital-incubator/katana/branch/master/graph/badge.svg)](https://codecov.io/gh/rewe-digital-incubator/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.20-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
+[![Build Status](https://travis-ci.com/rewe-digital/katana.svg?branch=master)](https://travis-ci.com/rewe-digital/katana) [![codecov](https://codecov.io/gh/rewe-digital/katana/branch/master/graph/badge.svg)](https://codecov.io/gh/rewe-digital/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.20-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
 
 # Katana
 
@@ -209,7 +209,7 @@ Also have a look at the Android-specific [setup steps](android/README.md).
 
 ## Help & contribution
 
-If you found a bug or want to suggest a feature, please create an [issue](https://github.com/rewe-digital-incubator/katana/issues/new).  
+If you found a bug or want to suggest a feature, please create an [issue](https://github.com/rewe-digital/katana/issues/new).  
 If you need help, visit our Slack [channel](https://kotlinlang.slack.com/messages/katana).
 
 ## Further reading

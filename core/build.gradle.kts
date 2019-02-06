@@ -84,8 +84,8 @@ bintray {
         repo = "katana"
         name = "katana-core"
         userOrg = "rewe-digital"
-        websiteUrl = "https://github.com/rewe-digital-incubator/katana"
-        vcsUrl = "https://github.com/rewe-digital-incubator/katana"
+        websiteUrl = "https://github.com/rewe-digital/katana"
+        vcsUrl = "https://github.com/rewe-digital/katana"
         setLicenses("MIT")
 
         version(delegateClosureOf<VersionConfig> {

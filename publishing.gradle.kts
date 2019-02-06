@@ -2,7 +2,7 @@ extra["addCommonPomAttributes"] = fun(publication: MavenPublication) {
     publication.pom {
         name.set("Katana")
         description.set("Lightweight, minimalistic dependency injection library for Android & Kotlin")
-        url.set("https://github.com/rewe-digital-incubator/katana")
+        url.set("https://github.com/rewe-digital/katana")
 
         developers {
             developer {
@@ -22,9 +22,9 @@ extra["addCommonPomAttributes"] = fun(publication: MavenPublication) {
         }
 
         scm {
-            connection.set("scm:git:git://github.com/rewe-digital-incubator/katana.git")
-            developerConnection.set("scm:git:git://github.com/rewe-digital-incubator/katana.git")
-            url.set("https://github.com/rewe-digital-incubator/katana")
+            connection.set("scm:git:git://github.com/rewe-digital/katana.git")
+            developerConnection.set("scm:git:git://github.com/rewe-digital/katana.git")
+            url.set("https://github.com/rewe-digital/katana")
         }
     }
 }
