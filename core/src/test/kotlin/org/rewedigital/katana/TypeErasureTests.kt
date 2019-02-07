@@ -2,15 +2,10 @@ package org.rewedigital.katana
 
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import org.rewedigital.katana.OverrideException
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-@RunWith(JUnitPlatform::class)
-class TypeErasureTests : Spek(
+object TypeErasureTests : Spek(
     {
         describe("Modules with type erasure") {
 

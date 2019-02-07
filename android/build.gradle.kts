@@ -1,12 +1,14 @@
 import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
 import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
+import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     id("org.jetbrains.dokka")
-    id("digital.wup.android-maven-publish") version "3.6.2"
+    id("digital.wup.android-maven-publish") version Versions.androidMavenPublishPlugin
     id("com.android.library")
     id("com.jfrog.bintray")
+    id("de.mannodermaus.android-junit5")
     kotlin("android")
     `maven-publish`
 }
@@ -16,11 +18,11 @@ apply(from = "../publishing.gradle.kts")
 val addCommonPomAttributes = extra["addCommonPomAttributes"] as (MavenPublication) -> Unit
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(Android.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion(14)
-        targetSdkVersion(28)
+        minSdkVersion(Android.minSdkVersion)
+        targetSdkVersion(Android.targetSdkVersion)
     }
 
     buildTypes {
@@ -30,13 +32,32 @@ android {
             consumerProguardFiles("proguard-consumer-rules.pro")
         }
     }
+
+    testOptions {
+        junitPlatform {
+            filters {
+                includeEngines("spek2")
+            }
+        }
+    }
 }
 
 dependencies {
     api(project(":core"))
-    api(kotlin("stdlib", version = "1.3.11"))
-    api("androidx.collection:collection:1.0.0")
-    api("androidx.fragment:fragment:1.0.0")
+    api(kotlin("stdlib"))
+    api(Dependencies.androidXCollection)
+    api(Dependencies.androidXFragment)
+
+    testImplementation(Dependencies.kluent) {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+    testImplementation(Dependencies.spekApi) {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+    testRuntimeOnly(Dependencies.spek2RunnerJunit5) {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+    testRuntimeOnly(kotlin("stdlib-jdk8", version = Versions.kotlin))
 }
 
 val dokka = tasks.withType(DokkaTask::class) {

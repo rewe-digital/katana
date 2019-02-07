@@ -2,14 +2,10 @@ package org.rewedigital.katana
 
 import org.amshove.kluent.shouldNotThrow
 import org.amshove.kluent.shouldThrow
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-@RunWith(JUnitPlatform::class)
-class OverrideTests : Spek(
+object OverrideTests : Spek(
     {
         describe("Modules with overrides") {
 

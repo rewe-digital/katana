@@ -7,16 +7,17 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:3.3.0")
+        classpath(Dependencies.androidPlugin)
+        classpath(Dependencies.androidJunit5GradlePlugin)
     }
 }
 
 plugins {
     base
-    kotlin("jvm") version "1.3.20" apply false
+    kotlin("jvm") version Versions.kotlin apply false
     `maven-publish`
-    id("org.jetbrains.dokka") version "0.9.17"
-    id("com.jfrog.bintray") version "1.8.4"
+    id("org.jetbrains.dokka") version Versions.dokkaPlugin
+    id("com.jfrog.bintray") version Versions.bintrayPlugin
 }
 
 allprojects {

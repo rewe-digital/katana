@@ -2,15 +2,11 @@ package org.rewedigital.katana
 
 import org.amshove.kluent.shouldContain
 import org.amshove.kluent.shouldEqual
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
 import org.rewedigital.katana.internal.Logger
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-@RunWith(JUnitPlatform::class)
-class LoggerTests : Spek(
+object LoggerTests : Spek(
     {
 
         data class LogEntry(val msg: String, val throwable: Throwable? = null)

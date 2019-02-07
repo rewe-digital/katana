@@ -19,16 +19,16 @@ dependencies {
 
     testRuntime(kotlin("test"))
     testRuntime(kotlin("reflect"))
-    testImplementation("org.jetbrains.spek:spek-api:1.2.1") {
+    testImplementation(Dependencies.kluent) {
         exclude(group = "org.jetbrains.kotlin")
     }
-    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:1.2.1") {
+    testImplementation(Dependencies.spekApi) {
         exclude(group = "org.jetbrains.kotlin")
     }
-    testImplementation("org.amshove.kluent:kluent:1.45") {
+    testRuntimeOnly(Dependencies.spek2RunnerJunit5) {
         exclude(group = "org.jetbrains.kotlin")
     }
-    testImplementation("org.junit.platform:junit-platform-runner:1.3.2")
+    testRuntimeOnly(kotlin("stdlib-jdk8"))
 }
 
 tasks.withType<Jar> {
@@ -58,6 +58,12 @@ val javaDoc by tasks.registering(Jar::class) {
     dependsOn(dokka)
     classifier = "javadoc"
     from("$buildDir/dokkaJavadoc")
+}
+
+tasks.withType(Test::class) {
+    useJUnitPlatform {
+        includeEngines("spek2")
+    }
 }
 
 publishing {
