@@ -7,7 +7,7 @@ object Versions {
     const val bintrayPlugin = "1.8.4"
     const val dokkaPlugin = "0.9.17"
     const val kluent = "1.47"
-    const val kotlin = "1.3.20"
+    const val kotlin = "1.3.21"
     const val spek = "2.0.0"
 }
 

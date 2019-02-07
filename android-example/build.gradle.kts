@@ -6,8 +6,8 @@ buildscript {
 
 plugins {
     id("com.android.application") version "3.3.0"
-    kotlin("android") version "1.3.20"
-    kotlin("android.extensions") version "1.3.20"
+    kotlin("android") version "1.3.21"
+    kotlin("android.extensions") version "1.3.21"
 }
 
 android {
