@@ -3,7 +3,8 @@ package org.rewedigital.katana
 /**
  * Unique key per dependency declaration based either on the class or name of the dependency.
  */
-sealed class Key {
+@PublishedApi
+internal sealed class Key {
 
     data class ClassKey<T>(val clazz: Class<T>) : Key()
 

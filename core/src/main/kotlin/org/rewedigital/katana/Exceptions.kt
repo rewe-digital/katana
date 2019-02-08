@@ -9,7 +9,7 @@ class ComponentNotInitializedException(message: String) : ComponentException(mes
 class InjectionException(message: String) : KatanaException(message)
 
 class OverrideException(message: String) : KatanaException(message) {
-    constructor(override: Declaration<*>, existing: Declaration<*>) : this("$override would override $existing")
+    constructor(override: String, existing: String) : this("$override would override $existing")
 }
 
 class InstanceCreationException(message: String, cause: Throwable) : KatanaException(message, cause)

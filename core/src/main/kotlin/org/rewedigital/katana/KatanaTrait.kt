@@ -38,7 +38,8 @@ inline fun <reified T> KatanaTrait.canInject(name: String? = null) =
     withComponent { canInject<T>(name) }
 
 @Suppress("SENSELESS_COMPARISON")
-fun <R> KatanaTrait.withComponent(body: Component.() -> R) =
+@PublishedApi
+internal fun <R> KatanaTrait.withComponent(body: Component.() -> R) =
 // Despite the non-null type the `component` can be null if the above extension functions are used before the
 // `component` property was initialized.
     if (component == null) {

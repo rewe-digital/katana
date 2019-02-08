@@ -69,7 +69,7 @@ class Component internal constructor(internal val declarations: Declarations,
                                      dependsOn: Iterable<Component>) {
 
     private val instances = Katana.environmentContext.mapFactory().create<Key, Instance<*>>()
-    val context = ComponentContext.of(this, dependsOn)
+    @PublishedApi internal val context = ComponentContext.of(this, dependsOn)
 
     init {
         // Initialize eager singletons
@@ -207,7 +207,8 @@ operator fun Iterable<Component>.plus(module: Module) =
 class ComponentContext internal constructor(private val thisComponent: Component,
                                             private val dependsOn: Iterable<Component>) {
 
-    fun <T> injectByKey(key: Key, internal: Boolean = false): T {
+    @PublishedApi
+    internal fun <T> injectByKey(key: Key, internal: Boolean = false): T {
         val instance = thisComponent.thisComponentInjectByKey<T>(key, internal)
         return when {
             instance != null -> instance.value
@@ -219,7 +220,8 @@ class ComponentContext internal constructor(private val thisComponent: Component
         }
     }
 
-    fun canInject(key: Key, internal: Boolean = false): Boolean =
+    @PublishedApi
+    internal fun canInject(key: Key, internal: Boolean = false): Boolean =
         when {
             thisComponent.thisComponentCanInject(key = key, internal = internal) -> true
             else -> dependsOn.any { component -> component.canInject(key) }
@@ -247,7 +249,7 @@ private fun Iterable<Declarations>.fold(each: ((Declaration<*>) -> Unit)? = null
         currDeclarations.entries.forEach { entry ->
             val existingDeclaration = acc[entry.key]
             existingDeclaration?.let { declaration ->
-                if (!declaration.internal) throw OverrideException(entry.value, declaration)
+                if (!declaration.internal) throw OverrideException(entry.value.toString(), declaration.toString())
             }
             each?.invoke(entry.value)
         }

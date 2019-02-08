@@ -2,7 +2,8 @@ package org.rewedigital.katana.dsl.internal
 
 import org.rewedigital.katana.*
 
-fun <T> moduleDeclaration(
+@PublishedApi
+internal fun <T> moduleDeclaration(
     module: Module,
     clazz: Class<T>,
     name: String?,
@@ -23,7 +24,7 @@ fun <T> moduleDeclaration(
 
     val existingDeclaration = module.declarations[key]
     if (existingDeclaration != null) {
-        throw OverrideException(declaration, existingDeclaration)
+        throw OverrideException(declaration.toString(), existingDeclaration.toString())
     }
 
     module.declarations[key] = declaration

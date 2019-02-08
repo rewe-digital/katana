@@ -1,5 +1,7 @@
 package org.rewedigital.katana
 
+import org.rewedigital.katana.dsl.ProviderDsl
+
 /**
  * Lambda which provides an instance of T.
  *
@@ -9,6 +11,6 @@ package org.rewedigital.katana
  * @see Module
  * @see ProviderDsl
  */
-typealias Provider<T> = (ComponentContext) -> T
+internal typealias Provider<T> = (ComponentContext) -> T
 
-typealias Declarations = Map<Key, Declaration<*>>
+internal typealias Declarations = Map<Key, Declaration<*>>
