@@ -25,7 +25,6 @@ might be a module for every feature of your application. Modules are created wit
 ```kotlin
 val myModule = createModule {
 
-  // Each binding starts with bind<T>()
   // A "factory" declaration means that this dependency is instantiated every time when it's requested
   factory { MyDependency() }
   
