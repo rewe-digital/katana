@@ -1,6 +1,9 @@
 package org.rewedigital.katana.comparison
 
 import org.rewedigital.katana.*
+import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.get
 
 class KatanaSubject : Subject, KatanaTrait {
 
@@ -9,11 +12,11 @@ class KatanaSubject : Subject, KatanaTrait {
     override fun setup() {
         val module = createModule {
 
-            bind<MySingleton> { singleton { MySingleton() } }
+            singleton { MySingleton() }
 
-            bind<MyDependency> { factory { MyDependencyImpl(get()) } }
+            factory<MyDependency> { MyDependencyImpl(get()) }
 
-            bind<MyDependency2> { factory { MyDependency2(get()) } }
+            factory { MyDependency2(get()) }
         }
 
         component = createComponent(module)

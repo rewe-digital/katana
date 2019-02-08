@@ -27,20 +27,20 @@ val myModule = createModule {
 
   // Each binding starts with bind<T>()
   // A "factory" declaration means that this dependency is instantiated every time when it's requested
-  bind<MyDependency> { factory { MyDependency() } }
+  factory { MyDependency() }
   
   // A "singleton" declaration means that this dependency is only instantiated once (per component) 
-  bind<AnotherDependency> { singleton { AnotherDependency() } }
+  singleton { AnotherDependency() }
   
   // See how transitive dependencies can be injected with get() within the module's scope
-  bind<YetAnotherDependency> { factory { YetAnotherDependency(get<MyDependency>(), get<AnotherDependency>()) } }
+  factory { YetAnotherDependency(get<MyDependency>(), get<AnotherDependency>()) }
   
   // Use named bindings when the type is not unique (there might be more Strings)
-  bind<String>("globalId") { singleton { "SOME_GLOBAL_ID" } }
+  singleton(name = "globalId") { "SOME_GLOBAL_ID" }
   
   // Use "eagerSingleton" for singleton instances which are instantiated as soon as the component
   // is created and not lazily the first time it's requested
-  bind<SomeEagerDependency> { eagerSingleton { SomeEagerDependency() } }
+  eagerSingleton { SomeEagerDependency() }
 }
 ```
 
@@ -86,11 +86,11 @@ dependencies are declared. The following code will result in an `OverrideExcepti
 ```kotlin
 createModule {
     
-    bind<MyProvider<Int>> { factory { MyProvider<Int>(1337) } }
+    factory { MyProvider<Int>(1337) }
     
-    bind<MyProvider<String>> { factory { MyProvider<String>("Hello world") } }
+    factory { MyProvider<String>("Hello world") }
     
-    bind<MyDependency> { factory { MyDependency(get(), get()) } }
+    factory { MyDependency(get(), get()) }
 }
 ```
 
@@ -99,11 +99,11 @@ Luckily Katana provides a solution for this! Just use named injection :)
 ```kotlin
 createModule {
     
-    bind<MyProvider<Int>>("intProvider") { factory { MyProvider<Int>(1337) } }
+    factory(name = ""intProvider"") { MyProvider<Int>(1337) }
     
-    bind<MyProvider<String>>("stringProvider") { factory { MyProvider<String>("Hello world") } }
+    factory(name = "stringProvider") { MyProvider<String>("Hello world") }
     
-    bind<MyDependency> { factory { MyDependency(get("intProvider"), get("stringProvider")) } }
+    factory { MyDependency(get("intProvider"), get("stringProvider")) }
 }
 ```
 
@@ -117,17 +117,17 @@ necessary. For example:
 ```kotlin
 val commonModule = createModule {
     
-    bind<MyCommonDependency> { singleton { MyCommonDependency() } }
+    singleton { MyCommonDependency() }
 }
 
 val engineModule = createModule {
     
-    bind<MyEngine> { factory { MyEngineImpl(get<MyCommonDependency>()) } }
+    factory<MyEngine> { MyEngineImpl(get<MyCommonDependency>()) }
 }
 
 val testEngineModule = createModule {
     
-    bind<MyEngine> { factory { MyTestEngine(get<MyCommonDependency>()) } }
+    factory<MyEngine> { MyTestEngine(get<MyCommonDependency>()) }
 }
 
 val productionComponent = createComponent(commonModule, engineModule)
@@ -145,9 +145,9 @@ class B(a: A)
 
 val module = createModule {
 
-    bind<A> { singleton { A(get()) } }
+    singleton { A(get()) }
 
-    bind<B> { singleton { B(get()) } }
+    singleton { B(get()) }
 }
 
 val component = createComponent(module)
@@ -173,9 +173,9 @@ class B2(a2: A2)
 val module = createModule {
 
     // See how lazy() is used here instead of get()
-    bind<A2> { singleton { A2(lazy()) } }
+    singleton { A2(lazy()) }
 
-    bind<B2> { singleton { B2(get()) } }
+    singleton { B2(get()) }
 }
 
 val component = createComponent(module)
@@ -196,9 +196,9 @@ a repository to your project. Then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'org.rewedigital.katana:katana-core:1.2.8'
+    implementation 'org.rewedigital.katana:katana-core:1.3.0'
     // Use this artifact for Katana on Android
-    implementation 'org.rewedigital.katana:katana-android:1.2.8'
+    implementation 'org.rewedigital.katana:katana-android:1.3.0'
 }
 ```
 

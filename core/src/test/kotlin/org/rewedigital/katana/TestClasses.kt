@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.rewedigital.katana
 
 interface MyComponent

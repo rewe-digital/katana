@@ -1,3 +1,18 @@
+## Version 1.3.0
+
+_2019-02-08_
+
+* Add a new, compact DSL for module declarations.  
+  **Imports must be updated!** Either use `org.rewedigital.katana.dsl.classic` or the new 
+  `org.rewedigital.katana.dsl.compact`:
+  ```kotlin
+  createModule {
+    factory { MyDependencyA() }
+    singleton { MyDependencyB() }  
+  }
+  ``` 
+* Update Kotlin version to 1.3.21
+
 ## Version 1.2.8
 
 _2019-02-06_

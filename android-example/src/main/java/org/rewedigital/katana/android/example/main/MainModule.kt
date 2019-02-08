@@ -15,10 +15,9 @@ import org.rewedigital.katana.android.example.main.view.MainActivity
 import org.rewedigital.katana.android.example.main.view.MainView
 import org.rewedigital.katana.android.modules.ACTIVITY
 import org.rewedigital.katana.android.modules.ACTIVITY_CONTEXT
-import org.rewedigital.katana.bind
 import org.rewedigital.katana.createModule
-import org.rewedigital.katana.get
-import org.rewedigital.katana.singleton
+import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.get
 
 /**
  * This module demonstrates how the current [Context] can be injected safely.
@@ -31,15 +30,15 @@ import org.rewedigital.katana.singleton
  */
 fun createMainModule(activity: MainActivity) = createModule {
 
-    bind<ButtonMapper> { singleton { ButtonMapperImpl(get(ACTIVITY_CONTEXT)) } }
+    singleton<ButtonMapper> { ButtonMapperImpl(get(ACTIVITY_CONTEXT)) }
 
-    bind<ButtonRepository> { singleton { ButtonRepositoryImpl() } }
+    singleton<ButtonRepository> { ButtonRepositoryImpl() }
 
-    bind<MainView> { singleton { activity } }
+    singleton<MainView> { activity }
 
-    bind<MainPresenter> { singleton { MainPresenterImpl(get(), get(), get()) } }
+    singleton<MainPresenter> { MainPresenterImpl(get(), get(), get()) }
 
-    bind<MainInteractor> { singleton { MainInteractorImpl(get(), get(), get()) } }
+    singleton<MainInteractor> { MainInteractorImpl(get(), get(), get()) }
 
-    bind<MainNavigator> { singleton { MainNavigatorImpl(get(ACTIVITY)) } }
+    singleton<MainNavigator> { MainNavigatorImpl(get(ACTIVITY)) }
 }

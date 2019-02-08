@@ -4,6 +4,12 @@ import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
+import org.rewedigital.katana.dsl.classic.bind
+import org.rewedigital.katana.dsl.classic.eagerSingleton
+import org.rewedigital.katana.dsl.classic.factory
+import org.rewedigital.katana.dsl.classic.singleton
+import org.rewedigital.katana.dsl.get
+import org.rewedigital.katana.dsl.lazy
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 

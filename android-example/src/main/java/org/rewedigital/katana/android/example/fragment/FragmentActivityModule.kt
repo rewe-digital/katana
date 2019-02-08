@@ -1,12 +1,11 @@
 package org.rewedigital.katana.android.example.fragment
 
-import org.rewedigital.katana.bind
 import org.rewedigital.katana.createModule
-import org.rewedigital.katana.factory
+import org.rewedigital.katana.dsl.compact.factory
 
 const val SOME_DEPENDENCY = "SOME_DEPENDENCY"
 
 val fragmentActivityModule = createModule {
 
-    bind<String>(SOME_DEPENDENCY) { factory { "SOME_DEPENDENCY" } }
+    factory(name = SOME_DEPENDENCY) { "SOME_DEPENDENCY" }
 }

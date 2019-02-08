@@ -4,10 +4,9 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import org.rewedigital.katana.bind
 import org.rewedigital.katana.createModule
-import org.rewedigital.katana.factory
-import org.rewedigital.katana.singleton
+import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.compact.singleton
 
 const val APPLICATION = "APPLICATION"
 const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"
@@ -17,9 +16,9 @@ const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"
  */
 fun createApplicationModule(app: Application) = createModule("applicationModule") {
 
-    bind<Application>(APPLICATION) { singleton { app } }
+    singleton(name = APPLICATION) { app }
 
-    bind<Context>(APPLICATION_CONTEXT) { singleton { app } }
+    singleton<Context>(name = APPLICATION_CONTEXT) { app }
 }
 
 const val ACTIVITY = "ACTIVITY"
@@ -33,9 +32,9 @@ const val ACTIVITY_CONTEXT = "ACTIVITY_CONTEXT"
  */
 fun createActivityModule(activity: Activity) = createModule("activityModule") {
 
-    bind<Activity>(ACTIVITY) { singleton { activity } }
+    singleton(name = ACTIVITY) { activity }
 
-    bind<Context>(ACTIVITY_CONTEXT) { singleton { activity } }
+    singleton<Context>(name = ACTIVITY_CONTEXT) { activity }
 }
 
 const val SUPPORT_FRAGMENT = "SUPPORT_FRAGMENT"
@@ -47,7 +46,7 @@ const val SUPPORT_FRAGMENT_CONTEXT = "SUPPORT_FRAGMENT_CONTEXT"
  */
 fun createSupportFragmentModule(fragment: Fragment) = createModule("supportFragmentModule") {
 
-    bind<Fragment>(SUPPORT_FRAGMENT) { singleton { fragment } }
+    singleton(name = SUPPORT_FRAGMENT) { fragment }
 
-    bind<Context?>(SUPPORT_FRAGMENT_CONTEXT) { factory { fragment.context } }
+    factory(name = SUPPORT_FRAGMENT_CONTEXT) { fragment.context }
 }

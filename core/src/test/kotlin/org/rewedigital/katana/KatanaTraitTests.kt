@@ -1,6 +1,8 @@
 package org.rewedigital.katana
 
 import org.amshove.kluent.shouldThrow
+import org.rewedigital.katana.dsl.classic.bind
+import org.rewedigital.katana.dsl.classic.singleton
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 

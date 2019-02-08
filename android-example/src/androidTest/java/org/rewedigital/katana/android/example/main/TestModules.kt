@@ -2,26 +2,21 @@ package org.rewedigital.katana.android.example.main
 
 import androidx.test.espresso.idling.CountingIdlingResource
 import org.rewedigital.katana.android.example.remote.*
-import org.rewedigital.katana.bind
 import org.rewedigital.katana.createModule
-import org.rewedigital.katana.get
-import org.rewedigital.katana.singleton
+import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.get
 
 val testSuccessApiMockModule = createModule("testSuccessApiMockModule") {
 
-    bind<JsonPlaceholderApi> {
-        singleton {
-            JsonPlaceholderApiSuccessMock()
-        }
+    singleton<JsonPlaceholderApi> {
+        JsonPlaceholderApiSuccessMock()
     }
 }
 
 val testErrorApiMockModule = createModule("testErrorApiMockModule") {
 
-    bind<JsonPlaceholderApi> {
-        singleton {
-            JsonPlaceholderApiErrorMock()
-        }
+    singleton<JsonPlaceholderApi> {
+        JsonPlaceholderApiErrorMock()
     }
 }
 
@@ -31,16 +26,14 @@ const val TEST_IDLING_RESOURCE = "TEST_IDLING_RESOURCE"
 fun createTestRepositoryModule(repositoryIdlingResource: CountingIdlingResource) =
     createModule("testRepositoryModule") {
 
-        bind<CountingIdlingResource>(TEST_IDLING_RESOURCE) { singleton { repositoryIdlingResource } }
+        singleton(name = TEST_IDLING_RESOURCE) { repositoryIdlingResource }
 
-        bind<JsonPlaceholderRepository>(TEST_REPO) { singleton { JsonPlaceholderRepositoryImpl(get()) } }
+        singleton<JsonPlaceholderRepository>(name = TEST_REPO) { JsonPlaceholderRepositoryImpl(get()) }
 
-        bind<JsonPlaceholderRepository> {
-            singleton {
-                TestJsonPlaceholderRepository(
-                    get(TEST_REPO),
-                    get(TEST_IDLING_RESOURCE)
-                )
-            }
+        singleton<JsonPlaceholderRepository> {
+            TestJsonPlaceholderRepository(
+                get(TEST_REPO),
+                get(TEST_IDLING_RESOURCE)
+            )
         }
     }
