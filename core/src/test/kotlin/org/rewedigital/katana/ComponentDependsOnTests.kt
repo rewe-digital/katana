@@ -3,8 +3,7 @@ package org.rewedigital.katana
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.rewedigital.katana.dsl.classic.bind
-import org.rewedigital.katana.dsl.classic.factory
+import org.rewedigital.katana.dsl.compact.factory
 import org.rewedigital.katana.dsl.get
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -16,28 +15,23 @@ object ComponentDependsOnTests : Spek(
             it("should inject dependencies") {
                 val module1 = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
 
-                    bind<String>("another") { factory { "Hello world 2" } }
+                    factory("another") { "Hello world 2" }
                 }
 
                 val component1 = createComponent(module1)
 
                 val module2 = createModule {
 
-                    bind<Int> { factory { 1337 } }
+                    factory { 1337 }
                 }
 
                 val component2 = createComponent(module2)
 
                 val module3 = createModule {
 
-                    bind<MyComponentC<String, Int>> {
-                        factory {
-                            MyComponentC(get(),
-                                         get())
-                        }
-                    }
+                    factory { MyComponentC<String, Int>(get(), get()) }
                 }
 
                 val component3 = createComponent(modules = listOf(module3),
@@ -59,7 +53,7 @@ object ComponentDependsOnTests : Spek(
 
                 val module1 = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
                 }
 
                 val component1 = createComponent(module1)
@@ -68,7 +62,7 @@ object ComponentDependsOnTests : Spek(
 
                 val module3 = createModule {
 
-                    bind<Int> { factory { 1337 } }
+                    factory { 1337 }
                 }
 
                 val component3 = createComponent(
@@ -88,21 +82,21 @@ object ComponentDependsOnTests : Spek(
 
                 val module1 = createModule {
 
-                    bind<MyComponent> { factory { MyComponentA() } }
+                    factory<MyComponent> { MyComponentA() }
                 }
 
                 val component1 = createComponent(module1)
 
                 val module2 = createModule("module1") {
 
-                    bind<MyComponent> { factory { MyComponentA() } }
+                    factory<MyComponent> { MyComponentA() }
                 }
 
                 val component2 = createComponent(module2)
 
                 val module3 = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
                 }
 
                 val fn = {
@@ -117,7 +111,7 @@ object ComponentDependsOnTests : Spek(
 
                 val module = createModule {
 
-                    bind<MyComponent?> { factory { null } }
+                    factory<MyComponent?> { null }
                 }
 
                 val component = createComponent(module)
@@ -131,9 +125,9 @@ object ComponentDependsOnTests : Spek(
             it("should not inject internal bindings over multiple component tiers") {
                 val module = createModule {
 
-                    bind<String>(name = "internal", internal = true) { factory { "Hello world" } }
+                    factory(name = "internal", internal = true) { "Hello world" }
 
-                    bind<MyComponent> { factory { MyComponentB<String>(get("internal")) } }
+                    factory<MyComponent> { MyComponentB<String>(get("internal")) }
                 }
 
                 val component = createComponent(module)
@@ -155,22 +149,22 @@ object ComponentDependsOnTests : Spek(
 
                 val module1 = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
                 }
 
                 val module2 = createModule {
 
-                    bind<Int> { factory { 1234 } }
+                    factory { 1234 }
                 }
 
                 val module3 = createModule {
 
-                    bind<Int>("NAME") { factory { 4321 } }
+                    factory("NAME") { 4321 }
                 }
 
                 val module4 = createModule {
 
-                    bind<Int>("NAME2") { factory { 1337 } }
+                    factory("NAME2") { 1337 }
                 }
 
                 val component1 = createComponent(module1)
@@ -203,7 +197,7 @@ object ComponentDependsOnTests : Spek(
 
                 val module = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
                 }
 
                 val component = createComponent(module)

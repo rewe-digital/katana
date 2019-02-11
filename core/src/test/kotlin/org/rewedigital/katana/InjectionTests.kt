@@ -4,10 +4,9 @@ import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.rewedigital.katana.dsl.classic.bind
-import org.rewedigital.katana.dsl.classic.eagerSingleton
-import org.rewedigital.katana.dsl.classic.factory
-import org.rewedigital.katana.dsl.classic.singleton
+import org.rewedigital.katana.dsl.compact.eagerSingleton
+import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.compact.singleton
 import org.rewedigital.katana.dsl.get
 import org.rewedigital.katana.dsl.lazy
 import org.spekframework.spek2.Spek
@@ -17,25 +16,23 @@ object InjectionTests : Spek(
     {
         val module1 = createModule {
 
-            bind<String> { factory { "Hello world" } }
+            factory { "Hello world" }
         }
 
         val component1 = createComponent(module1)
 
         val module2 = createModule("module1") {
 
-            bind<MyComponent> { singleton { MyComponentA() } }
+            singleton<MyComponent> { MyComponentA() }
         }
 
         val module3 = createModule("module2") {
 
-            bind<MyComponent>("myComponent2") {
-                factory {
-                    MyComponentB<String>(component1.injectNow())
-                }
+            factory<MyComponent>("myComponent2") {
+                MyComponentB<String>(component1.injectNow())
             }
 
-            bind<MyComponentB<String>> { factory { get("myComponent2") } }
+            factory<MyComponentB<String>> { get("myComponent2") }
         }
 
         val component2 = createComponent(module2, module3)
@@ -74,15 +71,13 @@ object InjectionTests : Spek(
             it("should provide dependencies across createModule boundaries") {
                 val module4 = createModule {
 
-                    bind<MyComponentA> { factory { MyComponentA() } }
+                    factory { MyComponentA() }
                 }
 
                 val module5 = createModule {
 
-                    bind<MyComponentB<MyComponentA>> {
-                        factory {
-                            MyComponentB(get())
-                        }
+                    factory {
+                        MyComponentB<MyComponentA>(get())
                     }
                 }
 
@@ -95,7 +90,7 @@ object InjectionTests : Spek(
             it("should throw exception when dependency was not declared") {
                 val module = createModule {
 
-                    bind<Int> { factory { 1337 } }
+                    factory { 1337 }
                 }
 
                 val component3 = createComponent(module)
@@ -112,13 +107,11 @@ object InjectionTests : Spek(
                 var timesSingletonCreated = 0
                 val module = createModule {
 
-                    bind<String> { factory { "Hello world" } }
+                    factory { "Hello world" }
 
-                    bind<MyComponentB<String>> {
-                        eagerSingleton {
-                            timesSingletonCreated++; MyComponentB(
-                            get())
-                        }
+                    eagerSingleton<MyComponentB<String>> {
+                        timesSingletonCreated++; MyComponentB(
+                        get())
                     }
                 }
 
@@ -135,9 +128,9 @@ object InjectionTests : Spek(
             it("circular dependencies should fail") {
                 val module = createModule {
 
-                    bind<A> { singleton { A(get()) } }
+                    singleton { A(get()) }
 
-                    bind<B> { singleton { B(get()) } }
+                    singleton { B(get()) }
                 }
 
                 val component = createComponent(module)
@@ -152,9 +145,9 @@ object InjectionTests : Spek(
             it("circular dependencies with lazy() should work") {
                 val module = createModule {
 
-                    bind<A2> { singleton { A2(lazy()) } }
+                    singleton { A2(lazy()) }
 
-                    bind<B2> { singleton { B2(get()) } }
+                    singleton { B2(get()) }
                 }
 
                 val component = createComponent(module)
@@ -166,7 +159,7 @@ object InjectionTests : Spek(
             it("permit injection of null values") {
                 val module = createModule {
 
-                    bind<A?> { factory { null } }
+                    factory<A?> { null }
                 }
 
                 val component = createComponent(module)
@@ -179,9 +172,9 @@ object InjectionTests : Spek(
             it("permit internal module bindings") {
                 val module = createModule {
 
-                    bind<String>(name = "internal", internal = true) { factory { "Hello world" } }
+                    factory(name = "internal", internal = true) { "Hello world" }
 
-                    bind<MyComponent> { factory { MyComponentB<String>(get("internal")) } }
+                    factory<MyComponent> { MyComponentB<String>(get("internal")) }
                 }
 
                 val component = createComponent(module)
@@ -205,7 +198,7 @@ object InjectionTests : Spek(
                 var invocations = 0
                 val module = createModule {
 
-                    bind<String?>("singleton") { singleton { invocations++; null } }
+                    singleton<String?>("singleton") { invocations++; null }
                 }
 
                 val component = createComponent(module)
@@ -221,7 +214,7 @@ object InjectionTests : Spek(
                 var invocations = 0
                 val module = createModule {
 
-                    bind<String?>("eagerSingleton") { eagerSingleton { invocations++; null } }
+                    eagerSingleton<String?>("eagerSingleton") { invocations++; null }
                 }
 
                 val component = createComponent(module)

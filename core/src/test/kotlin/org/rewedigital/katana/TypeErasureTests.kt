@@ -2,8 +2,7 @@ package org.rewedigital.katana
 
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.rewedigital.katana.dsl.classic.bind
-import org.rewedigital.katana.dsl.classic.factory
+import org.rewedigital.katana.dsl.compact.factory
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -15,16 +14,12 @@ object TypeErasureTests : Spek(
                 val fn = {
                     createModule {
 
-                        bind<MyComponentB<Int>> {
-                            factory {
-                                MyComponentB(1337)
-                            }
+                        factory {
+                            MyComponentB(1337)
                         }
 
-                        bind<MyComponentB<String>> {
-                            factory {
-                                MyComponentB("Hello world")
-                            }
+                        factory {
+                            MyComponentB("Hello world")
                         }
                     }
                 }
@@ -35,16 +30,12 @@ object TypeErasureTests : Spek(
             it("should work when unique names have been specified") {
                 val module = createModule {
 
-                    bind<MyComponentB<Int>>("int") {
-                        factory {
-                            MyComponentB(1337)
-                        }
+                    factory("int") {
+                        MyComponentB(1337)
                     }
 
-                    bind<MyComponentB<String>>("string") {
-                        factory {
-                            MyComponentB("Hello world")
-                        }
+                    factory("string") {
+                        MyComponentB("Hello world")
                     }
                 }
 
