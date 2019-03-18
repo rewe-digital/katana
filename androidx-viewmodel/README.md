@@ -20,7 +20,7 @@ Inject ViewModel in your `Activity` or `Fragment`:
 class MyFragment : Fragment(),
                    KatanaTrait {
                    
-    override val component: Component by lazy { ... }
+    override val component = createComponent(...)
     
     private val viewModel by viewModel<MyViewModel>() 
 }
