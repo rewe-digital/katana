@@ -50,8 +50,9 @@ android {
 dependencies {
     api(project(":core"))
     api(kotlin("stdlib"))
-    api(Dependencies.androidXCollection)
     api(Dependencies.androidXFragment)
+    api(Dependencies.androidXLifecycleViewModel)
+    api(Dependencies.androidXLifecycleExtensions)
 
     testImplementation(Dependencies.kluent) {
         exclude(group = "org.jetbrains.kotlin")
@@ -83,11 +84,11 @@ val javaDoc by tasks.registering(Jar::class) {
 
 publishing {
     publications {
-        create<MavenPublication>("katana-android") {
+        create<MavenPublication>("katana-androidx-viewmodel") {
             from(components["android"])
             artifact(sourcesJar.get())
             artifact(javaDoc.get())
-            artifactId = "katana-android"
+            artifactId = "katana-androidx-viewmodel"
             addCommonPomAttributes(this)
         }
     }
@@ -99,11 +100,11 @@ bintray {
     override = false
     publish = true
 
-    setPublications("katana-android")
+    setPublications("katana-androidx-viewmodel")
 
     pkg(delegateClosureOf<PackageConfig> {
         repo = "katana"
-        name = "katana-android"
+        name = "katana-androidx-viewmodel"
         userOrg = "rewe-digital"
         websiteUrl = "https://github.com/rewe-digital/katana"
         vcsUrl = "https://github.com/rewe-digital/katana"

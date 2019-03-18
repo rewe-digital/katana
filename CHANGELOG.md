@@ -1,3 +1,12 @@
+## Version 1.4.0
+
+_2019-03-18_
+
+* Add [AndroidX ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) support via new 
+  [katana-androidx-viewmodel](./androidx-viewmodel) artifact.
+  
+  Thanks to @inshiro for idea & initial code :)
+
 ## Version 1.3.0
 
 _2019-02-08_

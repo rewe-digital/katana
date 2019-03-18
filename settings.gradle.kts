@@ -1,4 +1,4 @@
-include("core", "android", "speed-comparison")
+include("core", "android", "androidx-viewmodel", "speed-comparison")
 
 pluginManagement {
     repositories {
