@@ -24,7 +24,7 @@ cache:
 
 deploy:
   provider: script
-  script: ./gradlew :core:bintrayUpload :android:bintrayUpload
+  script: ./gradlew bintrayUpload
   skip_cleanup: true
   on:
     branch: master
