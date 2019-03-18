@@ -10,13 +10,17 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.inject.Container
+import org.rewedigital.katana.android.example.fragment.model.SecondFragmentViewModel
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
 import org.rewedigital.katana.android.fragment.KatanaFragment
+import org.rewedigital.katana.androidx.viewmodel.viewModelNow
 import org.rewedigital.katana.injectNow
 
 /**
  * See [FirstFragment] first.
  * This is an alternative approach to the Fragment/Activity relation issue.
+ *
+ * Also this fragment showcases Katana's support for [androidx.lifecycle.ViewModel].
  *
  * @see FirstFragment
  * @see secondFragmentModule
@@ -27,23 +31,42 @@ class SecondFragment : KatanaFragment(),
 
     override lateinit var component: Component
     private lateinit var container: Container
+    private lateinit var viewModel: SecondFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? =
-        inflater.inflate(R.layout.fragment_second, container, false)
+        inflater.inflate(R.layout.fragment_second, container, false).apply {
+            button.setOnClickListener {
+                viewModel.message = editText.text?.toString()
+                updateMessage()
+            }
+        }
 
     override fun onInject(activity: Activity) {
         component = (activity as KatanaTrait).component + secondFragmentModule
 
         container = injectNow()
+        viewModel = viewModelNow()
 
-        view?.textView?.text = context?.getString(
-            R.string.second_fragment,
-            container.activityDependency,
-            container.fragmentDependency
-        )
+        updateMessage()
+    }
+
+    private fun updateMessage() {
+        val message = StringBuilder().apply {
+            append(
+                context?.getString(
+                    R.string.second_fragment,
+                    container.activityDependency,
+                    container.fragmentDependency
+                )
+            )
+
+            append(" ${viewModel.message.orEmpty()}")
+        }.trim()
+
+        view?.textView?.text = message
     }
 }
