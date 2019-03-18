@@ -19,7 +19,7 @@ import org.rewedigital.katana.dsl.compact.factory
  * outside of this scope via `get()` or `inject()` for instance.
  */
 @PublishedApi
-internal fun <T : ViewModel> viewModelName(modelClass: Class<T>, key: String?) =
+internal fun <VM : ViewModel> viewModelName(modelClass: Class<VM>, key: String?) =
     "ViewModel\$\$${modelClass.name}\$\$${key ?: "DEFAULT_KEY"}"
 
 @Suppress("UNCHECKED_CAST")
@@ -27,8 +27,8 @@ internal fun <T : ViewModel> viewModelName(modelClass: Class<T>, key: String?) =
 internal class KatanaViewModelProviderFactory(private val viewModelProvider: () -> ViewModel) :
     ViewModelProvider.Factory {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        viewModelProvider() as T
+    override fun <VM : ViewModel> create(modelClass: Class<VM>) =
+        viewModelProvider() as VM
 }
 
 @PublishedApi
@@ -67,7 +67,7 @@ internal object InternalViewModelProvider {
 /**
  * Declares a [ViewModel] dependency binding.
  *
- * Body of provider syntax allow for arbitrary dependency injection into the ViewModel when first instantiated.
+ * Body of provider syntax facilitates arbitrary dependency injection into the ViewModel when first instantiated.
  * **Important:** The ViewModel instance is handled by AndroidX's [ViewModelProvider] and not by Katana itself.
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
