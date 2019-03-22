@@ -216,6 +216,7 @@ If you need help, visit our Slack [channel](https://kotlinlang.slack.com/message
 * [Why we need yet another dependency injection framework for Kotlin & Android](https://medium.com/@caffeine81/why-we-need-yet-another-dependency-injection-framework-for-kotlin-android-f8162174ea4)
 * [Leak free dependency injection in Android](https://medium.com/@caffeine81/leak-free-dependency-injection-in-android-adaf65643dbf)
 * [Android UI testing with Katana](https://medium.com/@caffeine81/android-ui-testing-with-katana-97e5301e5cda)
+* [Android Fragments & dependency injection](https://medium.com/@caffeine81/android-fragments-dependency-injection-c22b4c03142e)
 * [Slides](https://drive.google.com/file/d/1hDslldu2vOa-sdIEjVAPY51ZYX_Imlt6/view) of a talk about Katana at the Kotlin User Group Cologne
 
 ## License
