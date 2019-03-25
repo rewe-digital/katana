@@ -6,7 +6,7 @@ import org.rewedigital.katana.*
 internal fun <T> moduleDeclaration(
     module: Module,
     clazz: Class<T>,
-    name: String?,
+    name: Any?,
     internal: Boolean,
     type: Declaration.Type,
     provider: Provider<T>

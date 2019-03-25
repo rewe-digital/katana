@@ -96,13 +96,15 @@ createModule {
 Luckily Katana provides a solution for this! Just use named injection :)
 
 ```kotlin
+enum class Names { IntProvider, StringProvider }
+
 createModule {
     
-    factory(name = ""intProvider"") { MyProvider<Int>(1337) }
+    factory(name = Names.IntProvider) { MyProvider<Int>(1337) }
     
-    factory(name = "stringProvider") { MyProvider<String>("Hello world") }
+    factory(name = Names.StringProvider) { MyProvider<String>("Hello world") }
     
-    factory { MyDependency(get("intProvider"), get("stringProvider")) }
+    factory { MyDependency(get(Names.IntProvider), get(Names.StringProvider)) }
 }
 ```
 

@@ -9,7 +9,7 @@ internal data class Declaration<T>(
     val type: Type,
     val moduleName: String?,
     val clazz: Class<T>,
-    val name: String?,
+    val name: Any?,
     val provider: Provider<T>,
     val internal: Boolean) {
 

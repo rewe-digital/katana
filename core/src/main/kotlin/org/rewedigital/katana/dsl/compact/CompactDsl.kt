@@ -10,14 +10,14 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * Declares a dependency binding.
  * A new instance will be created every time the dependency is requested.
  *
- * @param name Optional name of binding
+ * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
  * @param internal If `true` binding is only available in current module
  * @param body Body of binding declaration
  *
  * @see Module.singleton
  * @see Module.eagerSingleton
  */
-inline fun <reified T> Module.factory(name: String? = null,
+inline fun <reified T> Module.factory(name: Any? = null,
                                       internal: Boolean = false,
                                       crossinline body: ProviderDsl.() -> T) =
     moduleDeclaration(
@@ -33,14 +33,14 @@ inline fun <reified T> Module.factory(name: String? = null,
  * Declares a dependency binding as a singleton.
  * Only one instance (per component) will be created.
  *
- * @param name Optional name of binding
+ * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
  * @param internal If `true` binding is only available in current module
  * @param body Body of binding declaration
  *
  * @see Module.factory
  * @see Module.eagerSingleton
  */
-inline fun <reified T> Module.singleton(name: String? = null,
+inline fun <reified T> Module.singleton(name: Any? = null,
                                         internal: Boolean = false,
                                         crossinline body: ProviderDsl.() -> T) =
     moduleDeclaration(
@@ -57,14 +57,14 @@ inline fun <reified T> Module.singleton(name: String? = null,
  * Only once instance (per component) will be created.
  * The instance will be created when the [Component] is created and not lazily the first time it's requested.
  *
- * @param name Optional name of binding
+ * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
  * @param internal If `true` binding is only available in current module
  * @param body Body of binding declaration
  *
  * @see Module.factory
  * @see Module.singleton
  */
-inline fun <reified T> Module.eagerSingleton(name: String? = null,
+inline fun <reified T> Module.eagerSingleton(name: Any? = null,
                                              internal: Boolean = false,
                                              crossinline body: ProviderDsl.() -> T) =
     moduleDeclaration(

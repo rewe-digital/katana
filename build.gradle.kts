@@ -1,3 +1,4 @@
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -18,11 +19,12 @@ plugins {
     `maven-publish`
     id("org.jetbrains.dokka") version Versions.dokkaPlugin
     id("com.jfrog.bintray") version Versions.bintrayPlugin
+    id("com.github.ben-manes.versions") version Versions.gradleVersionsPlugin
 }
 
 allprojects {
     group = "org.rewedigital.katana"
-    version = "1.4.0"
+    version = "1.4.1"
 
     repositories {
         google()
@@ -33,3 +35,19 @@ allprojects {
         kotlinOptions.jvmTarget = "1.6"
     }
 }
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea")
+                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
+                    .any { it.matches(candidate.version) }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
+    }
+}
+

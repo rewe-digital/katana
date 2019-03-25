@@ -22,19 +22,19 @@ interface KatanaTrait {
 /**
  * @see Component.inject
  */
-inline fun <reified T> KatanaTrait.inject(name: String? = null) =
+inline fun <reified T> KatanaTrait.inject(name: Any? = null) =
     withComponent { inject<T>(name) }
 
 /**
  * @see Component.injectNow
  */
-inline fun <reified T> KatanaTrait.injectNow(name: String? = null) =
+inline fun <reified T> KatanaTrait.injectNow(name: Any? = null) =
     withComponent { injectNow<T>(name) }
 
 /**
  * @see Component.canInject
  */
-inline fun <reified T> KatanaTrait.canInject(name: String? = null) =
+inline fun <reified T> KatanaTrait.canInject(name: Any? = null) =
     withComponent { canInject<T>(name) }
 
 @Suppress("SENSELESS_COMPARISON")

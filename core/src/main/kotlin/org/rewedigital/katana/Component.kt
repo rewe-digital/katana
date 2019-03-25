@@ -133,7 +133,7 @@ class Component internal constructor(internal val declarations: Declarations,
     /**
      * Returns `true` if this component is capable of injecting requested dependency.
      */
-    inline fun <reified T> canInject(name: String? = null) =
+    inline fun <reified T> canInject(name: Any? = null) =
         context.canInject<T>(name)
 
     /**
@@ -148,7 +148,7 @@ class Component internal constructor(internal val declarations: Declarations,
      * @throws InjectionException
      * @throws InstanceCreationException
      */
-    inline fun <reified T> inject(name: String? = null) =
+    inline fun <reified T> inject(name: Any? = null) =
         context.inject<T>(name)
 
     /**
@@ -158,7 +158,7 @@ class Component internal constructor(internal val declarations: Declarations,
      * @throws InjectionException
      * @throws InstanceCreationException
      */
-    inline fun <reified T> injectNow(name: String? = null) =
+    inline fun <reified T> injectNow(name: Any? = null) =
         context.injectNow<T>(name)
 
     /**
@@ -227,14 +227,14 @@ class ComponentContext internal constructor(private val thisComponent: Component
             else -> dependsOn.any { component -> component.canInject(key) }
         }
 
-    inline fun <reified T> canInject(name: String? = null, internal: Boolean = false) =
+    inline fun <reified T> canInject(name: Any? = null, internal: Boolean = false) =
         canInject(key = Key.of(T::class.java, name), internal = internal)
 
-    inline fun <reified T> inject(name: String? = null, internal: Boolean = false) = lazy {
+    inline fun <reified T> inject(name: Any? = null, internal: Boolean = false) = lazy {
         injectNow<T>(name = name, internal = internal)
     }
 
-    inline fun <reified T> injectNow(name: String? = null, internal: Boolean = false) =
+    inline fun <reified T> injectNow(name: Any? = null, internal: Boolean = false) =
         injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
 
     internal companion object {

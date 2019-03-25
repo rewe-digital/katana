@@ -12,7 +12,7 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
 /**
  * Declares a dependency binding.
  *
- * @param name Optional name of binding
+ * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
  * @param internal If `true` binding is only available in current module
  * @param body Body of binding declaration
  *
@@ -20,7 +20,7 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * @see singleton
  * @see eagerSingleton
  */
-inline fun <reified T> Module.bind(name: String? = null,
+inline fun <reified T> Module.bind(name: Any? = null,
                                    internal: Boolean = false,
                                    body: BindingDsl<T>.() -> Module) =
     body.invoke(BindingDsl(module = this,
@@ -34,7 +34,7 @@ inline fun <reified T> Module.bind(name: String? = null,
 @ModuleDslMarker
 class BindingDsl<T>(private val module: Module,
                     private val clazz: Class<T>,
-                    private val name: String?,
+                    private val name: Any?,
                     private val internal: Boolean) {
 
     internal fun declaration(type: Declaration.Type,

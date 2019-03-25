@@ -47,6 +47,7 @@ tasks.getByName("check").dependsOn(jacoco)
 val dokka = tasks.withType(DokkaTask::class) {
     outputFormat = "javadoc"
     outputDirectory = "$buildDir/dokkaJavadoc"
+    includes = listOf("src/main/kotlin/org/rewedigital/katana/package.md")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {

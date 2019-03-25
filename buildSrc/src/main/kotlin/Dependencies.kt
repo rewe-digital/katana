@@ -1,16 +1,17 @@
 object Versions {
-    const val androidJunit5GradlePlugin = "1.3.2.0"
+    const val androidJunit5GradlePlugin = "1.4.0.0"
     const val androidMavenPublishPlugin = "3.6.2"
-    const val androidPlugin = "3.3.0"
+    const val androidPlugin = "3.3.2"
     const val androidXCollection = "1.0.0"
     const val androidXFragment = "1.0.0"
     const val androidXLifecycleExtensions = "2.0.0"
     const val androidXLifecycleViewModel = "2.0.0"
     const val bintrayPlugin = "1.8.4"
-    const val dokkaPlugin = "0.9.17"
-    const val kluent = "1.47"
+    const val dokkaPlugin = "0.9.18"
+    const val gradleVersionsPlugin = "0.21.0"
+    const val kluent = "1.49"
     const val kotlin = "1.3.21"
-    const val spek = "2.0.0"
+    const val spek = "2.0.1"
 }
 
 object Dependencies {
