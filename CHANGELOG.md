@@ -1,3 +1,12 @@
+## Version 1.5.0
+
+_2019-03-26_
+
+* Allow `Any` references for dependency names.  
+  Now String constants, Kotlin `object`s, enum classes and custom (data) classes representing a unique identity / 
+  equality can be used for names.
+* Modules may include other modules during declaration via `includes` attribute.
+
 ## Version 1.4.0
 
 _2019-03-18_
