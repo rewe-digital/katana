@@ -31,17 +31,21 @@ fun createComponent(vararg components: Component) =
 fun createComponent(modules: Iterable<Module> = emptyList(),
                     dependsOn: Iterable<Component> = emptyList()): Component {
 
-    val moduleDeclarations = modules.map { module -> module.declarations }.fold {
-        Logger.info { "Registering declaration $it" }
-    }
-    val componentDeclarations = dependsOn.map { component -> component.declarations }
-    val allDeclarations = (componentDeclarations + moduleDeclarations).fold()
+    /**
+     * Collect all modules including modules declared via `includes`.
+     */
+    fun Iterable<Module>.collect(
+        acc: MutableMap<Int, Module> = mutableMapOf()
+    ): Map<Int, Module> =
+        fold(initial = acc) { curAcc, module ->
+            if (!curAcc.containsKey(module.id)) {
+                curAcc[module.id] = module
+                module.includes.collect(curAcc)
+            }
+            return@fold curAcc
+        }
 
-    if (allDeclarations.isEmpty()) {
-        throw ComponentException("No declarations found (did you forget to pass modules and/or parent components?)")
-    }
-
-    return Component(moduleDeclarations, dependsOn)
+    return Component(modules.collect(), dependsOn)
 }
 
 /**
@@ -65,13 +69,24 @@ fun createComponent(modules: Iterable<Module> = emptyList(),
  * @see canInject
  * @see Module
  */
-class Component internal constructor(internal val declarations: Declarations,
+class Component internal constructor(modules: Map<Int, Module>,
                                      dependsOn: Iterable<Component>) {
+
+    private val declarations = modules.map { it.value.declarations }.collect {
+        Logger.info { "Registering declaration $it" }
+    }
 
     private val instances = Katana.environmentContext.mapFactory().create<Key, Instance<*>>()
     @PublishedApi internal val context = ComponentContext.of(this, dependsOn)
 
     init {
+        val componentDeclarations = dependsOn.map { component -> component.declarations }
+        val allDeclarations = (componentDeclarations + declarations).collect()
+
+        if (allDeclarations.isEmpty()) {
+            throw ComponentException("No declarations found (did you forget to pass modules and/or parent components?)")
+        }
+
         // Initialize eager singletons
         declarations.values
             .filter { it.type == EAGER_SINGLETON }
@@ -244,12 +259,13 @@ class ComponentContext internal constructor(private val thisComponent: Component
     }
 }
 
-private fun Iterable<Declarations>.fold(each: ((Declaration<*>) -> Unit)? = null): Declarations =
+private fun Iterable<Declarations>.collect(each: ((Declaration<*>) -> Unit)? = null): Declarations =
     fold(Katana.environmentContext.mapFactory().create()) { acc, currDeclarations ->
         currDeclarations.entries.forEach { entry ->
             val existingDeclaration = acc[entry.key]
             existingDeclaration?.let { declaration ->
-                if (!declaration.internal) throw OverrideException(entry.value.toString(), declaration.toString())
+                if (declaration.moduleId != entry.value.moduleId && !declaration.internal)
+                    throw OverrideException(entry.value.toString(), declaration.toString())
             }
             each?.invoke(entry.value)
         }

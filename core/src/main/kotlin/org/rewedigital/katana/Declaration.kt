@@ -7,6 +7,7 @@ package org.rewedigital.katana
 internal data class Declaration<T>(
     val key: Key,
     val type: Type,
+    val moduleId: Int,
     val moduleName: String?,
     val clazz: Class<T>,
     val name: Any?,

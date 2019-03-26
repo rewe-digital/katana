@@ -16,6 +16,7 @@ internal fun <T> moduleDeclaration(
     val declaration =
         Declaration(key = key,
                     type = type,
+                    moduleId = module.id,
                     moduleName = module.name,
                     clazz = clazz,
                     name = name,
