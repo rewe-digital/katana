@@ -14,6 +14,10 @@ import org.spekframework.spek2.style.specification.describe
 
 object InjectionTests : Spek(
     {
+        beforeGroup {
+            Katana.environmentContext = TestEnvironmentContext
+        }
+
         val module1 = createModule {
 
             factory { "Hello world" }
@@ -123,6 +127,32 @@ object InjectionTests : Spek(
                 myComponent.value shouldEqual "Hello world"
 
                 timesSingletonCreated shouldEqual 1
+            }
+
+            it("transitive eager singletons should be initialized properly") {
+                var timesFirstSingletonCreated = 0
+                var timesSecondSingletonCreated = 0
+
+                val module = createModule {
+
+                    eagerSingleton(name = "eagerSingleton1") {
+                        timesFirstSingletonCreated++
+                        "eagerSingleton1 ${get<String>("eagerSingleton2")}"
+                    }
+
+                    eagerSingleton(name = "eagerSingleton2") {
+                        timesSecondSingletonCreated++
+                        "eagerSingleton2"
+                    }
+                }
+
+                val component = createComponent(module)
+
+                timesFirstSingletonCreated shouldEqual 1
+                timesSecondSingletonCreated shouldEqual 1
+
+                component.injectNow<String>("eagerSingleton1") shouldEqual "eagerSingleton1 eagerSingleton2"
+                component.injectNow<String>("eagerSingleton2") shouldEqual "eagerSingleton2"
             }
 
             it("circular dependencies should fail") {

@@ -24,7 +24,7 @@ plugins {
 
 allprojects {
     group = "org.rewedigital.katana"
-    version = "1.5.0"
+    version = "1.5.1"
 
     repositories {
         google()

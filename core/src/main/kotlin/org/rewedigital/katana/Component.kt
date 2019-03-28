@@ -91,9 +91,10 @@ class Component internal constructor(modules: Map<Int, Module>,
         declarations.values
             .filter { it.type == EAGER_SINGLETON }
             .forEach { declaration ->
-                declaration.provider(context).let { newInstance ->
-                    instances[declaration.key] = Instance(newInstance)
-                }
+                getOrCreateSingleton<Any?>(
+                    declaration = declaration,
+                    createMessage = { "Created eager singleton instance for ${declaration.key.stringIdentifier}" }
+                )
             }
     }
 
@@ -110,23 +111,16 @@ class Component internal constructor(modules: Map<Int, Module>,
                         Logger.debug { "Created instance for ${key.stringIdentifier}" }
                         Instance(newInstance as T)
                     }
-                    SINGLETON -> {
-                        instances[key]?.let { instance ->
-                            Logger.debug { "Returning existing singleton instance for ${key.stringIdentifier}" }
-                            instance as Instance<T>
-                        } ?: declaration.provider(context).let { newInstance ->
-                            Logger.debug { "Created singleton instance for ${key.stringIdentifier}" }
-                            Instance(newInstance as T).also {
-                                instances[key] = it
-                            }
-                        }
-                    }
-                    EAGER_SINGLETON -> instances[key].let { instance ->
-                        when (instance) {
-                            null -> throw KatanaException("Eager singleton was not properly initialized")
-                            else -> instance as Instance<T>
-                        }
-                    }
+                    SINGLETON -> getOrCreateSingleton(
+                        declaration = declaration,
+                        getMessage = { "Returning existing singleton instance for ${key.stringIdentifier}" },
+                        createMessage = { "Created singleton instance for ${key.stringIdentifier}" }
+                    )
+                    EAGER_SINGLETON -> getOrCreateSingleton(
+                        declaration = declaration,
+                        getMessage = { "Returning existing eager singleton instance for ${key.stringIdentifier}" },
+                        createMessage = { "Created eager singleton instance for ${key.stringIdentifier}" }
+                    )
                 }
             } catch (e: KatanaException) {
                 throw e
@@ -135,6 +129,24 @@ class Component internal constructor(modules: Map<Int, Module>,
             }
         }
     }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> getOrCreateSingleton(
+        declaration: Declaration<*>,
+        getMessage: (() -> String)? = null,
+        createMessage: (() -> String)? = null
+    ) =
+        declaration.key.let { key ->
+            instances[key]?.let { instance ->
+                if (getMessage != null) Logger.debug(getMessage)
+                instance as Instance<T>
+            } ?: declaration.provider(context).let { newInstance ->
+                if (createMessage != null) Logger.debug(createMessage)
+                Instance(newInstance as T).also {
+                    instances[key] = it
+                }
+            }
+        }
 
     internal fun thisComponentCanInject(key: Key, internal: Boolean) =
         declarations.filter { if (!internal) !it.value.internal else true }.containsKey(key)

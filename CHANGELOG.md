@@ -1,3 +1,9 @@
+## Version 1.5.1
+
+_2019-03-28_
+
+* Fix initialization of transitive eager singletons
+
 ## Version 1.5.0
 
 _2019-03-26_
