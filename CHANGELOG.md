@@ -1,3 +1,9 @@
+## Version 1.6.0
+
+_2019-03-29_
+
+* `createModule()` and `createComponent()` have been deprecated. Use constructors of `Module` and `Component` instead. 
+
 ## Version 1.5.1
 
 _2019-03-28_

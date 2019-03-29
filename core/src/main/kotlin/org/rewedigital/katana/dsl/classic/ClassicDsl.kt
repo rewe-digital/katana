@@ -20,25 +20,35 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * @see singleton
  * @see eagerSingleton
  */
-inline fun <reified T> Module.bind(name: Any? = null,
-                                   internal: Boolean = false,
-                                   body: BindingDsl<T>.() -> Module) =
-    body.invoke(BindingDsl(module = this,
-                           clazz = T::class.java,
-                           name = name,
-                           internal = internal))
+inline fun <reified T> Module.bind(
+    name: Any? = null,
+    internal: Boolean = false,
+    body: BindingDsl<T>.() -> Module
+) =
+    body.invoke(
+        BindingDsl(
+            module = this,
+            clazz = T::class.java,
+            name = name,
+            internal = internal
+        )
+    )
 
 /**
  * Provides syntax for declaring how the dependency is provided, either via [factory], [singleton] or [eagerSingleton].
  */
 @ModuleDslMarker
-class BindingDsl<T>(private val module: Module,
-                    private val clazz: Class<T>,
-                    private val name: Any?,
-                    private val internal: Boolean) {
+class BindingDsl<T>(
+    private val module: Module,
+    private val clazz: Class<T>,
+    private val name: Any?,
+    private val internal: Boolean
+) {
 
-    internal fun declaration(type: Declaration.Type,
-                             provider: Provider<T>) =
+    internal fun declaration(
+        type: Declaration.Type,
+        provider: Provider<T>
+    ) =
         moduleDeclaration(
             module = module,
             clazz = clazz,

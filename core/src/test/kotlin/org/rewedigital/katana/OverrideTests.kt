@@ -11,9 +11,9 @@ object OverrideTests : Spek(
     {
         describe("Modules with overrides") {
 
-            it("should throw exception when dependencies are overridden in same createModule") {
+            it("should throw exception when dependencies are overridden in same module") {
                 val fn = {
-                    createModule {
+                    Module {
 
                         factory<MyComponent> { MyComponentA() }
 
@@ -24,13 +24,13 @@ object OverrideTests : Spek(
                 fn shouldThrow OverrideException::class
             }
 
-            it("should throw exception when dependencies are overridden in same createModule with identical names") {
+            it("should throw exception when dependencies are overridden in same module with identical names") {
                 val fn = {
-                    createModule {
+                    Module {
 
-                        factory("createComponent") { MyComponentA() }
+                        factory("component") { MyComponentA() }
 
-                        factory("createComponent") {
+                        factory("component") {
                             MyComponentB("Hello world")
                         }
                     }
@@ -40,24 +40,24 @@ object OverrideTests : Spek(
             }
 
             it("should throw exception when dependencies are overridden in multiple modules") {
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory<MyComponent> { MyComponentA() }
                 }
 
-                val module2 = createModule {
+                val module2 = Module {
 
                     factory<MyComponent> { MyComponentA() }
                 }
 
-                val fn = { createComponent(module1, module2) }
+                val fn = { Component(module1, module2) }
 
                 fn shouldThrow OverrideException::class
             }
 
             it("should throw exception for internal module binding overrides") {
                 val fn = {
-                    createModule {
+                    Module {
 
                         factory("internal", internal = true) { "Hello world" }
 
@@ -69,14 +69,14 @@ object OverrideTests : Spek(
             }
 
             it("should not throw exception for internal module binding overrides across module boundaries") {
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory("internal", internal = true) { "Hello world" }
 
                     factory { MyComponentA() }
                 }
 
-                val module2 = createModule {
+                val module2 = Module {
 
                     factory("internal", internal = true) { "Hello world 2" }
 
@@ -84,7 +84,7 @@ object OverrideTests : Spek(
                 }
 
                 val fn = {
-                    createComponent(module1, module2)
+                    Component(module1, module2)
                 }
 
                 fn shouldNotThrow OverrideException::class

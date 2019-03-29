@@ -17,9 +17,11 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * @see Module.singleton
  * @see Module.eagerSingleton
  */
-inline fun <reified T> Module.factory(name: Any? = null,
-                                      internal: Boolean = false,
-                                      crossinline body: ProviderDsl.() -> T) =
+inline fun <reified T> Module.factory(
+    name: Any? = null,
+    internal: Boolean = false,
+    crossinline body: ProviderDsl.() -> T
+) =
     moduleDeclaration(
         module = this,
         clazz = T::class.java,
@@ -40,9 +42,11 @@ inline fun <reified T> Module.factory(name: Any? = null,
  * @see Module.factory
  * @see Module.eagerSingleton
  */
-inline fun <reified T> Module.singleton(name: Any? = null,
-                                        internal: Boolean = false,
-                                        crossinline body: ProviderDsl.() -> T) =
+inline fun <reified T> Module.singleton(
+    name: Any? = null,
+    internal: Boolean = false,
+    crossinline body: ProviderDsl.() -> T
+) =
     moduleDeclaration(
         module = this,
         clazz = T::class.java,
@@ -64,9 +68,11 @@ inline fun <reified T> Module.singleton(name: Any? = null,
  * @see Module.factory
  * @see Module.singleton
  */
-inline fun <reified T> Module.eagerSingleton(name: Any? = null,
-                                             internal: Boolean = false,
-                                             crossinline body: ProviderDsl.() -> T) =
+inline fun <reified T> Module.eagerSingleton(
+    name: Any? = null,
+    internal: Boolean = false,
+    crossinline body: ProviderDsl.() -> T
+) =
     moduleDeclaration(
         module = this,
         clazz = T::class.java,

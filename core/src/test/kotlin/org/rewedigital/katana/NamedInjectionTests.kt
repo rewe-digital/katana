@@ -12,7 +12,7 @@ import org.spekframework.spek2.style.specification.describe
 object NamedInjectionTests : Spek(
     {
         val module by memoized {
-            createModule {
+            Module {
                 factory(name = Key1) { "First" }
                 factory(name = Key2) { "Second" }
 
@@ -27,7 +27,7 @@ object NamedInjectionTests : Spek(
             }
         }
 
-        val component by memoized { createComponent(module) }
+        val component by memoized { Component(module) }
 
         describe("Named injection") {
 

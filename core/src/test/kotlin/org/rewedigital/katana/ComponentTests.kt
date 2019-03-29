@@ -10,7 +10,7 @@ object ComponentTests : Spek(
 
             it("should throw exception when no modules or parent components were passed") {
                 val fn = {
-                    createComponent()
+                    Component()
                 }
 
                 fn shouldThrow ComponentException::class
@@ -18,13 +18,13 @@ object ComponentTests : Spek(
 
             it("should throw exception when all modules are empty") {
                 val fn = {
-                    val module1 = createModule {
+                    val module1 = Module {
                     }
 
-                    val module2 = createModule {
+                    val module2 = Module {
                     }
 
-                    createComponent(module1, module2)
+                    Component(module1, module2)
                 }
 
                 fn shouldThrow ComponentException::class

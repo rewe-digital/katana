@@ -18,19 +18,19 @@ object InjectionTests : Spek(
             Katana.environmentContext = TestEnvironmentContext
         }
 
-        val module1 = createModule {
+        val module1 = Module {
 
             factory { "Hello world" }
         }
 
-        val component1 = createComponent(module1)
+        val component1 = Component(module1)
 
-        val module2 = createModule("module1") {
+        val module2 = Module("module1") {
 
             singleton<MyComponent> { MyComponentA() }
         }
 
-        val module3 = createModule("module2") {
+        val module3 = Module("module2") {
 
             factory<MyComponent>("myComponent2") {
                 MyComponentB<String>(component1.injectNow())
@@ -39,7 +39,7 @@ object InjectionTests : Spek(
             factory<MyComponentB<String>> { get("myComponent2") }
         }
 
-        val component2 = createComponent(module2, module3)
+        val component2 = Component(module2, module3)
 
         describe("Injection") {
 
@@ -72,32 +72,32 @@ object InjectionTests : Spek(
                 component2.canInject<MyComponent>("myComponent3") shouldEqual false
             }
 
-            it("should provide dependencies across createModule boundaries") {
-                val module4 = createModule {
+            it("should provide dependencies across module boundaries") {
+                val module4 = Module {
 
                     factory { MyComponentA() }
                 }
 
-                val module5 = createModule {
+                val module5 = Module {
 
                     factory {
                         MyComponentB<MyComponentA>(get())
                     }
                 }
 
-                val component3 = createComponent(module5, module4)
+                val component3 = Component(module5, module4)
                 val myComponent: MyComponentB<MyComponentA> by component3.inject()
 
                 myComponent.value shouldBeInstanceOf MyComponentA::class
             }
 
             it("should throw exception when dependency was not declared") {
-                val module = createModule {
+                val module = Module {
 
                     factory { 1337 }
                 }
 
-                val component3 = createComponent(module)
+                val component3 = Component(module)
 
                 val fn = {
                     val myComponent: MyComponent by component3.inject()
@@ -109,17 +109,18 @@ object InjectionTests : Spek(
 
             it("eager singletons should be initialized when component is created") {
                 var timesSingletonCreated = 0
-                val module = createModule {
+                val module = Module {
 
                     factory { "Hello world" }
 
                     eagerSingleton<MyComponentB<String>> {
                         timesSingletonCreated++; MyComponentB(
-                        get())
+                        get()
+                    )
                     }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 timesSingletonCreated shouldEqual 1
 
@@ -133,7 +134,7 @@ object InjectionTests : Spek(
                 var timesFirstSingletonCreated = 0
                 var timesSecondSingletonCreated = 0
 
-                val module = createModule {
+                val module = Module {
 
                     eagerSingleton(name = "eagerSingleton1") {
                         timesFirstSingletonCreated++
@@ -146,7 +147,7 @@ object InjectionTests : Spek(
                     }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 timesFirstSingletonCreated shouldEqual 1
                 timesSecondSingletonCreated shouldEqual 1
@@ -156,14 +157,14 @@ object InjectionTests : Spek(
             }
 
             it("circular dependencies should fail") {
-                val module = createModule {
+                val module = Module {
 
                     singleton { A(get()) }
 
                     singleton { B(get()) }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 val fn = {
                     component.injectNow<A>()
@@ -173,26 +174,26 @@ object InjectionTests : Spek(
             }
 
             it("circular dependencies with lazy() should work") {
-                val module = createModule {
+                val module = Module {
 
                     singleton { A2(lazy()) }
 
                     singleton { B2(get()) }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 component.injectNow<A2>()
                 component.injectNow<B2>()
             }
 
             it("permit injection of null values") {
-                val module = createModule {
+                val module = Module {
 
                     factory<A?> { null }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 val injection: A? = component.injectNow()
 
@@ -200,14 +201,14 @@ object InjectionTests : Spek(
             }
 
             it("permit internal module bindings") {
-                val module = createModule {
+                val module = Module {
 
                     factory(name = "internal", internal = true) { "Hello world" }
 
                     factory<MyComponent> { MyComponentB<String>(get("internal")) }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 component.canInject<String>("internal") shouldEqual false
                 component.canInject<MyComponent>() shouldEqual true
@@ -226,12 +227,12 @@ object InjectionTests : Spek(
 
             it("singleton injection should allow null values") {
                 var invocations = 0
-                val module = createModule {
+                val module = Module {
 
                     singleton<String?>("singleton") { invocations++; null }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 component.canInject<String?>("singleton") shouldEqual true
                 component.injectNow<String?>("singleton") shouldEqual null
@@ -242,12 +243,12 @@ object InjectionTests : Spek(
 
             it("eagerSingleton injection should allow null values") {
                 var invocations = 0
-                val module = createModule {
+                val module = Module {
 
                     eagerSingleton<String?>("eagerSingleton") { invocations++; null }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 component.canInject<String?>("eagerSingleton") shouldEqual true
                 component.injectNow<String?>("eagerSingleton") shouldEqual null

@@ -12,7 +12,7 @@ object TypeErasureTests : Spek(
 
             it("should throw exception when type erasure kicks in") {
                 val fn = {
-                    createModule {
+                    Module {
 
                         factory {
                             MyComponentB(1337)
@@ -28,7 +28,7 @@ object TypeErasureTests : Spek(
             }
 
             it("should work when unique names have been specified") {
-                val module = createModule {
+                val module = Module {
 
                     factory("int") {
                         MyComponentB(1337)
@@ -39,7 +39,7 @@ object TypeErasureTests : Spek(
                     }
                 }
 
-                val component = createComponent(module)
+                val component = Component(module)
 
                 val myComponent1: MyComponentB<Int> by component.inject("int")
                 val myComponent2: MyComponentB<String> by component.inject("string")

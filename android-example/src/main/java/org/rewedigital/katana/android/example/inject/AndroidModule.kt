@@ -2,8 +2,8 @@ package org.rewedigital.katana.android.example.inject
 
 import android.content.Context
 import android.content.res.Resources
+import org.rewedigital.katana.Module
 import org.rewedigital.katana.android.modules.APPLICATION_CONTEXT
-import org.rewedigital.katana.createModule
 import org.rewedigital.katana.dsl.compact.factory
 import org.rewedigital.katana.dsl.get
 
@@ -13,7 +13,7 @@ import org.rewedigital.katana.dsl.get
  *
  * @see org.rewedigital.katana.android.modules.createApplicationModule
  */
-val androidModule = createModule {
+val androidModule = Module {
 
     factory { get<Context>(APPLICATION_CONTEXT).resources }
 }

@@ -13,29 +13,31 @@ object ComponentDependsOnTests : Spek(
         describe("Injection with multiple components") {
 
             it("should inject dependencies") {
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory { "Hello world" }
 
                     factory("another") { "Hello world 2" }
                 }
 
-                val component1 = createComponent(module1)
+                val component1 = Component(module1)
 
-                val module2 = createModule {
+                val module2 = Module {
 
                     factory { 1337 }
                 }
 
-                val component2 = createComponent(module2)
+                val component2 = Component(module2)
 
-                val module3 = createModule {
+                val module3 = Module {
 
                     factory { MyComponentC<String, Int>(get(), get()) }
                 }
 
-                val component3 = createComponent(modules = listOf(module3),
-                                                 dependsOn = listOf(component1, component2))
+                val component3 = Component(
+                    modules = listOf(module3),
+                    dependsOn = listOf(component1, component2)
+                )
 
                 component3.canInject<MyComponentC<String, Int>>() shouldEqual true
                 component3.canInject<Int>() shouldEqual true
@@ -51,23 +53,24 @@ object ComponentDependsOnTests : Spek(
 
             it("should inject dependencies over multiple component tiers") {
 
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory { "Hello world" }
                 }
 
-                val component1 = createComponent(module1)
+                val component1 = Component(module1)
 
-                val component2 = createComponent(component1)
+                val component2 = Component(component1)
 
-                val module3 = createModule {
+                val module3 = Module {
 
                     factory { 1337 }
                 }
 
-                val component3 = createComponent(
+                val component3 = Component(
                     modules = listOf(module3),
-                    dependsOn = listOf(component2))
+                    dependsOn = listOf(component2)
+                )
 
                 component3.canInject<String>() shouldEqual true
                 component3.canInject<Int>() shouldEqual true
@@ -80,28 +83,30 @@ object ComponentDependsOnTests : Spek(
 
             it("should throw override exception for overrides in components") {
 
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory<MyComponent> { MyComponentA() }
                 }
 
-                val component1 = createComponent(module1)
+                val component1 = Component(module1)
 
-                val module2 = createModule("module1") {
+                val module2 = Module("module1") {
 
                     factory<MyComponent> { MyComponentA() }
                 }
 
-                val component2 = createComponent(module2)
+                val component2 = Component(module2)
 
-                val module3 = createModule {
+                val module3 = Module {
 
                     factory { "Hello world" }
                 }
 
                 val fn = {
-                    createComponent(modules = listOf(module3),
-                                    dependsOn = listOf(component1, component2))
+                    Component(
+                        modules = listOf(module3),
+                        dependsOn = listOf(component1, component2)
+                    )
                 }
 
                 fn shouldThrow OverrideException::class
@@ -109,13 +114,13 @@ object ComponentDependsOnTests : Spek(
 
             it("should inject null values over multiple component tiers") {
 
-                val module = createModule {
+                val module = Module {
 
                     factory<MyComponent?> { null }
                 }
 
-                val component = createComponent(module)
-                val component2 = createComponent(component)
+                val component = Component(module)
+                val component2 = Component(component)
 
                 val injection: MyComponent? = component2.injectNow()
 
@@ -123,15 +128,15 @@ object ComponentDependsOnTests : Spek(
             }
 
             it("should not inject internal bindings over multiple component tiers") {
-                val module = createModule {
+                val module = Module {
 
                     factory(name = "internal", internal = true) { "Hello world" }
 
                     factory<MyComponent> { MyComponentB<String>(get("internal")) }
                 }
 
-                val component = createComponent(module)
-                val component2 = createComponent(component)
+                val component = Component(module)
+                val component2 = Component(component)
 
                 component2.canInject<String>("internal") shouldEqual false
                 component2.canInject<MyComponent>() shouldEqual true
@@ -147,27 +152,27 @@ object ComponentDependsOnTests : Spek(
 
             it("plus operator should work as expected") {
 
-                val module1 = createModule {
+                val module1 = Module {
 
                     factory { "Hello world" }
                 }
 
-                val module2 = createModule {
+                val module2 = Module {
 
                     factory { 1234 }
                 }
 
-                val module3 = createModule {
+                val module3 = Module {
 
                     factory("NAME") { 4321 }
                 }
 
-                val module4 = createModule {
+                val module4 = Module {
 
                     factory("NAME2") { 1337 }
                 }
 
-                val component1 = createComponent(module1)
+                val component1 = Component(module1)
                 val component2 = component1 + listOf(module2)
                 val component3 = component1 + module2
 
@@ -177,7 +182,7 @@ object ComponentDependsOnTests : Spek(
                 component3.injectNow<String>() shouldEqual "Hello world"
                 component3.injectNow<Int>() shouldEqual 1234
 
-                val component4 = createComponent(module3)
+                val component4 = Component(module3)
                 val component5 = listOf(component2, component4) + listOf(module4)
                 val component6 = listOf(component2, component4) + module4
 
@@ -195,14 +200,14 @@ object ComponentDependsOnTests : Spek(
             // TODO: Fix this
             xit("should allow \"empty\" component when it only has transitive dependencies") {
 
-                val module = createModule {
+                val module = Module {
 
                     factory { "Hello world" }
                 }
 
-                val component = createComponent(module)
-                val component2 = createComponent(component)
-                val component3 = createComponent(component2)
+                val component = Component(module)
+                val component2 = Component(component)
+                val component3 = Component(component2)
 
                 val injection: String = component3.injectNow()
 

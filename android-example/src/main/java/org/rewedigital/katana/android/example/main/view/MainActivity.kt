@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.KatanaApp
 import org.rewedigital.katana.android.example.R
@@ -17,7 +18,6 @@ import org.rewedigital.katana.android.example.main.Modules
 import org.rewedigital.katana.android.example.main.createMainModule
 import org.rewedigital.katana.android.example.main.presenter.MainPresenter
 import org.rewedigital.katana.android.modules.createActivityModule
-import org.rewedigital.katana.createComponent
 import org.rewedigital.katana.inject
 
 class MainActivity : AppCompatActivity(),
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),
                      MainView {
 
     // Component is created and referenced only from this Activity
-    override val component = createComponent(
+    override val component = Component(
         modules = listOf(createActivityModule(this), createMainModule(this)) + Modules.modules,
         dependsOn = listOf(KatanaApp.applicationComponent)
     )

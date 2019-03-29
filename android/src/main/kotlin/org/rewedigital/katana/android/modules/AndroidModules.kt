@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import org.rewedigital.katana.createModule
+import org.rewedigital.katana.Module
 import org.rewedigital.katana.dsl.compact.factory
 import org.rewedigital.katana.dsl.compact.singleton
 
@@ -14,7 +14,7 @@ const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"
 /**
  * Provides a named binding of `Application` as `APPLICATION` and of the application `Context` as `APPLICATION_CONTEXT`.
  */
-fun createApplicationModule(app: Application) = createModule("applicationModule") {
+fun createApplicationModule(app: Application) = Module("applicationModule") {
 
     singleton(name = APPLICATION) { app }
 
@@ -30,7 +30,7 @@ const val ACTIVITY_CONTEXT = "ACTIVITY_CONTEXT"
  * **Note:** This module should only be referenced from a [Component][org.rewedigital.katana.Component] located in an
  * `Activity` or else Activity/memory leaks might be introduced!
  */
-fun createActivityModule(activity: Activity) = createModule("activityModule") {
+fun createActivityModule(activity: Activity) = Module("activityModule") {
 
     singleton(name = ACTIVITY) { activity }
 
@@ -44,7 +44,7 @@ const val SUPPORT_FRAGMENT_CONTEXT = "SUPPORT_FRAGMENT_CONTEXT"
  * Provides a named binding of `Fragment` as `SUPPORT_FRAGMENT` and of the Fragment's `Context` as
  * `SUPPORT_FRAGMENT_CONTEXT`. Note that the Fragment's Context may be `null`.
  */
-fun createSupportFragmentModule(fragment: Fragment) = createModule("supportFragmentModule") {
+fun createSupportFragmentModule(fragment: Fragment) = Module("supportFragmentModule") {
 
     singleton(name = SUPPORT_FRAGMENT) { fragment }
 

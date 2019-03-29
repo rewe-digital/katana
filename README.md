@@ -20,10 +20,10 @@ Katana consists of two core concepts: modules and components.
 ### Module
 
 A module describes **how** dependencies are provided. Each module should represent a logical unit. For instance there
-might be a module for every feature of your application. Modules are created with `createModule()`:
+might be a module for every feature of your application.
 
 ```kotlin
-val myModule = createModule {
+val myModule = Module {
 
   // A "factory" declaration means that this dependency is instantiated every time when it's requested
   factory { MyDependency() }
@@ -57,7 +57,7 @@ The component pattern has been introduced so that – especially in an Android e
 objects that should be released when the view has been destroyed, like for example the current `Context`.
 
 ```kotlin
-val component = createComponent(modules = listOf(myModuleA, myModuleB))
+val component = Component(modules = listOf(myModuleA, myModuleB))
 
 val myDependency: MyDependency by component.inject()
 ```
@@ -72,8 +72,10 @@ Component `A` declares `B` as a dependent component. `B` should be released but 
 referenced somewhere `B` will remain in memory.
 
 ```kotlin
-val component = createComponent(modules = listOf(myModule),
-                                dependsOn = listOf(parentComponentA, parentComponentB))
+val component = Component(
+  modules = listOf(myModule),
+  dependsOn = listOf(parentComponentA, parentComponentB)
+)
 ```
 
 ### A word on type erasure
@@ -83,7 +85,7 @@ During runtime Katana will not be able to distinguish between `MyProvider<Int>` 
 dependencies are declared. The following code will result in an `OverrideException`:
 
 ```kotlin
-createModule {
+Module {
     
     factory { MyProvider<Int>(1337) }
     
@@ -98,7 +100,7 @@ Luckily Katana provides a solution for this! Just use named injection :)
 ```kotlin
 enum class Names { IntProvider, StringProvider }
 
-createModule {
+Module {
     
     factory(name = Names.IntProvider) { MyProvider<Int>(1337) }
     
@@ -116,23 +118,23 @@ an override for example in a test scope, you should instead structure your modul
 necessary. For example:
 
 ```kotlin
-val commonModule = createModule {
+val commonModule = Module {
     
     singleton { MyCommonDependency() }
 }
 
-val engineModule = createModule {
+val engineModule = Module {
     
     factory<MyEngine> { MyEngineImpl(get<MyCommonDependency>()) }
 }
 
-val testEngineModule = createModule {
+val testEngineModule = Module {
     
     factory<MyEngine> { MyTestEngine(get<MyCommonDependency>()) }
 }
 
-val productionComponent = createComponent(commonModule, engineModule)
-val testComponent = createComponent(commonModule, testEngineModule)
+val productionComponent = Component(commonModule, engineModule)
+val testComponent = Component(commonModule, testEngineModule)
 ```
 
 ### Circular dependencies
@@ -144,14 +146,14 @@ class A(b: B)
 
 class B(a: A)
 
-val module = createModule {
+val module = Module {
 
     singleton { A(get()) }
 
     singleton { B(get()) }
 }
 
-val component = createComponent(module)
+val component = Component(module)
 
 val a: A by component.inject()
 ```
@@ -171,7 +173,7 @@ class A2(b2: Lazy<B2>)
 
 class B2(a2: A2)
 
-val module = createModule {
+val module = Module {
 
     // See how lazy() is used here instead of get()
     singleton { A2(lazy()) }
@@ -179,7 +181,7 @@ val module = createModule {
     singleton { B2(get()) }
 }
 
-val component = createComponent(module)
+val component = Component(module)
 
 val a: A by component.inject()
 ```
@@ -197,9 +199,9 @@ a repository to your project. Then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'org.rewedigital.katana:katana-core:1.5.1'
+    implementation 'org.rewedigital.katana:katana-core:1.6.0'
     // Use this artifact for Katana on Android
-    implementation 'org.rewedigital.katana:katana-android:1.5.1'
+    implementation 'org.rewedigital.katana:katana-android:1.6.0'
 }
 ```
 

@@ -16,7 +16,7 @@ object ClassicDslTests : Spek(
         var eagerInvocations = 0
 
         val module by memoized {
-            createModule {
+            Module {
 
                 bind<MyComponent> { factory { MyComponentA() } }
 
@@ -30,7 +30,7 @@ object ClassicDslTests : Spek(
             }
         }
 
-        val component by memoized { createComponent(module) }
+        val component by memoized { Component(module) }
 
         beforeEachTest {
             invocations = 0

@@ -9,13 +9,13 @@ import org.spekframework.spek2.style.specification.describe
 
 object KatanaTraitTests : Spek(
     {
-        val module = createModule {
+        val module = Module {
             singleton<MyComponent> { MyComponentA() }
         }
 
         class TestKatanaTrait : KatanaTrait {
 
-            override val component = createComponent(module)
+            override val component = Component(module)
 
             val myComponent by inject<MyComponent>()
 
@@ -29,7 +29,7 @@ object KatanaTraitTests : Spek(
 
             val myComponent by inject<MyComponent>()
 
-            override val component = createComponent(module)
+            override val component = Component(module)
         }
 
         describe("KatanaTrait") {

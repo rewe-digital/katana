@@ -3,14 +3,14 @@ package org.rewedigital.katana.android.example.remote
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import org.rewedigital.katana.createModule
+import org.rewedigital.katana.Module
 import org.rewedigital.katana.dsl.compact.factory
 import org.rewedigital.katana.dsl.compact.singleton
 import org.rewedigital.katana.dsl.get
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-val moshiModule = createModule("moshiModule") {
+val moshiModule = Module("moshiModule") {
 
     singleton {
         Moshi.Builder()
@@ -19,7 +19,7 @@ val moshiModule = createModule("moshiModule") {
     }
 }
 
-val retrofitModule = createModule("retrofitModule") {
+val retrofitModule = Module("retrofitModule") {
 
     factory {
         Retrofit.Builder()
@@ -28,7 +28,7 @@ val retrofitModule = createModule("retrofitModule") {
     }
 }
 
-val apiModule = createModule("apiModule") {
+val apiModule = Module("apiModule") {
 
     singleton {
         get<Retrofit.Builder>()
@@ -38,7 +38,7 @@ val apiModule = createModule("apiModule") {
     }
 }
 
-val repositoryModule = createModule("repositoryModule") {
+val repositoryModule = Module("repositoryModule") {
 
     singleton<JsonPlaceholderRepository> { JsonPlaceholderRepositoryImpl(get()) }
 }

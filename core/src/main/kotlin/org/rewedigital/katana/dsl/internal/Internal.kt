@@ -14,14 +14,16 @@ internal fun <T> moduleDeclaration(
 
     val key = Key.of(clazz, name)
     val declaration =
-        Declaration(key = key,
-                    type = type,
-                    moduleId = module.id,
-                    moduleName = module.name,
-                    clazz = clazz,
-                    name = name,
-                    provider = provider,
-                    internal = internal)
+        Declaration(
+            key = key,
+            type = type,
+            moduleId = module.id,
+            moduleName = module.name,
+            clazz = clazz,
+            name = name,
+            provider = provider,
+            internal = internal
+        )
 
     val existingDeclaration = module.declarations[key]
     if (existingDeclaration != null) {

@@ -1,6 +1,7 @@
 package org.rewedigital.katana.android.example.main
 
 import android.content.Context
+import org.rewedigital.katana.Module
 import org.rewedigital.katana.android.example.main.interactor.MainInteractor
 import org.rewedigital.katana.android.example.main.interactor.MainInteractorImpl
 import org.rewedigital.katana.android.example.main.mapper.ButtonMapper
@@ -15,7 +16,6 @@ import org.rewedigital.katana.android.example.main.view.MainActivity
 import org.rewedigital.katana.android.example.main.view.MainView
 import org.rewedigital.katana.android.modules.ACTIVITY
 import org.rewedigital.katana.android.modules.ACTIVITY_CONTEXT
-import org.rewedigital.katana.createModule
 import org.rewedigital.katana.dsl.compact.singleton
 import org.rewedigital.katana.dsl.get
 
@@ -28,7 +28,7 @@ import org.rewedigital.katana.dsl.get
  * @see MainActivity
  * @see ButtonMapper
  */
-fun createMainModule(activity: MainActivity) = createModule {
+fun createMainModule(activity: MainActivity) = Module {
 
     singleton<ButtonMapper> { ButtonMapperImpl(get(ACTIVITY_CONTEXT)) }
 

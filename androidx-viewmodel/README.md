@@ -8,7 +8,7 @@ Create a ViewModel binding inside a module:
 ```kotlin
 data class MyViewModel(val someDependency: SomeDependency) : ViewModel()
 
-createModule {
+Module {
     
     viewModel { MyViewModel(get()) }
 }
@@ -20,7 +20,7 @@ Inject ViewModel in your `Activity` or `Fragment`:
 class MyFragment : Fragment(),
                    KatanaTrait {
                    
-    override val component = createComponent(...)
+    override val component = Component(...)
     
     private val viewModel by viewModel<MyViewModel>() 
 }

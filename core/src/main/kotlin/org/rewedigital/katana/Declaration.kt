@@ -12,7 +12,8 @@ internal data class Declaration<T>(
     val clazz: Class<T>,
     val name: Any?,
     val provider: Provider<T>,
-    val internal: Boolean) {
+    val internal: Boolean
+) {
 
     enum class Type { FACTORY, SINGLETON, EAGER_SINGLETON }
 

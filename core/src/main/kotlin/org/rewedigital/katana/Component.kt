@@ -9,44 +9,37 @@ import org.rewedigital.katana.internal.Logger
  * Defines a component.
  *
  * @see Component
- * @see Component.plus
  */
-fun createComponent(vararg modules: Module) =
-    createComponent(modules = modules.asIterable())
+@Deprecated(
+    message = "Use Component constructor instead",
+    replaceWith = ReplaceWith(expression = "Component(modules)")
+)
+fun createComponent(vararg modules: Module) = Component(modules = *modules)
 
 /**
  * Defines a component.
  *
  * @see Component
  */
-fun createComponent(vararg components: Component) =
-    createComponent(dependsOn = components.asIterable())
+@Deprecated(
+    message = "Use Component constructor instead",
+    replaceWith = ReplaceWith(expression = "Component(components)")
+)
+fun createComponent(vararg components: Component) = Component(dependsOn = *components)
 
 /**
  * Defines a component.
  *
  * @see Component
- * @see Component.plus
  */
-fun createComponent(modules: Iterable<Module> = emptyList(),
-                    dependsOn: Iterable<Component> = emptyList()): Component {
-
-    /**
-     * Collect all modules including modules declared via `includes`.
-     */
-    fun Iterable<Module>.collect(
-        acc: MutableMap<Int, Module> = mutableMapOf()
-    ): Map<Int, Module> =
-        fold(initial = acc) { curAcc, module ->
-            if (!curAcc.containsKey(module.id)) {
-                curAcc[module.id] = module
-                module.includes.collect(curAcc)
-            }
-            return@fold curAcc
-        }
-
-    return Component(modules.collect(), dependsOn)
-}
+@Deprecated(
+    message = "Use Component constructor instead",
+    replaceWith = ReplaceWith(expression = "Component(modules = modules, dependsOn = dependsOn)")
+)
+fun createComponent(
+    modules: Iterable<Module> = emptyList(),
+    dependsOn: Iterable<Component> = emptyList()
+) = Component(modules, dependsOn)
 
 /**
  * Along with [Modules][Module] a Component is the heart of dependency injection via Katana.
@@ -58,21 +51,44 @@ fun createComponent(modules: Iterable<Module> = emptyList(),
  * design was chosen in contrast to other DI libraries that for instance work with a global, singleton state to prevent
  * accidental memory leaks.
  *
- * However great care should be taken when dependent Components are specified via `dependsOn` at [createComponent]. If
- * dependent Components are specified and the current Component has a greater scope (lifespan) than the other Components,
- * references to these Components are still held. Dependent Components should always have an equal or greater scope
- * than the current Component.
+ * However great care should be taken when dependent Components are specified via `dependsOn`. If dependent Components
+ * are specified and the current Component has a greater scope (lifespan) than the other Components, references to these
+ * Components are still held. Dependent Components should always have an equal or greater scope than the current
+ * Component.
  *
- * @see createComponent
+ * @param modules Modules included by this component
+ * @param dependsOn Further components this component depends on
+ *
+ * @see Module
  * @see inject
  * @see injectNow
  * @see canInject
- * @see Module
+ * @see Component.plus
  */
-class Component internal constructor(modules: Map<Int, Module>,
-                                     dependsOn: Iterable<Component>) {
+class Component(
+    modules: Iterable<Module> = emptyList(),
+    dependsOn: Iterable<Component> = emptyList()
+) {
 
-    private val declarations = modules.map { it.value.declarations }.collect {
+    constructor(vararg modules: Module) : this(modules = modules.asIterable())
+
+    constructor(vararg dependsOn: Component) : this(dependsOn = dependsOn.asIterable())
+
+    /**
+     * Collect all modules including modules declared via `includes`.
+     */
+    private fun Iterable<Module>.collect(
+        acc: MutableMap<Int, Module> = mutableMapOf()
+    ): Map<Int, Module> =
+        fold(initial = acc) { curAcc, module ->
+            if (!curAcc.containsKey(module.id)) {
+                curAcc[module.id] = module
+                module.includes.collect(curAcc)
+            }
+            return@fold curAcc
+        }
+
+    private val declarations = modules.collect().map { it.value.declarations }.collect {
         Logger.info { "Registering declaration $it" }
     }
 
@@ -191,18 +207,16 @@ class Component internal constructor(modules: Map<Int, Module>,
     /**
      * Alternative syntax for creating a child component that depends on current component
      * plus additional modules.
-     *
-     * @see createComponent
      */
     operator fun plus(modules: Iterable<Module>) =
-        createComponent(modules = modules,
-                        dependsOn = listOf(this))
+        Component(
+            modules = modules,
+            dependsOn = listOf(this)
+        )
 
     /**
      * Alternative syntax for creating a child component that depends on current component
      * plus additional module.
-     *
-     * @see createComponent
      */
     operator fun plus(module: Module) = this + listOf(module)
 }
@@ -210,18 +224,16 @@ class Component internal constructor(modules: Map<Int, Module>,
 /**
  * Alternative syntax for creating a child component that depends on current components
  * plus additional modules.
- *
- * @see createComponent
  */
 operator fun Iterable<Component>.plus(modules: Iterable<Module>) =
-    createComponent(modules = modules,
-                    dependsOn = this)
+    Component(
+        modules = modules,
+        dependsOn = this
+    )
 
 /**
  * Alternative syntax for creating a child component that depends on current components
  * plus additional module.
- *
- * @see createComponent
  */
 operator fun Iterable<Component>.plus(module: Module) =
     this + listOf(module)
@@ -229,10 +241,12 @@ operator fun Iterable<Component>.plus(module: Module) =
 /**
  * ComponentContext is used internally to represent the total set of [Components][Component] and thus possible
  * injections for the current context consisting of the current Component and all Components that have been specified
- * via `dependsOn` (see [createComponent]).
+ * via `dependsOn`.
  */
-class ComponentContext internal constructor(private val thisComponent: Component,
-                                            private val dependsOn: Iterable<Component>) {
+class ComponentContext private constructor(
+    private val thisComponent: Component,
+    private val dependsOn: Iterable<Component>
+) {
 
     @PublishedApi
     internal fun <T> injectByKey(key: Key, internal: Boolean = false): T {

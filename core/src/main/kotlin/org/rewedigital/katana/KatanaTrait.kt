@@ -9,7 +9,7 @@ package org.rewedigital.katana
  *
  * ```
  * class Example : KatanaTrait {
- *     override val component = createComponent(module)
+ *     override val component = Component(module)
  *     // We don't have to explicitly reference component like component.inject()
  *     private val myDependency: MyDependency by inject()
  * }

@@ -8,8 +8,10 @@ class MyComponentA : MyComponent
 
 class MyComponentB<T>(val value: T) : MyComponent
 
-class MyComponentC<A, B>(val value: A,
-                         val value2: B) : MyComponent
+class MyComponentC<A, B>(
+    val value: A,
+    val value2: B
+) : MyComponent
 
 class A(val b: B)
 
