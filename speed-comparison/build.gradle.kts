@@ -14,7 +14,7 @@ val fatJar = task("fatJar", type = Jar::class) {
     manifest {
         attributes["Main-Class"] = "org.rewedigital.katana.comparison.ComparisonKt"
     }
-    from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+    from(configurations.runtime.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks["jar"] as CopySpec)
 }
 

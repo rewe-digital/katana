@@ -72,13 +72,13 @@ val dokka = tasks.withType(DokkaTask::class) {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(project.android.sourceSets["main"].java.srcDirs)
 }
 
 val javaDoc by tasks.registering(Jar::class) {
     dependsOn(dokka)
-    classifier = "javadoc"
+    archiveClassifier.set("javadoc")
     from("$buildDir/dokkaJavadoc")
 }
 

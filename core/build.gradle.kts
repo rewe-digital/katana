@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
 import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.jetbrains.dokka.gradle.DokkaTask
@@ -32,7 +34,7 @@ dependencies {
 }
 
 tasks.withType<Jar> {
-    baseName = "katana-core"
+    archiveBaseName.set("katana-core")
 }
 
 val jacoco = tasks.withType<JacocoReport> {
@@ -51,13 +53,13 @@ val dokka = tasks.withType(DokkaTask::class) {
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    classifier = "sources"
+    archiveClassifier.set("sources")
     from(sourceSets["main"].allSource)
 }
 
 val javaDoc by tasks.registering(Jar::class) {
     dependsOn(dokka)
-    classifier = "javadoc"
+    archiveClassifier.set("javadoc")
     from("$buildDir/dokkaJavadoc")
 }
 
