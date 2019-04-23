@@ -1,3 +1,9 @@
+## Version 1.6.1
+
+_2019-04-23_
+
+* Maintenance release. Kotlin dependency has been updated to 1.3.30.
+
 ## Version 1.6.0
 
 _2019-03-29_
