@@ -1,7 +1,7 @@
 object Versions {
-    const val androidJunit5GradlePlugin = "1.4.0.0"
+    const val androidJunit5GradlePlugin = "1.4.2.0"
     const val androidMavenPublishPlugin = "3.6.2"
-    const val androidPlugin = "3.3.2"
+    const val androidPlugin = "3.4.0"
     const val androidXCollection = "1.0.0"
     const val androidXFragment = "1.0.0"
     const val androidXLifecycleExtensions = "2.0.0"
@@ -10,8 +10,8 @@ object Versions {
     const val dokkaPlugin = "0.9.18"
     const val gradleVersionsPlugin = "0.21.0"
     const val kluent = "1.49"
-    const val kotlin = "1.3.21"
-    const val spek = "2.0.0"
+    const val kotlin = "1.3.30"
+    const val spek = "2.0.2"
 }
 
 object Dependencies {

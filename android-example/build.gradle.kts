@@ -5,9 +5,10 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "3.3.0"
-    kotlin("android") version "1.3.21"
-    kotlin("android.extensions") version "1.3.21"
+    id("com.android.application") version "3.4.0"
+    kotlin("android") version "1.3.30"
+    kotlin("android.extensions") version "1.3.30"
+    id("com.github.ben-manes.versions") version "0.21.0"
 }
 
 android {
@@ -30,8 +31,8 @@ dependencies {
     implementation("org.rewedigital.katana:katana-androidx-viewmodel:1.6.0")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.0")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
     implementation("com.squareup.retrofit2:retrofit:2.5.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.5.0")
@@ -51,3 +52,19 @@ repositories {
     google()
     jcenter()
 }
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
+    resolutionStrategy {
+        componentSelection {
+            all {
+                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea")
+                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
+                    .any { it.matches(candidate.version) }
+                if (rejected) {
+                    reject("Release candidate")
+                }
+            }
+        }
+    }
+}
+
