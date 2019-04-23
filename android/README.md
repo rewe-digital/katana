@@ -23,6 +23,10 @@ Katana.environmentContext = AndroidEnvironmentContext()
 By default this context improves memory consumption at the cost of speed. If memory is not a concern but speed is,
 use `AndroidEnvironmentContext(profile = SPEED)`.
 
+## AndroidX ViewModel
+
+Looking for AndroidX ViewModel support? Have a look at the [katana-androidx-viewmodel](../androidx-viewmodel) artifact.
+  
 ## ProGuard
 
 Katana does not require any specific ProGuard configuration 😎.
