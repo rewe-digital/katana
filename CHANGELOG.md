@@ -1,3 +1,10 @@
+## Version 1.6.2
+
+_2019-04-29_
+
+* `savedInstanceState` is passed to `KatanaFragment(Delegate)` 
+* Kotlin dependency has been updated to 1.3.31.
+
 ## Version 1.6.1
 
 _2019-04-23_
