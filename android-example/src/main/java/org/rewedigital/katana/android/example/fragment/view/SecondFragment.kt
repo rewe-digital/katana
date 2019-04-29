@@ -26,8 +26,7 @@ import org.rewedigital.katana.injectNow
  * @see secondFragmentModule
  * @see KatanaFragment
  */
-class SecondFragment : KatanaFragment(),
-                       KatanaTrait {
+class SecondFragment : KatanaFragment(), KatanaTrait {
 
     override lateinit var component: Component
     private lateinit var container: Container
@@ -45,7 +44,7 @@ class SecondFragment : KatanaFragment(),
             }
         }
 
-    override fun onInject(activity: Activity) {
+    override fun onInject(activity: Activity, savedInstanceState: Bundle?) {
         component = (activity as KatanaTrait).component + secondFragmentModule
 
         container = injectNow()

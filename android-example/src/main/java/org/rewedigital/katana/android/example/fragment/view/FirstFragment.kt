@@ -24,8 +24,7 @@ import org.rewedigital.katana.injectNow
  * @see KatanaFragmentDelegate
  * @see SecondFragment
  */
-class FirstFragment : Fragment(),
-                      KatanaTrait {
+class FirstFragment : Fragment(), KatanaTrait {
 
     private val fragmentDelegate: KatanaFragmentDelegate<FirstFragment>
 
@@ -34,7 +33,7 @@ class FirstFragment : Fragment(),
     private lateinit var fragmentDependency: String
 
     init {
-        fragmentDelegate = fragmentDelegate { activity ->
+        fragmentDelegate = fragmentDelegate { activity, _ ->
             component = (activity as KatanaTrait).component + firstFragmentModule
 
             activityDependency = injectNow(SOME_DEPENDENCY)
@@ -55,6 +54,6 @@ class FirstFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentDelegate.onActivityCreated()
+        fragmentDelegate.onActivityCreated(savedInstanceState)
     }
 }

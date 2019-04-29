@@ -1,6 +1,7 @@
 package org.rewedigital.katana.android.fragment
 
 import android.app.Activity
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 
 /**
@@ -20,21 +21,22 @@ import androidx.fragment.app.Fragment
  */
 class KatanaFragmentDelegate<T : Fragment>(
     private val fragment: T,
-    private val onInject: T.(activity: Activity) -> Unit
+    private val onInject: T.(activity: Activity, savedInstanceState: Bundle?) -> Unit
 ) {
 
     /**
      * Must be called in [Fragment.onActivityCreated] of Fragment associated with this delegate.
+     *
+     * @param savedInstanceState Saved state as passed to [Fragment.onActivityCreated].
      */
-    fun onActivityCreated() {
+    fun onActivityCreated(savedInstanceState: Bundle?) {
         fragment.activity?.let { activity ->
-            fragment.onInject(activity)
-        }
-            ?: throw IllegalStateException("Activity is null. Was delegate called in onActivityCreated() of Fragment?")
+            fragment.onInject(activity, savedInstanceState)
+        } ?: throw IllegalStateException("Activity is null. Was delegate called in onActivityCreated() of Fragment?")
     }
 }
 
-fun <T : Fragment> T.fragmentDelegate(onInject: T.(activity: Activity) -> Unit) =
+fun <T : Fragment> T.fragmentDelegate(onInject: T.(activity: Activity, savedInstanceState: Bundle?) -> Unit) =
     KatanaFragmentDelegate(
         fragment = this,
         onInject = onInject

@@ -20,14 +20,14 @@ abstract class KatanaFragment : Fragment() {
     private val fragmentDelegate: KatanaFragmentDelegate<KatanaFragment>
 
     init {
-        fragmentDelegate = fragmentDelegate { activity -> onInject(activity) }
+        fragmentDelegate = fragmentDelegate { activity, savedInstanceState -> onInject(activity, savedInstanceState) }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentDelegate.onActivityCreated()
+        fragmentDelegate.onActivityCreated(savedInstanceState)
     }
 
-    abstract fun onInject(activity: Activity)
+    abstract fun onInject(activity: Activity, savedInstanceState: Bundle?)
 }
