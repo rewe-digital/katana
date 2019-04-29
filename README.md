@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/rewe-digital/katana.svg?branch=master)](https://travis-ci.com/rewe-digital/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.30-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
+[![Build Status](https://travis-ci.com/rewe-digital/katana.svg?branch=master)](https://travis-ci.com/rewe-digital/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.31-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
 
 # Katana
 
