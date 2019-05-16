@@ -1,3 +1,10 @@
+## Version 1.6.3
+
+_2019-05-16_
+
+* Add `Component.Builder` pattern
+* Downgrade Android plugin to 3.3.2 (workaround for issue #7)
+
 ## Version 1.6.2
 
 _2019-04-29_

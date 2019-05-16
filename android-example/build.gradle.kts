@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "3.4.0"
+    id("com.android.application") version "3.4.1"
     kotlin("android") version "1.3.31"
     kotlin("android.extensions") version "1.3.31"
     id("com.github.ben-manes.versions") version "0.21.0"
@@ -22,19 +22,19 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.6.2"
+        versionName = "1.6.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.6.2")
-    implementation("org.rewedigital.katana:katana-androidx-viewmodel:1.6.2")
+    implementation("org.rewedigital.katana:katana-android:1.6.3")
+    implementation("org.rewedigital.katana:katana-androidx-viewmodel:1.6.3")
     implementation("androidx.appcompat:appcompat:1.0.2")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
     implementation("com.squareup.retrofit2:retrofit:2.5.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.5.0")
