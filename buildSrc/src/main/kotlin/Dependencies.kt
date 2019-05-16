@@ -11,7 +11,7 @@ object Versions {
     const val gradleVersionsPlugin = "0.21.0"
     const val kluent = "1.49"
     const val kotlin = "1.3.31"
-    const val spek = "2.0.2"
+    const val spek = "2.0.4"
 }
 
 object Dependencies {

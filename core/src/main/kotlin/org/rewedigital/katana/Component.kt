@@ -219,6 +219,56 @@ class Component(
      * plus additional module.
      */
     operator fun plus(module: Module) = this + listOf(module)
+
+    /**
+     * Builder for a [Component].
+     *
+     * Builder is **not** thread-safe!
+     */
+    class Builder(
+        private val modules: MutableList<Module> = mutableListOf(),
+        private val dependsOn: MutableList<Component> = mutableListOf()
+    ) {
+        /**
+         * Sets [Modules][Module] of [Component]. Existing modules will be cleared.
+         */
+        fun setModules(modules: Iterable<Module>) = apply {
+            this.modules.clear()
+            this.modules.addAll(modules)
+        }
+
+        /**
+         * Sets [Modules][Module] of [Component]. Existing modules will be cleared.
+         */
+        fun setModules(vararg module: Module) = setModules(module.asIterable())
+
+        fun addModule(module: Module) = apply {
+            modules.add(module)
+        }
+
+        /**
+         * Sets depending [Components][Component] of Component. Existing components will be cleared.
+         */
+        fun setDependsOn(dependsOn: Iterable<Component>) = apply {
+            this.dependsOn.clear()
+            this.dependsOn.addAll(dependsOn)
+        }
+
+        /**
+         * Sets depending [Components][Component] of Component. Existing components will be cleared.
+         */
+        fun setDependsOn(vararg dependsOn: Component) = setDependsOn(dependsOn.asIterable())
+
+        fun addDependsOn(dependsOn: Component) = apply {
+            this.dependsOn.add(dependsOn)
+        }
+
+        fun build() =
+            Component(
+                modules = modules,
+                dependsOn = dependsOn
+            )
+    }
 }
 
 /**
