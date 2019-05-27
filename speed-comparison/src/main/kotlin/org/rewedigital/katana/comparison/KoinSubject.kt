@@ -1,11 +1,11 @@
 package org.rewedigital.katana.comparison
 
-import org.koin.dsl.module.module
-import org.koin.log.EmptyLogger
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.core.inject
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
 class KoinSubject : Subject, KoinComponent {
 
@@ -19,8 +19,9 @@ class KoinSubject : Subject, KoinComponent {
             factory { MyDependency2(get()) }
         }
 
-        startKoin(list = listOf(module),
-                  logger = EmptyLogger())
+        startKoin {
+            modules(module)
+        }
     }
 
     override fun execute() {
