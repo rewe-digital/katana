@@ -1,3 +1,10 @@
+## Version 1.7.0
+
+_2019-06-05_
+
+* Add experimental support for ViewModel injection with [saved state](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate).  
+  Please use artifact `org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.7.0-alpha01`.
+
 ## Version 1.6.3
 
 _2019-05-16_

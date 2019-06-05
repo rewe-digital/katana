@@ -1,7 +1,7 @@
 # AndroidX ViewModel extensions for Katana
 
 The extensions declared in this artifact simplify [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
-injection with Katana.
+injection with Katana. Also see [katana-androidx-viewmodel-savedstate](../androidx-viewmodel-savedstate).
 
 Create a ViewModel binding inside a module:
 

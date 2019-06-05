@@ -8,20 +8,11 @@ import androidx.lifecycle.ViewModelProviders
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.Module
+import org.rewedigital.katana.androidx.viewmodel.internal.viewModelName
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.compact.factory
 
 //<editor-fold desc="Internal utility functions and classes">
-/**
- * Returns name for [ViewModel] dependency binding.
- *
- * The binding under the returned name should only be used by these ViewModel extensions and not accessed
- * outside of this scope via `get()` or `inject()` for instance.
- */
-@PublishedApi
-internal fun <VM : ViewModel> viewModelName(modelClass: Class<VM>, key: String?) =
-    "ViewModel\$\$${modelClass.name}\$\$${key ?: "DEFAULT_KEY"}"
-
 @Suppress("UNCHECKED_CAST")
 @PublishedApi
 internal class KatanaViewModelProviderFactory(private val viewModelProvider: () -> ViewModel) :
@@ -75,7 +66,7 @@ internal object InternalViewModelProvider {
  * @see ProviderDsl.viewModel
  * @see ProviderDsl.activityViewModel
  */
-inline fun <reified VM : ViewModel> Module.viewModel(key: String? = null, crossinline body: ProviderDsl.() -> VM) {
+inline fun <reified VM : ViewModel> Module.viewModel(key: String? = null, noinline body: ProviderDsl.() -> VM) {
     factory(name = viewModelName(modelClass = VM::class.java, key = key), body = body)
 }
 

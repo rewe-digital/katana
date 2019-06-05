@@ -13,6 +13,7 @@ import org.rewedigital.katana.android.example.fragment.inject.Container
 import org.rewedigital.katana.android.example.fragment.model.SecondFragmentViewModel
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
 import org.rewedigital.katana.android.fragment.KatanaFragment
+import org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedStateNow
 import org.rewedigital.katana.androidx.viewmodel.viewModelNow
 import org.rewedigital.katana.injectNow
 
@@ -48,7 +49,7 @@ class SecondFragment : KatanaFragment(), KatanaTrait {
         component = (activity as KatanaTrait).component + secondFragmentModule
 
         container = injectNow()
-        viewModel = viewModelNow()
+        viewModel = viewModelSavedStateNow()
 
         updateMessage()
     }
