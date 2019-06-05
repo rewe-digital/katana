@@ -1,10 +1,9 @@
 package org.rewedigital.katana.dsl.classic
 
 import org.rewedigital.katana.Component
-import org.rewedigital.katana.Declaration
 import org.rewedigital.katana.Declaration.Type
+import org.rewedigital.katana.DefaultProvider
 import org.rewedigital.katana.Module
-import org.rewedigital.katana.Provider
 import org.rewedigital.katana.dsl.ModuleDslMarker
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.internal.moduleDeclaration
@@ -46,8 +45,8 @@ class BindingDsl<T>(
 ) {
 
     internal fun declaration(
-        type: Declaration.Type,
-        provider: Provider<T>
+        type: Type,
+        body: ProviderDsl.() -> T
     ) =
         moduleDeclaration(
             module = module,
@@ -55,7 +54,7 @@ class BindingDsl<T>(
             name = name,
             internal = internal,
             type = type,
-            provider = provider
+            provider = DefaultProvider(body)
         )
 }
 
@@ -63,17 +62,17 @@ class BindingDsl<T>(
  * Provides the dependency via a factory. A new instance will be created every time the dependency is requested.
  */
 fun <T> BindingDsl<T>.factory(body: ProviderDsl.() -> T): Module =
-    declaration(Type.FACTORY) { context -> body.invoke(ProviderDsl(context)) }
+    declaration(Type.FACTORY, body)
 
 /**
  * Provides the dependency as a singleton. Only one instance (per component) will be created.
  */
 fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): Module =
-    declaration(Type.SINGLETON) { context -> body.invoke(ProviderDsl(context)) }
+    declaration(Type.SINGLETON, body)
 
 /**
  * Provides the dependency as an eager singleton. Only once instance (per component) will be created.
  * The instance will be created when the [Component] is created and not lazily the first time it's requested.
  */
 fun <T> BindingDsl<T>.eagerSingleton(body: ProviderDsl.() -> T): Module =
-    declaration(Type.EAGER_SINGLETON) { context -> body.invoke(ProviderDsl(context)) }
+    declaration(Type.EAGER_SINGLETON, body)

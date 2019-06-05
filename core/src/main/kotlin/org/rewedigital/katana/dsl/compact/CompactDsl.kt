@@ -2,7 +2,9 @@ package org.rewedigital.katana.dsl.compact
 
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.Declaration.Type
+import org.rewedigital.katana.DefaultProvider
 import org.rewedigital.katana.Module
+import org.rewedigital.katana.Provider
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.internal.moduleDeclaration
 
@@ -20,7 +22,7 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
 inline fun <reified T> Module.factory(
     name: Any? = null,
     internal: Boolean = false,
-    crossinline body: ProviderDsl.() -> T
+    noinline body: ProviderDsl.() -> T
 ) =
     moduleDeclaration(
         module = this,
@@ -28,7 +30,7 @@ inline fun <reified T> Module.factory(
         name = name,
         internal = internal,
         type = Type.FACTORY,
-        provider = { context -> body.invoke(ProviderDsl(context)) }
+        provider = DefaultProvider(body)
     )
 
 /**
@@ -45,7 +47,7 @@ inline fun <reified T> Module.factory(
 inline fun <reified T> Module.singleton(
     name: Any? = null,
     internal: Boolean = false,
-    crossinline body: ProviderDsl.() -> T
+    noinline body: ProviderDsl.() -> T
 ) =
     moduleDeclaration(
         module = this,
@@ -53,7 +55,7 @@ inline fun <reified T> Module.singleton(
         name = name,
         internal = internal,
         type = Type.SINGLETON,
-        provider = { context -> body.invoke(ProviderDsl(context)) }
+        provider = DefaultProvider(body)
     )
 
 /**
@@ -71,7 +73,7 @@ inline fun <reified T> Module.singleton(
 inline fun <reified T> Module.eagerSingleton(
     name: Any? = null,
     internal: Boolean = false,
-    crossinline body: ProviderDsl.() -> T
+    noinline body: ProviderDsl.() -> T
 ) =
     moduleDeclaration(
         module = this,
@@ -79,5 +81,27 @@ inline fun <reified T> Module.eagerSingleton(
         name = name,
         internal = internal,
         type = Type.EAGER_SINGLETON,
-        provider = { context -> body.invoke(ProviderDsl(context)) }
+        provider = DefaultProvider(body)
+    )
+
+/**
+ * Declares a custom binding with a custom implementation of [Provider].
+ *
+ * A custom provider might for instance handle additional arguments passed to [Provider.invoke].
+ * This should rarely be used and is rather meant for Katana extensions!
+ *
+ * @see Component.custom
+ */
+inline fun <reified T> Module.custom(
+    name: Any? = null,
+    internal: Boolean = false,
+    provider: Provider<T>
+) =
+    moduleDeclaration(
+        module = this,
+        clazz = T::class.java,
+        name = name,
+        internal = internal,
+        type = Type.CUSTOM,
+        provider = provider
     )

@@ -4,6 +4,7 @@ import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
+import org.rewedigital.katana.dsl.compact.custom
 import org.rewedigital.katana.dsl.compact.eagerSingleton
 import org.rewedigital.katana.dsl.compact.factory
 import org.rewedigital.katana.dsl.compact.singleton
@@ -255,6 +256,20 @@ object InjectionTests : Spek(
                 component.injectNow<String?>("eagerSingleton") shouldEqual null
 
                 invocations shouldEqual 1
+            }
+
+            it("custom injection should pass arguments to custom provider") {
+                val provider = object : Provider<String> {
+                    override fun invoke(context: ComponentContext, arg: Any?) = "Hello $arg"
+                }
+
+                val module = Module {
+                    custom(name = "TEST", provider = provider)
+                }
+
+                val component = Component(module)
+
+                component.custom<String>(name = "TEST", arg = "World") shouldEqual "Hello World"
             }
         }
     })

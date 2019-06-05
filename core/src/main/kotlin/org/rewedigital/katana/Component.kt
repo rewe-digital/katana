@@ -115,7 +115,7 @@ class Component(
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean): Instance<T>? {
+    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean, arg: Any?): Instance<T>? {
         val declaration = declarations[key]
         if (declaration == null || (declaration.internal && !internal)) {
             return null
@@ -137,6 +137,10 @@ class Component(
                         getMessage = { "Returning existing eager singleton instance for ${key.stringIdentifier}" },
                         createMessage = { "Created eager singleton instance for ${key.stringIdentifier}" }
                     )
+                    CUSTOM -> declaration.provider(context, arg).let { newInstance ->
+                        Logger.debug { "Created custom instance for ${key.stringIdentifier}" }
+                        Instance(newInstance as T)
+                    }
                 }
             } catch (e: KatanaException) {
                 throw e
@@ -170,8 +174,8 @@ class Component(
     internal fun canInject(key: Key) =
         context.canInject(key)
 
-    internal fun <T> injectByKey(key: Key) =
-        context.injectByKey<T>(key)
+    internal fun <T> injectByKey(key: Key, arg: Any?) =
+        context.injectByKey<T>(key = key, arg = arg)
 
     /**
      * Returns `true` if this component is capable of injecting requested dependency.
@@ -203,6 +207,14 @@ class Component(
      */
     inline fun <reified T> injectNow(name: Any? = null) =
         context.injectNow<T>(name)
+
+    /**
+     * Injects requested dependency, passing custom arguments to [Provider].
+     *
+     * This should rarely be used and is rather meant for Katana extensions!
+     */
+    inline fun <reified T> custom(name: Any? = null, arg: Any? = null) =
+        context.custom<T>(name, arg = arg)
 
     /**
      * Alternative syntax for creating a child component that depends on current component
@@ -299,14 +311,14 @@ class ComponentContext private constructor(
 ) {
 
     @PublishedApi
-    internal fun <T> injectByKey(key: Key, internal: Boolean = false): T {
-        val instance = thisComponent.thisComponentInjectByKey<T>(key, internal)
+    internal fun <T> injectByKey(key: Key, internal: Boolean = false, arg: Any?): T {
+        val instance = thisComponent.thisComponentInjectByKey<T>(key, internal, arg)
         return when {
             instance != null -> instance.value
             else -> {
                 val component = dependsOn.find { component -> component.canInject(key) }
                     ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
-                component.injectByKey(key) as T
+                component.injectByKey(key, arg) as T
             }
         }
     }
@@ -326,7 +338,10 @@ class ComponentContext private constructor(
     }
 
     inline fun <reified T> injectNow(name: Any? = null, internal: Boolean = false) =
-        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
+        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal, arg = null)
+
+    inline fun <reified T> custom(name: Any? = null, internal: Boolean = false, arg: Any? = null) =
+        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal, arg = arg)
 
     internal companion object {
 

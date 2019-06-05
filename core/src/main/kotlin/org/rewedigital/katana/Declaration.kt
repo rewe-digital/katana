@@ -15,7 +15,7 @@ internal data class Declaration<T>(
     val internal: Boolean
 ) {
 
-    enum class Type { FACTORY, SINGLETON, EAGER_SINGLETON }
+    enum class Type { FACTORY, SINGLETON, EAGER_SINGLETON, CUSTOM }
 
     override fun toString() =
         "${clazz.name}(type=$type${name?.let { ", name=$it" }.orEmpty()}${moduleName?.let { ", module=$it" }.orEmpty()})"
