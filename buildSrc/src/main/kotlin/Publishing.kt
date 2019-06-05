@@ -1,5 +1,8 @@
-extra["addCommonPomAttributes"] = fun(publication: MavenPublication) {
-    publication.pom {
+import org.gradle.api.publish.maven.MavenPublication
+
+@Suppress("UnstableApiUsage")
+fun MavenPublication.addCommonPomAttributes() {
+    pom {
         name.set("Katana")
         description.set("Lightweight, minimalistic dependency injection library for Android & Kotlin")
         url.set("https://github.com/rewe-digital/katana")

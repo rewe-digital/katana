@@ -1,5 +1,4 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
@@ -10,29 +9,18 @@ buildscript {
     dependencies {
         classpath(Dependencies.androidPlugin)
         classpath(Dependencies.androidJunit5GradlePlugin)
+        classpath(Dependencies.androidMavenPublishPlugin)
     }
 }
 
 plugins {
-    base
-    kotlin("jvm") version Versions.kotlin apply false
-    `maven-publish`
-    id("org.jetbrains.dokka") version Versions.dokkaPlugin
-    id("com.jfrog.bintray") version Versions.bintrayPlugin
     id("com.github.ben-manes.versions") version Versions.gradleVersionsPlugin
 }
 
 allprojects {
-    group = "org.rewedigital.katana"
-    version = "1.6.3"
-
     repositories {
         google()
         jcenter()
-    }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.6"
     }
 }
 
