@@ -1,0 +1,8 @@
+title: Katana
+
+markdown: kramdown
+highlighter: rouge
+
+#kramdown:
+#  input: GFM
+#  syntax_highlighter: route
