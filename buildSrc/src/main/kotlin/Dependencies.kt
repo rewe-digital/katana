@@ -3,15 +3,15 @@ object Versions {
     const val androidJunit5GradlePlugin = "1.4.0.0"
     const val androidMavenPublishPlugin = "3.6.2"
     const val androidPlugin = "3.3.2"
-    const val androidXCollection = "1.0.0"
+    const val androidXCollection = "1.1.0"
     const val androidXFragment = "1.0.0"
     const val androidXLifecycleExtensions = "2.0.0"
     const val androidXLifecycleViewModel = "2.0.0"
     const val androidXLifecycleViewModelSavedState = "1.0.0-alpha01"
-    const val gradleVersionsPlugin = "0.21.0"
-    const val kluent = "1.49"
-    const val kotlin = "1.3.31"
-    const val spek = "2.0.4"
+    const val gradleVersionsPlugin = "0.22.0"
+    const val kluent = "1.53"
+    const val kotlin = "1.3.50"
+    const val spek = "2.0.6"
 }
 
 object Dependencies {
@@ -34,7 +34,7 @@ object Dependencies {
 }
 
 object Android {
-    const val compileSdkVersion = 28
-    const val targetSdkVersion = 28
+    const val compileSdkVersion = 29
+    const val targetSdkVersion = 29
     const val minSdkVersion = 14
 }
