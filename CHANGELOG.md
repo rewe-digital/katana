@@ -1,3 +1,10 @@
+## Version 1.7.1
+
+_2019-08-29_
+
+* Update dependencies (Kotlin 1.3.50)
+* Update `lifecycle-viewmodel-savedstate` to 1.0.0-alpha03
+
 ## Version 1.7.0
 
 _2019-06-05_
