@@ -7,7 +7,7 @@ object Versions {
     const val androidXFragment = "1.0.0"
     const val androidXLifecycleExtensions = "2.0.0"
     const val androidXLifecycleViewModel = "2.0.0"
-    const val androidXLifecycleViewModelSavedState = "1.0.0-alpha01"
+    const val androidXLifecycleViewModelSavedState = "1.0.0-alpha03"
     const val gradleVersionsPlugin = "0.22.0"
     const val kluent = "1.53"
     const val kotlin = "1.3.50"

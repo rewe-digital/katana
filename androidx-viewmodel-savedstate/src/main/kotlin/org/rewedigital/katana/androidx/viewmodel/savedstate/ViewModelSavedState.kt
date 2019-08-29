@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.rewedigital.katana.androidx.viewmodel.savedstate
 
 import android.os.Bundle
@@ -7,22 +9,22 @@ import androidx.lifecycle.*
 import androidx.savedstate.SavedStateRegistryOwner
 import org.rewedigital.katana.*
 import org.rewedigital.katana.androidx.viewmodel.internal.viewModelName
-import org.rewedigital.katana.androidx.viewmodel.savedstate.SavedStateVMKatanaProvider.Arg
+import org.rewedigital.katana.androidx.viewmodel.savedstate.SavedStateViewModelKatanaProvider.Arg
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.compact.custom
 
-internal class KatanaSavedStateVMFactory(
+internal class KatanaSavedStateViewModelFactory(
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle?,
     private val viewModelProvider: (state: SavedStateHandle) -> ViewModel
-) : AbstractSavedStateVMFactory(owner, defaultArgs) {
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
     @Suppress("UNCHECKED_CAST")
     override fun <VM : ViewModel> create(key: String, modelClass: Class<VM>, handle: SavedStateHandle): VM =
         viewModelProvider(handle) as VM
 }
 
-internal object InternalSavedStateVMProvider {
+internal object InternalSavedStateViewModelProvider {
 
     fun <VM : ViewModel> of(
         fragment: Fragment,
@@ -33,7 +35,7 @@ internal object InternalSavedStateVMProvider {
     ) =
         ViewModelProviders.of(
             fragment,
-            KatanaSavedStateVMFactory(
+            KatanaSavedStateViewModelFactory(
                 fragment,
                 defaultArgs,
                 viewModelProvider
@@ -49,7 +51,7 @@ internal object InternalSavedStateVMProvider {
     ) =
         ViewModelProviders.of(
             activity,
-            KatanaSavedStateVMFactory(
+            KatanaSavedStateViewModelFactory(
                 activity,
                 defaultArgs,
                 viewModelProvider
@@ -64,7 +66,7 @@ internal object InternalSavedStateVMProvider {
 }
 
 @PublishedApi
-internal class SavedStateVMKatanaProvider<VM : ViewModel>(
+internal class SavedStateViewModelKatanaProvider<VM : ViewModel>(
     private val body: ProviderDsl.(state: SavedStateHandle) -> VM,
     private val defaultArgs: Bundle?,
     private val viewModelClass: Class<VM>
@@ -79,14 +81,14 @@ internal class SavedStateVMKatanaProvider<VM : ViewModel>(
 
     override operator fun invoke(context: ComponentContext, arg: Any?): VM =
         when (arg) {
-            is Arg.Fragment -> InternalSavedStateVMProvider.of(
+            is Arg.Fragment -> InternalSavedStateViewModelProvider.of(
                 fragment = arg.fragment,
                 key = arg.key,
                 defaultArgs = defaultArgs,
                 viewModelClass = viewModelClass,
                 viewModelProvider = { state -> body.invoke(ProviderDsl(context), state) }
             )
-            is Arg.Activity -> InternalSavedStateVMProvider.of(
+            is Arg.Activity -> InternalSavedStateViewModelProvider.of(
                 activity = arg.activity,
                 key = arg.key,
                 defaultArgs = defaultArgs,
@@ -105,7 +107,7 @@ internal class SavedStateVMKatanaProvider<VM : ViewModel>(
  * when created.
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
- * @param defaultArgs Optional default args that are passed to [AbstractSavedStateVMFactory]
+ * @param defaultArgs Optional default args that are passed to [AbstractSavedStateViewModelFactory]
  */
 inline fun <reified VM : ViewModel> Module.viewModelSavedState(
     key: String? = null,
@@ -114,7 +116,7 @@ inline fun <reified VM : ViewModel> Module.viewModelSavedState(
 ) {
     custom(
         name = viewModelName(modelClass = VM::class.java, key = key),
-        provider = SavedStateVMKatanaProvider(
+        provider = SavedStateViewModelKatanaProvider(
             body = body,
             defaultArgs = defaultArgs,
             viewModelClass = VM::class.java

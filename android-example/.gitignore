@@ -2,3 +2,4 @@
 .idea
 build
 local.properties
+!.idea/dictionaries
