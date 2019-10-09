@@ -1,7 +1,7 @@
 package org.rewedigital.katana
 
 import org.amshove.kluent.shouldEqual
-import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.factory
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 

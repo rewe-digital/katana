@@ -1,202 +1,53 @@
 package org.rewedigital.katana.dsl.compact
 
-import org.rewedigital.katana.*
-import org.rewedigital.katana.Declaration.Type
+import org.rewedigital.katana.ModuleBindingContext
+import org.rewedigital.katana.Provider
 import org.rewedigital.katana.dsl.ProviderDsl
-import org.rewedigital.katana.dsl.internal.moduleDeclaration
+import org.rewedigital.katana.dsl.custom as newCustom
+import org.rewedigital.katana.dsl.eagerSingleton as newEagerSingleton
+import org.rewedigital.katana.dsl.factory as newFactory
+import org.rewedigital.katana.dsl.singleton as newSingleton
 
-/**
- * Declares a dependency binding.
- * A new instance will be created every time the dependency is requested.
- *
- * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
- * @param internal If `true` binding is only available in current module
- * @param body Body of binding declaration
- *
- * @see ModuleBindingContext.singleton
- * @see ModuleBindingContext.eagerSingleton
- */
+@Deprecated(
+    message = "DSL has been moved to package org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("factory(name, internal, body)", "org.rewedigital.katana.dsl.factory")
+)
 inline fun <reified T> ModuleBindingContext.factory(
     name: Any? = null,
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = name,
-        internal = internal,
-        type = Type.FACTORY,
-        provider = DefaultProvider(body)
-    )
+    newFactory(name = name, internal = internal, body = body)
 
-/**
- * Declares a dependency binding as a singleton.
- * Only one instance (per component) will be created.
- *
- * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
- * @param internal If `true` binding is only available in current module
- * @param body Body of binding declaration
- *
- * @see ModuleBindingContext.factory
- * @see ModuleBindingContext.eagerSingleton
- */
+@Deprecated(
+    message = "DSL has been moved to package org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("singleton(name, internal, body)", "org.rewedigital.katana.dsl.singleton")
+)
 inline fun <reified T> ModuleBindingContext.singleton(
     name: Any? = null,
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = name,
-        internal = internal,
-        type = Type.SINGLETON,
-        provider = DefaultProvider(body)
-    )
+    newSingleton(name = name, internal = internal, body = body)
 
-/**
- * Declares a dependency binding as a eager singleton.
- * Only once instance (per component) will be created.
- * The instance will be created when the [Component] is created and not lazily the first time it's requested.
- *
- * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
- * @param internal If `true` binding is only available in current module
- * @param body Body of binding declaration
- *
- * @see ModuleBindingContext.factory
- * @see ModuleBindingContext.singleton
- */
+@Deprecated(
+    message = "DSL has been moved to package org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("eagerSingleton(name, internal, body)", "org.rewedigital.katana.dsl.eagerSingleton")
+)
 inline fun <reified T> ModuleBindingContext.eagerSingleton(
     name: Any? = null,
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = name,
-        internal = internal,
-        type = Type.EAGER_SINGLETON,
-        provider = DefaultProvider(body)
-    )
+    newEagerSingleton(name = name, internal = internal, body = body)
 
-/**
- * Declares a [Set] based multi-binding.
- *
- * Each [SetBindingContext.factory] or [SetBindingContext.singleton] declaration inside `set { }` contributes
- * to the set.
- *
- * Multiple set bindings of the same **unique** type across different modules and components are conflated into a single
- * [Set] during injection.
- *
- * Example:
- *
- * ```
- * val module1 = Module {
- *   set<String> {
- *     factory { "Hello" }
- *   }
- * }
- *
- * val module2 = Module {
- *   set<String> {
- *      factory { "World" }
- *   }
- * }
- *
- * val component = Component(modules = listOf(module1, module2))
- * val set: Set<String> = component.injectNow() // == setOf("Hello", "World")
- * ```
- *
- * Due to the nature of multi-bindings, singletons declared inside a set are unique per [Module] set declaration
- * **and** [Component]. This means that a set-singleton declared in `module1` and another set-singleton declared in
- * `module2` for the same unique set will result in two singleton instances if both modules are part of the same
- * [Component].
- *
- * @param name Optional name of binding. See documentation of package [org.rewedigital.katana] for more details.
- *
- * @see SetBindingContext.factory
- * @see SetBindingContext.singleton
- */
-inline fun <reified T> ModuleBindingContext.set(
-    name: Any? = null,
-    body: SetBindingContext<T>.() -> Unit
-) =
-    internalSet(
-        name = name,
-        body = body
-    )
-
-/**
- * internalSet required because of two reified type parameters,
- * where `S` however can be inferred by compiler in call of [set].
- */
-@PublishedApi
-internal inline fun <reified T, reified S : Set<T>> ModuleBindingContext.internalSet(
-    name: Any? = null,
-    body: SetBindingContext<T>.() -> Unit
-) =
-    also {
-        SetBindingContext<T>(
-            module = module,
-            key = Key.of(clazz = T::class.java, name = name)
-        ).let { bindingContext ->
-            moduleDeclaration(
-                context = this,
-                clazz = S::class.java,
-                name = name,
-                internal = false,
-                type = Type.SET,
-                provider = SetProvider(bindingContext.key)
-            )
-
-            body.invoke(bindingContext)
-        }
-    }
-
-inline fun <reified T> SetBindingContext<T>.factory(
-    noinline body: ProviderDsl.() -> T
-) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = null,
-        internal = false,
-        type = Type.FACTORY,
-        provider = DefaultProvider(body)
-    )
-
-inline fun <reified T> SetBindingContext<T>.singleton(
-    noinline body: ProviderDsl.() -> T
-) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = null,
-        internal = false,
-        type = Type.SINGLETON,
-        provider = DefaultProvider(body)
-    )
-
-/**
- * Declares a custom binding with a custom implementation of [Provider].
- *
- * A custom provider might for instance handle additional arguments passed to [Provider.invoke].
- * This should rarely be used and is rather meant for Katana extensions!
- *
- * @see Component.custom
- */
+@Deprecated(
+    message = "DSL has been moved to package org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("custom(name, internal, provider)", "org.rewedigital.katana.dsl.custom")
+)
 inline fun <reified T> ModuleBindingContext.custom(
     name: Any? = null,
     internal: Boolean = false,
     provider: Provider<T>
 ) =
-    moduleDeclaration(
-        context = this,
-        clazz = T::class.java,
-        name = name,
-        internal = internal,
-        type = Type.CUSTOM,
-        provider = provider
-    )
+    newCustom(name = name, internal = internal, provider = provider)

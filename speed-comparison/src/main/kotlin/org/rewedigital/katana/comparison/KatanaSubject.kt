@@ -3,9 +3,9 @@ package org.rewedigital.katana.comparison
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.Module
-import org.rewedigital.katana.dsl.compact.factory
-import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.factory
 import org.rewedigital.katana.dsl.get
+import org.rewedigital.katana.dsl.singleton
 import org.rewedigital.katana.inject
 
 class KatanaSubject : Subject, KatanaTrait {

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import org.rewedigital.katana.Module
 import org.rewedigital.katana.android.modules.APPLICATION_CONTEXT
-import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.factory
 import org.rewedigital.katana.dsl.get
 
 /**

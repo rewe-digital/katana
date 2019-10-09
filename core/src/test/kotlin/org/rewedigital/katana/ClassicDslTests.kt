@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package org.rewedigital.katana
 
 import org.amshove.kluent.shouldBeInstanceOf

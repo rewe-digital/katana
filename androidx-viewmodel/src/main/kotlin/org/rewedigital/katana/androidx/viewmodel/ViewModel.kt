@@ -10,7 +10,7 @@ import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.ModuleBindingContext
 import org.rewedigital.katana.androidx.viewmodel.internal.viewModelName
 import org.rewedigital.katana.dsl.ProviderDsl
-import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.factory
 
 //<editor-fold desc="Internal utility functions and classes">
 @Suppress("UNCHECKED_CAST")

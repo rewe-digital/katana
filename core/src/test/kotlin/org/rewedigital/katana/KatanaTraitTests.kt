@@ -3,7 +3,7 @@ package org.rewedigital.katana
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.singleton
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 

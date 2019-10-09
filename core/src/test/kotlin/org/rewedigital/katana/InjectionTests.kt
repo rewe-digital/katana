@@ -4,12 +4,7 @@ import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldBeInstanceOf
 import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
-import org.rewedigital.katana.dsl.compact.custom
-import org.rewedigital.katana.dsl.compact.eagerSingleton
-import org.rewedigital.katana.dsl.compact.factory
-import org.rewedigital.katana.dsl.compact.singleton
-import org.rewedigital.katana.dsl.get
-import org.rewedigital.katana.dsl.lazy
+import org.rewedigital.katana.dsl.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -174,10 +169,10 @@ object InjectionTests : Spek(
                 fn shouldThrow StackOverflowError::class
             }
 
-            it("circular dependencies with lazy() should work") {
+            it("circular dependencies with kotlin.lazy should work") {
                 val module = Module {
 
-                    singleton { A2(lazy()) }
+                    singleton { A2(kotlin.lazy { get<B2>() }) }
 
                     singleton { B2(get()) }
                 }

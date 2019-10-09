@@ -4,8 +4,8 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.rewedigital.katana.Module
-import org.rewedigital.katana.dsl.compact.factory
-import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.factory
+import org.rewedigital.katana.dsl.singleton
 import org.rewedigital.katana.dsl.get
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

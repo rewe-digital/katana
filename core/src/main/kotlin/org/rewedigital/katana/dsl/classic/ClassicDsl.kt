@@ -19,6 +19,10 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * @see singleton
  * @see eagerSingleton
  */
+@Deprecated(
+    message = "Use new DSL syntax under org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("")
+)
 inline fun <reified T> ModuleBindingContext.bind(
     name: Any? = null,
     internal: Boolean = false,
@@ -61,12 +65,20 @@ class BindingDsl<T>(
 /**
  * Provides the dependency via a factory. A new instance will be created every time the dependency is requested.
  */
+@Deprecated(
+    message = "Use new DSL syntax under org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("")
+)
 fun <T> BindingDsl<T>.factory(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.FACTORY, body)
 
 /**
  * Provides the dependency as a singleton. Only one instance (per component) will be created.
  */
+@Deprecated(
+    message = "Use new DSL syntax under org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("")
+)
 fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.SINGLETON, body)
 
@@ -74,5 +86,9 @@ fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): ModuleBindingContext
  * Provides the dependency as an eager singleton. Only once instance (per component) will be created.
  * The instance will be created when the [Component] is created and not lazily the first time it's requested.
  */
+@Deprecated(
+    message = "Use new DSL syntax under org.rewedigital.katana.dsl",
+    replaceWith = ReplaceWith("")
+)
 fun <T> BindingDsl<T>.eagerSingleton(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.EAGER_SINGLETON, body)

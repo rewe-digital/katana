@@ -5,8 +5,8 @@ import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
 import org.rewedigital.katana.Module
-import org.rewedigital.katana.dsl.compact.factory
-import org.rewedigital.katana.dsl.compact.singleton
+import org.rewedigital.katana.dsl.factory
+import org.rewedigital.katana.dsl.singleton
 
 const val APPLICATION = "APPLICATION"
 const val APPLICATION_CONTEXT = "APPLICATION_CONTEXT"

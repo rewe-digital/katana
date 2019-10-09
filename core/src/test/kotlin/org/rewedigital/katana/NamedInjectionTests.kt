@@ -5,7 +5,7 @@ import org.rewedigital.katana.NamedInjectionTests.Key5
 import org.rewedigital.katana.NamedInjectionTests.Key6
 import org.rewedigital.katana.NamedInjectionTests.Key7
 import org.rewedigital.katana.NamedInjectionTests.Key8
-import org.rewedigital.katana.dsl.compact.factory
+import org.rewedigital.katana.dsl.factory
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 

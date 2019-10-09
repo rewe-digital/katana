@@ -40,6 +40,13 @@ val myModule = Module {
   // Use "eagerSingleton" for singleton instances which are instantiated as soon as the component
   // is created and not lazily the first time it's requested
   eagerSingleton { SomeEagerDependency() }
+  
+  // Declares a set-based multi-binding where every declaration inside set { } contribute to the set.
+  // Set declarations may be segmented across multiple modules and components. 
+  set<String> {
+    factory { "Hello" }
+    singleton { "World" }
+  }
 }
 ```
 
@@ -199,9 +206,9 @@ a repository to your project. Then add the following dependencies:
 
 ```gradle
 dependencies {
-    implementation 'org.rewedigital.katana:katana-core:1.7.1'
+    implementation 'org.rewedigital.katana:katana-core:1.8.0'
     // Use this artifact for Katana on Android
-    implementation 'org.rewedigital.katana:katana-android:1.7.1'
+    implementation 'org.rewedigital.katana:katana-android:1.8.0'
 }
 ```
 

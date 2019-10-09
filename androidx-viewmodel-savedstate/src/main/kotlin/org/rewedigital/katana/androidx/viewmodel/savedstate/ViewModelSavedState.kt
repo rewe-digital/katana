@@ -11,7 +11,7 @@ import org.rewedigital.katana.*
 import org.rewedigital.katana.androidx.viewmodel.internal.viewModelName
 import org.rewedigital.katana.androidx.viewmodel.savedstate.SavedStateViewModelKatanaProvider.Arg
 import org.rewedigital.katana.dsl.ProviderDsl
-import org.rewedigital.katana.dsl.compact.custom
+import org.rewedigital.katana.dsl.custom
 
 internal class KatanaSavedStateViewModelFactory(
     owner: SavedStateRegistryOwner,
