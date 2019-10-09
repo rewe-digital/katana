@@ -3,21 +3,6 @@ package org.rewedigital.katana
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * @see Module
- */
-@Deprecated(message = "Use Module constructor", replaceWith = ReplaceWith(expression = "Module(name, includes, body)"))
-fun createModule(
-    name: String? = null,
-    includes: Iterable<Module> = emptyList(),
-    body: ModuleBindingContext.() -> Unit = {}
-) =
-    Module(
-        name = name,
-        includes = includes,
-        declarations = body
-    )
-
-/**
  * A module consists of dependency declarations and describes how dependencies are provided.
  * Each module should represent a logical unit. For instance there should be separate modules for each functionality
  * of your application.

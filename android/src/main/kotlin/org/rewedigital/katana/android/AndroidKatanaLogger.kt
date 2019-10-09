@@ -32,6 +32,3 @@ object AndroidKatanaLogger : Katana.Logger {
         }
     }
 }
-
-@Deprecated(message = "Use AndroidKatanaLogger.", replaceWith = ReplaceWith("AndroidKatanaLogger"))
-typealias KatanaAndroidLogger = AndroidKatanaLogger

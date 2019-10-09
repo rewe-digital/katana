@@ -6,42 +6,6 @@ import org.rewedigital.katana.Key.NameKey
 import org.rewedigital.katana.internal.Logger
 
 /**
- * Defines a component.
- *
- * @see Component
- */
-@Deprecated(
-    message = "Use Component constructor instead",
-    replaceWith = ReplaceWith(expression = "Component(modules)")
-)
-fun createComponent(vararg modules: Module) = Component(modules = *modules)
-
-/**
- * Defines a component.
- *
- * @see Component
- */
-@Deprecated(
-    message = "Use Component constructor instead",
-    replaceWith = ReplaceWith(expression = "Component(components)")
-)
-fun createComponent(vararg components: Component) = Component(dependsOn = *components)
-
-/**
- * Defines a component.
- *
- * @see Component
- */
-@Deprecated(
-    message = "Use Component constructor instead",
-    replaceWith = ReplaceWith(expression = "Component(modules = modules, dependsOn = dependsOn)")
-)
-fun createComponent(
-    modules: Iterable<Module> = emptyList(),
-    dependsOn: Iterable<Component> = emptyList()
-) = Component(modules, dependsOn)
-
-/**
  * Along with [Modules][Module] a Component is the heart of dependency injection via Katana.
  *
  * It performs the actual injection and will also hold the singleton instances of dependencies declared as singletons.
