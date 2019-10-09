@@ -3,7 +3,7 @@ package org.rewedigital.katana.dsl.classic
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.Declaration.Type
 import org.rewedigital.katana.DefaultProvider
-import org.rewedigital.katana.Module
+import org.rewedigital.katana.ModuleBindingContext
 import org.rewedigital.katana.dsl.ModuleDslMarker
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.internal.moduleDeclaration
@@ -19,14 +19,14 @@ import org.rewedigital.katana.dsl.internal.moduleDeclaration
  * @see singleton
  * @see eagerSingleton
  */
-inline fun <reified T> Module.bind(
+inline fun <reified T> ModuleBindingContext.bind(
     name: Any? = null,
     internal: Boolean = false,
-    body: BindingDsl<T>.() -> Module
+    body: BindingDsl<T>.() -> ModuleBindingContext
 ) =
     body.invoke(
         BindingDsl(
-            module = this,
+            context = this,
             clazz = T::class.java,
             name = name,
             internal = internal
@@ -38,7 +38,7 @@ inline fun <reified T> Module.bind(
  */
 @ModuleDslMarker
 class BindingDsl<T>(
-    private val module: Module,
+    private val context: ModuleBindingContext,
     private val clazz: Class<T>,
     private val name: Any?,
     private val internal: Boolean
@@ -49,7 +49,7 @@ class BindingDsl<T>(
         body: ProviderDsl.() -> T
     ) =
         moduleDeclaration(
-            module = module,
+            context = context,
             clazz = clazz,
             name = name,
             internal = internal,
@@ -61,18 +61,18 @@ class BindingDsl<T>(
 /**
  * Provides the dependency via a factory. A new instance will be created every time the dependency is requested.
  */
-fun <T> BindingDsl<T>.factory(body: ProviderDsl.() -> T): Module =
+fun <T> BindingDsl<T>.factory(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.FACTORY, body)
 
 /**
  * Provides the dependency as a singleton. Only one instance (per component) will be created.
  */
-fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): Module =
+fun <T> BindingDsl<T>.singleton(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.SINGLETON, body)
 
 /**
  * Provides the dependency as an eager singleton. Only once instance (per component) will be created.
  * The instance will be created when the [Component] is created and not lazily the first time it's requested.
  */
-fun <T> BindingDsl<T>.eagerSingleton(body: ProviderDsl.() -> T): Module =
+fun <T> BindingDsl<T>.eagerSingleton(body: ProviderDsl.() -> T): ModuleBindingContext =
     declaration(Type.EAGER_SINGLETON, body)

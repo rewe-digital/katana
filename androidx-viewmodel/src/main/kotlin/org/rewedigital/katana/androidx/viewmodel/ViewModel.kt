@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
-import org.rewedigital.katana.Module
+import org.rewedigital.katana.ModuleBindingContext
 import org.rewedigital.katana.androidx.viewmodel.internal.viewModelName
 import org.rewedigital.katana.dsl.ProviderDsl
 import org.rewedigital.katana.dsl.compact.factory
@@ -66,7 +66,10 @@ internal object InternalViewModelProvider {
  * @see ProviderDsl.viewModel
  * @see ProviderDsl.activityViewModel
  */
-inline fun <reified VM : ViewModel> Module.viewModel(key: String? = null, noinline body: ProviderDsl.() -> VM) {
+inline fun <reified VM : ViewModel> ModuleBindingContext.viewModel(
+    key: String? = null,
+    noinline body: ProviderDsl.() -> VM
+) {
     factory(name = viewModelName(modelClass = VM::class.java, key = key), body = body)
 }
 
@@ -101,7 +104,7 @@ inline fun <reified VM : ViewModel> ProviderDsl.viewModel(activity: FragmentActi
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.viewModelNow(fragment: Fragment, key: String? = null) =
     InternalViewModelProvider.of<VM>(fragment, key) {
@@ -113,7 +116,7 @@ inline fun <reified VM : ViewModel> Component.viewModelNow(fragment: Fragment, k
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.viewModel(fragment: Fragment, key: String? = null) =
     lazy { viewModelNow<VM>(fragment, key) }
@@ -123,7 +126,7 @@ inline fun <reified VM : ViewModel> Component.viewModel(fragment: Fragment, key:
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.viewModelNow<VM>(this, key)
@@ -133,7 +136,7 @@ inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.viewModel<VM>(this, key)
@@ -143,7 +146,7 @@ inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T 
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fragment, key: String? = null) =
     InternalViewModelProvider.of<VM>(fragment.requireActivity(), key) {
@@ -155,7 +158,7 @@ inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fra
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.activityViewModel(fragment: Fragment, key: String? = null) =
     lazy { activityViewModelNow<VM>(fragment, key) }
@@ -165,7 +168,7 @@ inline fun <reified VM : ViewModel> Component.activityViewModel(fragment: Fragme
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModelNow(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.activityViewModelNow<VM>(this, key)
@@ -175,7 +178,7 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelNow(key: String? = nul
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModel(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.activityViewModel<VM>(this, key)
@@ -185,7 +188,7 @@ inline fun <reified VM : ViewModel, T> T.activityViewModel(key: String? = null) 
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.viewModelNow(activity: FragmentActivity, key: String? = null) =
     InternalViewModelProvider.of<VM>(activity, key) {
@@ -197,7 +200,7 @@ inline fun <reified VM : ViewModel> Component.viewModelNow(activity: FragmentAct
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.viewModel(activity: FragmentActivity, key: String? = null) =
     lazy { viewModelNow<VM>(activity, key) }
@@ -207,7 +210,7 @@ inline fun <reified VM : ViewModel> Component.viewModel(activity: FragmentActivi
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
     component.viewModelNow<VM>(this, key)
@@ -217,7 +220,7 @@ inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModel
+ * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
     component.viewModel<VM>(this, key)

@@ -3,33 +3,38 @@ package org.rewedigital.katana.dsl.internal
 import org.rewedigital.katana.*
 
 @PublishedApi
-internal fun <T> moduleDeclaration(
-    module: Module,
+internal fun <CTX : BindingContext, T> moduleDeclaration(
+    context: CTX,
     clazz: Class<T>,
     name: Any?,
     internal: Boolean,
     type: Declaration.Type,
     provider: Provider<T>
-): Module {
+): CTX {
+    val key = Key.of(
+        clazz = clazz,
+        name = name,
+        contextKey = context.key,
+        increment = context.increment
+    )
 
-    val key = Key.of(clazz, name)
     val declaration =
         Declaration(
             key = key,
             type = type,
-            moduleId = module.id,
-            moduleName = module.name,
+            moduleId = context.module.id,
+            moduleName = context.module.name,
             clazz = clazz,
             name = name,
             provider = provider,
             internal = internal
         )
 
-    val existingDeclaration = module.declarations[key]
+    val existingDeclaration = context.module.declarations[key]
     if (existingDeclaration != null) {
         throw OverrideException(declaration.toString(), existingDeclaration.toString())
     }
 
-    module.declarations[key] = declaration
-    return module
+    context.module.declarations[key] = declaration
+    return context
 }

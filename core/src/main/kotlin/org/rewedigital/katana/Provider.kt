@@ -22,3 +22,15 @@ internal class DefaultProvider<T>(
     override operator fun invoke(context: ComponentContext, arg: Any?): T =
         body.invoke(ProviderDsl(context))
 }
+
+@PublishedApi
+internal class SetProvider<T, S : Set<T>>(
+    private val key: Key
+) : Provider<S> {
+
+    @Suppress("UNCHECKED_CAST")
+    override fun invoke(context: ComponentContext, arg: Any?): S =
+        context.findKeysForContext(key).map { contextKey ->
+            context.injectByKey<T>(contextKey)
+        }.toSet() as S
+}

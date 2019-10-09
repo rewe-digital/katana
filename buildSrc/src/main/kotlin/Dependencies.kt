@@ -8,10 +8,10 @@ object Versions {
     const val androidXLifecycleExtensions = "2.0.0"
     const val androidXLifecycleViewModel = "2.0.0"
     const val androidXLifecycleViewModelSavedState = "1.0.0-alpha03"
-    const val gradleVersionsPlugin = "0.22.0"
-    const val kluent = "1.53"
+    const val gradleVersionsPlugin = "0.25.0"
+    const val kluent = "1.56"
     const val kotlin = "1.3.50"
-    const val spek = "2.0.6"
+    const val spek = "2.0.8"
 }
 
 object Dependencies {

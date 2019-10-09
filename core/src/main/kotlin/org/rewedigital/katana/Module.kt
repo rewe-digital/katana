@@ -1,6 +1,5 @@
 package org.rewedigital.katana
 
-import org.rewedigital.katana.dsl.ModuleDslMarker
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -10,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
 fun createModule(
     name: String? = null,
     includes: Iterable<Module> = emptyList(),
-    body: Module.() -> Unit = {}
+    body: ModuleBindingContext.() -> Unit = {}
 ) =
     Module(
         name = name,
@@ -28,12 +27,13 @@ fun createModule(
  *
  * @see Component
  */
-@ModuleDslMarker
 class Module private constructor(
     internal val id: Int,
     internal val name: String?,
     internal val includes: Iterable<Module>
 ) {
+    private val bindingContext = ModuleBindingContext(this)
+
     /**
      * Creates a module (with an optional name).
      *
@@ -45,13 +45,13 @@ class Module private constructor(
     constructor(
         name: String? = null,
         includes: Iterable<Module> = emptyList(),
-        declarations: Module.() -> Unit = {}
+        declarations: ModuleBindingContext.() -> Unit = {}
     ) : this(
         id = ModuleIdProvider.id,
         name = name,
         includes = includes
     ) {
-        declarations.invoke(this)
+        declarations.invoke(bindingContext)
     }
 
     internal val declarations = Katana.environmentContext.mapFactory().create<Key, Declaration<*>>()

@@ -109,7 +109,7 @@ internal class SavedStateViewModelKatanaProvider<VM : ViewModel>(
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  * @param defaultArgs Optional default args that are passed to [AbstractSavedStateViewModelFactory]
  */
-inline fun <reified VM : ViewModel> Module.viewModelSavedState(
+inline fun <reified VM : ViewModel> ModuleBindingContext.viewModelSavedState(
     key: String? = null,
     defaultArgs: Bundle? = null,
     noinline body: ProviderDsl.(state: SavedStateHandle) -> VM
@@ -158,7 +158,7 @@ inline fun <reified VM : ViewModel> ProviderDsl.viewModelSavedState(activity: Fr
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.viewModelSavedStateNow(fragment: Fragment, key: String? = null) =
     custom<VM>(
@@ -171,7 +171,7 @@ inline fun <reified VM : ViewModel> Component.viewModelSavedStateNow(fragment: F
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.viewModelSavedState(fragment: Fragment, key: String? = null) =
     lazy { viewModelSavedStateNow<VM>(fragment, key) }
@@ -181,7 +181,7 @@ inline fun <reified VM : ViewModel> Component.viewModelSavedState(fragment: Frag
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.viewModelSavedStateNow(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.viewModelSavedStateNow<VM>(this, key)
@@ -191,7 +191,7 @@ inline fun <reified VM : ViewModel, T> T.viewModelSavedStateNow(key: String? = n
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.viewModelSavedState(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.viewModelSavedState<VM>(this, key)
@@ -201,7 +201,7 @@ inline fun <reified VM : ViewModel, T> T.viewModelSavedState(key: String? = null
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.activityViewModelSavedStateNow(fragment: Fragment, key: String? = null) =
     custom<VM>(
@@ -214,7 +214,7 @@ inline fun <reified VM : ViewModel> Component.activityViewModelSavedStateNow(fra
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.activityViewModelSavedState(fragment: Fragment, key: String? = null) =
     lazy { activityViewModelSavedStateNow<VM>(fragment, key) }
@@ -224,7 +224,7 @@ inline fun <reified VM : ViewModel> Component.activityViewModelSavedState(fragme
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModelSavedStateNow(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.activityViewModelSavedStateNow<VM>(this, key)
@@ -234,7 +234,7 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelSavedStateNow(key: Str
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModelSavedState(key: String? = null) where T : KatanaTrait, T : Fragment =
     component.activityViewModelSavedState<VM>(this, key)
@@ -244,7 +244,7 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelSavedState(key: String
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.viewModelSavedStateNow(activity: FragmentActivity, key: String? = null) =
     custom<VM>(
@@ -257,7 +257,7 @@ inline fun <reified VM : ViewModel> Component.viewModelSavedStateNow(activity: F
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel> Component.viewModelSavedState(activity: FragmentActivity, key: String? = null) =
     lazy { viewModelSavedStateNow<VM>(activity, key) }
@@ -267,7 +267,7 @@ inline fun <reified VM : ViewModel> Component.viewModelSavedState(activity: Frag
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.viewModelSavedStateNow(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
     component.viewModelSavedStateNow<VM>(this, key)
@@ -277,7 +277,7 @@ inline fun <reified VM : ViewModel, T> T.viewModelSavedStateNow(key: String? = n
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
- * @see Module.viewModelSavedState
+ * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.viewModelSavedState(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
     component.viewModelSavedState<VM>(this, key)

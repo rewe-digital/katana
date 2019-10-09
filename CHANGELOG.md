@@ -1,3 +1,12 @@
+## Version 1.8
+
+_2019-10-09_
+
+* Add `set` multi-binding functionality
+* Remove deprecated functions
+* Deprecate old DSL and promote "compact" DSL to default DSL
+* **Note:** Changes of this version are source but **not binary** compatible!
+
 ## Version 1.7.1
 
 _2019-08-29_

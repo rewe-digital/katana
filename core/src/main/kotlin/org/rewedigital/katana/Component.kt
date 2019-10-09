@@ -137,6 +137,10 @@ class Component(
                         getMessage = { "Returning existing eager singleton instance for ${key.stringIdentifier}" },
                         createMessage = { "Created eager singleton instance for ${key.stringIdentifier}" }
                     )
+                    SET -> declaration.provider(context).let { newInstance ->
+                        Logger.debug { "Created set instance for ${key.stringIdentifier}" }
+                        Instance(newInstance as T)
+                    }
                     CUSTOM -> declaration.provider(context, arg).let { newInstance ->
                         Logger.debug { "Created custom instance for ${key.stringIdentifier}" }
                         Instance(newInstance as T)
@@ -176,6 +180,9 @@ class Component(
 
     internal fun <T> injectByKey(key: Key, arg: Any?) =
         context.injectByKey<T>(key = key, arg = arg)
+
+    internal fun findKeysForContext(contextKey: Key): Iterable<Key> =
+        declarations.keys.filter { key -> key.contextKey == contextKey }
 
     /**
      * Returns `true` if this component is capable of injecting requested dependency.
@@ -311,7 +318,7 @@ class ComponentContext private constructor(
 ) {
 
     @PublishedApi
-    internal fun <T> injectByKey(key: Key, internal: Boolean = false, arg: Any?): T {
+    internal fun <T> injectByKey(key: Key, internal: Boolean = false, arg: Any? = null): T {
         val instance = thisComponent.thisComponentInjectByKey<T>(key, internal, arg)
         return when {
             instance != null -> instance.value
@@ -330,6 +337,10 @@ class ComponentContext private constructor(
             else -> dependsOn.any { component -> component.canInject(key) }
         }
 
+    internal fun findKeysForContext(contextKey: Key): Iterable<Key> =
+        thisComponent.findKeysForContext(contextKey)
+            .plus(dependsOn.flatMap { it.findKeysForContext(contextKey) })
+
     inline fun <reified T> canInject(name: Any? = null, internal: Boolean = false) =
         canInject(key = Key.of(T::class.java, name), internal = internal)
 
@@ -338,7 +349,7 @@ class ComponentContext private constructor(
     }
 
     inline fun <reified T> injectNow(name: Any? = null, internal: Boolean = false) =
-        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal, arg = null)
+        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
 
     inline fun <reified T> custom(name: Any? = null, internal: Boolean = false, arg: Any? = null) =
         injectByKey<T>(key = Key.of(T::class.java, name), internal = internal, arg = arg)
@@ -355,7 +366,7 @@ private fun Iterable<Declarations>.collect(each: ((Declaration<*>) -> Unit)? = n
         currDeclarations.entries.forEach { entry ->
             val existingDeclaration = acc[entry.key]
             existingDeclaration?.let { declaration ->
-                if (declaration.moduleId != entry.value.moduleId && !declaration.internal)
+                if (declaration.moduleId != entry.value.moduleId && !declaration.internal && !declaration.type.permitsRedeclaration)
                     throw OverrideException(entry.value.toString(), declaration.toString())
             }
             each?.invoke(entry.value)
