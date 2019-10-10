@@ -1,6 +1,6 @@
-## Version 1.8
+## Version 1.8.0
 
-_2019-10-09_
+_2019-10-10_
 
 * Add `set` multi-binding functionality
 * Remove deprecated functions
