@@ -229,6 +229,7 @@ If you need help, visit our Slack [channel](https://kotlinlang.slack.com/message
 * [Android UI testing with Katana](https://medium.com/@caffeine81/android-ui-testing-with-katana-97e5301e5cda)
 * [Android Fragments & dependency injection](https://medium.com/@caffeine81/android-fragments-dependency-injection-c22b4c03142e)
 * [Dependency injection into Android ViewModels (with Savedstate)](https://medium.com/@caffeine81/dependency-injection-into-android-viewmodels-with-savedstate-78241dfe0147)
+* [Multibindings with Katana](https://medium.com/@caffeine81/multibindings-with-katana-5af7bcdf6377)
 * [Slides](https://drive.google.com/file/d/1hDslldu2vOa-sdIEjVAPY51ZYX_Imlt6/view) of a talk about Katana at the Kotlin User Group Cologne
 
 ## License
