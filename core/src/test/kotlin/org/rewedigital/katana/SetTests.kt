@@ -72,6 +72,31 @@ object SetTests : Spek(
                 set shouldContain "World"
             }
 
+            it("should provide named set injection across modules") {
+                val module1 = Module {
+                    set<String>(name = "a set") {
+                        factory { "Hello" }
+                    }
+
+                    set<String>(name = "another set") {
+                        factory { "Hello 2" }
+                    }
+                }
+
+                val module2 = Module {
+                    set<String>(name = "a set") {
+                        factory { "World" }
+                    }
+                }
+
+                val component = Component(modules = listOf(module1, module2))
+                val set: Set<String> = component.injectNow(name = "a set")
+
+                set shouldHaveSize 2
+                set shouldContain "Hello"
+                set shouldContain "World"
+            }
+
             it("should provide set injection across components") {
                 val module1 = Module {
                     set<String> {
