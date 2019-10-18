@@ -2,19 +2,26 @@
   <dictionary name="sven">
     <words>
       <w>amshove</w>
+      <w>anko</w>
       <w>bintray</w>
+      <w>constraintlayout</w>
+      <w>coroutines</w>
       <w>dokka</w>
+      <w>jakewharton</w>
       <w>jfrog</w>
       <w>katana</w>
       <w>kluent</w>
       <w>kodein</w>
       <w>koin</w>
+      <w>kotlinx</w>
+      <w>leakcanary</w>
       <w>mannodermaus</w>
       <w>nield</w>
       <w>rewedigital</w>
       <w>savedstate</w>
       <w>spek</w>
       <w>spekframework</w>
+      <w>squareup</w>
       <w>viewmodel</w>
     </words>
   </dictionary>
