@@ -14,19 +14,19 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.KatanaApp
 import org.rewedigital.katana.android.example.R
+import org.rewedigital.katana.android.example.main.MainModule
 import org.rewedigital.katana.android.example.main.Modules
-import org.rewedigital.katana.android.example.main.createMainModule
 import org.rewedigital.katana.android.example.main.presenter.MainPresenter
-import org.rewedigital.katana.android.modules.createActivityModule
+import org.rewedigital.katana.android.modules.ActivityModule
 import org.rewedigital.katana.inject
 
 class MainActivity : AppCompatActivity(),
-                     KatanaTrait,
-                     MainView {
+    KatanaTrait,
+    MainView {
 
     // Component is created and referenced only from this Activity
     override val component = Component(
-        modules = listOf(createActivityModule(this), createMainModule(this)) + Modules.modules,
+        modules = listOf(ActivityModule(this), MainModule(this)) + Modules.modules,
         dependsOn = listOf(KatanaApp.applicationComponent)
     )
     private val presenter: MainPresenter by inject()

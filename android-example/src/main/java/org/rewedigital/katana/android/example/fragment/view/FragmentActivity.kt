@@ -6,7 +6,7 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.fragmentActivityModule
-import org.rewedigital.katana.android.modules.createActivityModule
+import org.rewedigital.katana.android.modules.ActivityModule
 
 /**
  * @see FirstFragment
@@ -16,7 +16,7 @@ class FragmentActivity : AppCompatActivity(), KatanaTrait {
 
     override val component: Component = Component(
         modules = listOf(
-            createActivityModule(this),
+            ActivityModule(this),
             fragmentActivityModule
         )
     )

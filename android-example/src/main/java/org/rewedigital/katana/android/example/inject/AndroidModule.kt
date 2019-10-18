@@ -13,7 +13,7 @@ import org.rewedigital.katana.dsl.get
  *
  * @see org.rewedigital.katana.android.modules.createApplicationModule
  */
-val androidModule = Module {
+val AndroidModule = Module {
 
     factory { get<Context>(APPLICATION_CONTEXT).resources }
 }

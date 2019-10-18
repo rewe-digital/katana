@@ -33,8 +33,8 @@ class MainEspressoTest {
 
         // Overwrite modules with mock implementation
         Modules.modules = listOf(
-            testSuccessApiMockModule,
-            createTestRepositoryModule(repositoryIdlingResource)
+            TestSuccessApiMockModule,
+            TestRepositoryModule(repositoryIdlingResource)
         )
 
         IdlingRegistry.getInstance().register(repositoryIdlingResource)

@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package org.rewedigital.katana.android.example.main
 
 import android.content.Context
@@ -16,8 +18,8 @@ import org.rewedigital.katana.android.example.main.view.MainActivity
 import org.rewedigital.katana.android.example.main.view.MainView
 import org.rewedigital.katana.android.modules.ACTIVITY
 import org.rewedigital.katana.android.modules.ACTIVITY_CONTEXT
-import org.rewedigital.katana.dsl.singleton
 import org.rewedigital.katana.dsl.get
+import org.rewedigital.katana.dsl.singleton
 
 /**
  * This module demonstrates how the current [Context] can be injected safely.
@@ -28,7 +30,7 @@ import org.rewedigital.katana.dsl.get
  * @see MainActivity
  * @see ButtonMapper
  */
-fun createMainModule(activity: MainActivity) = Module {
+fun MainModule(activity: MainActivity) = Module {
 
     singleton<ButtonMapper> { ButtonMapperImpl(get(ACTIVITY_CONTEXT)) }
 

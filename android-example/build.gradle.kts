@@ -7,10 +7,10 @@ buildscript {
 }
 
 plugins {
-    id("com.android.application") version "3.5.0"
+    id("com.android.application") version "3.5.1"
     kotlin("android") version "1.3.50"
     kotlin("android.extensions") version "1.3.50"
-    id("com.github.ben-manes.versions") version "0.22.0"
+    id("com.github.ben-manes.versions") version "0.27.0"
 }
 
 android {
@@ -22,23 +22,23 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.8.0"
+        versionName = "1.8.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.8.0")
-    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.8.0-alpha03")
+    implementation("org.rewedigital.katana:katana-android:1.8.1")
+    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.8.1-beta01")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
-    implementation("com.squareup.retrofit2:retrofit:2.6.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.6.1")
+    implementation("com.squareup.retrofit2:retrofit:2.6.2")
+    implementation("com.squareup.retrofit2:converter-moshi:2.6.2")
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     implementation("com.squareup.moshi:moshi:1.8.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.8.0") {
@@ -59,17 +59,16 @@ repositories {
 }
 
 tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
-    resolutionStrategy {
-        componentSelection {
-            all {
-                val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview", "b", "ea")
-                    .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-+]*") }
-                    .any { it.matches(candidate.version) }
-                if (rejected) {
-                    reject("Release candidate")
-                }
-            }
-        }
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword =
+            listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+        val regex = "^[0-9,.v-]+$".toRegex()
+        val isStable = stableKeyword || regex.matches(version)
+        return isStable.not()
+    }
+
+    rejectVersionIf {
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }
 

@@ -1,3 +1,5 @@
+@file:Suppress("TestFunctionName")
+
 package org.rewedigital.katana.android.example.main
 
 import androidx.test.espresso.idling.CountingIdlingResource
@@ -6,14 +8,14 @@ import org.rewedigital.katana.android.example.remote.*
 import org.rewedigital.katana.dsl.singleton
 import org.rewedigital.katana.dsl.get
 
-val testSuccessApiMockModule = Module("testSuccessApiMockModule") {
+val TestSuccessApiMockModule = Module("TestSuccessApiMockModule") {
 
     singleton<JsonPlaceholderApi> {
         JsonPlaceholderApiSuccessMock()
     }
 }
 
-val testErrorApiMockModule = Module("testErrorApiMockModule") {
+val TestErrorApiMockModule = Module("TestErrorApiMockModule") {
 
     singleton<JsonPlaceholderApi> {
         JsonPlaceholderApiErrorMock()
@@ -23,7 +25,7 @@ val testErrorApiMockModule = Module("testErrorApiMockModule") {
 const val TEST_REPO = "TEST_REPO"
 const val TEST_IDLING_RESOURCE = "TEST_IDLING_RESOURCE"
 
-fun createTestRepositoryModule(repositoryIdlingResource: CountingIdlingResource) =
+fun TestRepositoryModule(repositoryIdlingResource: CountingIdlingResource) =
     Module("testRepositoryModule") {
 
         singleton(name = TEST_IDLING_RESOURCE) { repositoryIdlingResource }

@@ -10,7 +10,7 @@ import org.rewedigital.katana.dsl.get
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-val moshiModule = Module("moshiModule") {
+val MoshiModule = Module("MoshiModule") {
 
     singleton {
         Moshi.Builder()
@@ -19,7 +19,7 @@ val moshiModule = Module("moshiModule") {
     }
 }
 
-val retrofitModule = Module("retrofitModule") {
+val RetrofitModule = Module("RetrofitModule") {
 
     factory {
         Retrofit.Builder()
@@ -28,7 +28,7 @@ val retrofitModule = Module("retrofitModule") {
     }
 }
 
-val apiModule = Module("apiModule") {
+val ApiModule = Module("ApiModule") {
 
     singleton {
         get<Retrofit.Builder>()
@@ -38,7 +38,7 @@ val apiModule = Module("apiModule") {
     }
 }
 
-val repositoryModule = Module("repositoryModule") {
+val RepositoryModule = Module("RepositoryModule") {
 
     singleton<JsonPlaceholderRepository> { JsonPlaceholderRepositoryImpl(get()) }
 }

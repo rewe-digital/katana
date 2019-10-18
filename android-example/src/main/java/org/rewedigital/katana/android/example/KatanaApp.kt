@@ -7,8 +7,8 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.Katana
 import org.rewedigital.katana.android.AndroidKatanaLogger
 import org.rewedigital.katana.android.environment.AndroidEnvironmentContext
-import org.rewedigital.katana.android.example.inject.androidModule
-import org.rewedigital.katana.android.modules.createApplicationModule
+import org.rewedigital.katana.android.example.inject.AndroidModule
+import org.rewedigital.katana.android.modules.ApplicationModule
 
 class KatanaApp : Application() {
 
@@ -37,8 +37,8 @@ class KatanaApp : Application() {
         Katana.environmentContext = AndroidEnvironmentContext()
 
         applicationComponent = Component(
-            createApplicationModule(this),
-            androidModule
+            ApplicationModule(this),
+            AndroidModule
         )
     }
 
