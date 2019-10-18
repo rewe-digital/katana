@@ -1,3 +1,10 @@
+## Version 1.8.1
+
+_2019-10-18_
+
+* Rename module factory functions of `katana-android` artifact
+* Update AndroidX Lifecycle and ViewModel dependencies
+
 ## Version 1.8.0
 
 _2019-10-10_
