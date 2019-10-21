@@ -75,13 +75,6 @@ inline fun <reified VM : ViewModel> ProviderDsl.viewModel(owner: ViewModelStoreO
 /**
  * Provides [Fragment] [ViewModel] instance scoped to its [FragmentActivity] declared in current injection context.
  */
-@Deprecated(
-    message = "Use viewModel(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModel(owner = fragment.requireActivity(), key = key)",
-        "org.rewedigital.katana.androidx.viewmodel.viewModel"
-    )
-)
 inline fun <reified VM : ViewModel> ProviderDsl.activityViewModel(fragment: Fragment, key: String? = null) =
     viewModel<VM>(owner = fragment.requireActivity(), key = key)
 //</editor-fold>
@@ -99,6 +92,13 @@ inline fun <reified VM : ViewModel> Component.viewModelNow(owner: ViewModelStore
         injectNow(name = viewModelName(VM::class.java, key))
     }
 
+@PublishedApi
+internal inline fun <reified VM : ViewModel> Component.internalViewModel(
+    noinline ownerProvider: () -> ViewModelStoreOwner,
+    key: String? = null
+) =
+    lazy { viewModelNow<VM>(ownerProvider(), key) }
+
 /**
  * Injects [ViewModel] of specified [ViewModelStoreOwner].
  *
@@ -107,7 +107,7 @@ inline fun <reified VM : ViewModel> Component.viewModelNow(owner: ViewModelStore
  * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel> Component.viewModel(owner: ViewModelStoreOwner, key: String? = null) =
-    lazy { viewModelNow<VM>(owner, key) }
+    internalViewModel<VM>(ownerProvider = { owner }, key = key)
 
 /**
  * Immediately injects [ViewModel] of current [ViewModelStoreOwner] implementing [KatanaTrait] interface.
@@ -136,13 +136,6 @@ inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T 
  *
  * @see ModuleBindingContext.viewModel
  */
-@Deprecated(
-    message = "Use viewModelNow(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModelNow(owner = fragment.requireActivity(), key = key)",
-        "org.rewedigital.katana.androidx.viewmodel.viewModelNow"
-    )
-)
 inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fragment, key: String? = null) =
     viewModelNow<VM>(owner = fragment.requireActivity(), key = key)
 
@@ -153,15 +146,8 @@ inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fra
  *
  * @see ModuleBindingContext.viewModel
  */
-@Deprecated(
-    message = "Use viewModel(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModelNow(owner = fragment.requireActivity(), key = key)",
-        "org.rewedigital.katana.androidx.viewmodel.viewModel"
-    )
-)
 inline fun <reified VM : ViewModel> Component.activityViewModel(fragment: Fragment, key: String? = null) =
-    lazy { activityViewModelNow<VM>(fragment, key) }
+    internalViewModel<VM>(ownerProvider = { fragment.requireActivity() }, key = key)
 
 /**
  * Immediately injects [ViewModel] of current [Fragment] implementing [KatanaTrait] scoped to its [FragmentActivity].
@@ -181,5 +167,5 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelNow(key: String? = nul
  * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModel(key: String? = null) where T : KatanaTrait, T : Fragment =
-    component.viewModel<VM>(owner = requireActivity(), key = key)
+    component.internalViewModel<VM>(ownerProvider = { requireActivity() }, key = key)
 //</editor-fold>

@@ -1,3 +1,9 @@
+## Version 1.8.3
+
+_2019-10-21_
+
+* Bugfix: Fixed bug introduced in 1.8.2 regarding Activity ViewModel injection
+
 ## Version 1.8.2
 
 _2019-10-21_

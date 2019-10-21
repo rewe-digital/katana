@@ -118,13 +118,6 @@ inline fun <reified VM : ViewModel, OWNER> ProviderDsl.viewModelSavedState(owner
 /**
  * Provides [Fragment] [ViewModel] instance with a [SavedStateHandle] scoped to its [FragmentActivity] declared in current injection context.
  */
-@Deprecated(
-    message = "Use viewModelSavedState(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModelSavedState(fragment.requireActivity())",
-        "org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedState"
-    )
-)
 inline fun <reified VM : ViewModel> ProviderDsl.activityViewModelSavedState(fragment: Fragment, key: String? = null) =
     viewModelSavedState<VM, FragmentActivity>(owner = fragment.requireActivity(), key = key)
 //</editor-fold>
@@ -148,6 +141,13 @@ inline fun <reified VM : ViewModel, OWNER> Component.viewModelSavedStateNow(owne
         )
     )
 
+@PublishedApi
+internal inline fun <reified VM : ViewModel, OWNER> Component.internalViewModelSavedState(
+    noinline ownerProvider: () -> OWNER,
+    key: String? = null
+) where OWNER : ViewModelStoreOwner, OWNER : SavedStateRegistryOwner =
+    lazy { viewModelSavedStateNow<VM, OWNER>(ownerProvider(), key) }
+
 /**
  * Injects [ViewModel] with a [SavedStateHandle].
  *
@@ -157,7 +157,7 @@ inline fun <reified VM : ViewModel, OWNER> Component.viewModelSavedStateNow(owne
  */
 inline fun <reified VM : ViewModel, OWNER> Component.viewModelSavedState(owner: OWNER, key: String? = null)
         where OWNER : ViewModelStoreOwner, OWNER : SavedStateRegistryOwner =
-    lazy { viewModelSavedStateNow<VM, OWNER>(owner, key) }
+    internalViewModelSavedState<VM, OWNER>(ownerProvider = { owner }, key = key)
 
 /**
  * Immediately injects [ViewModel] with a [SavedStateHandle] of current owner implementing [KatanaTrait] interface.
@@ -188,13 +188,6 @@ inline fun <reified VM : ViewModel, T> T.viewModelSavedState(key: String? = null
  *
  * @see ModuleBindingContext.viewModelSavedState
  */
-@Deprecated(
-    message = "Use viewModelSavedStateNow(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModelSavedStateNow(owner = fragment.requireActivity(), key = key)",
-        "org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedStateNow"
-    )
-)
 inline fun <reified VM : ViewModel> Component.activityViewModelSavedStateNow(fragment: Fragment, key: String? = null) =
     viewModelSavedStateNow<VM, FragmentActivity>(
         owner = fragment.requireActivity(),
@@ -208,15 +201,11 @@ inline fun <reified VM : ViewModel> Component.activityViewModelSavedStateNow(fra
  *
  * @see ModuleBindingContext.viewModelSavedState
  */
-@Deprecated(
-    message = "Use viewModelSavedState(ViewModelStoreOwner) passing the Activity",
-    replaceWith = ReplaceWith(
-        "viewModelSavedState(owner = fragment.requireActivity(), key = key)",
-        "org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedState"
-    )
-)
 inline fun <reified VM : ViewModel> Component.activityViewModelSavedState(fragment: Fragment, key: String? = null) =
-    lazy { activityViewModelSavedStateNow<VM>(fragment, key) }
+    internalViewModelSavedState<VM, FragmentActivity>(
+        ownerProvider = { fragment.requireActivity() },
+        key = key
+    )
 
 /**
  * Immediately injects [ViewModel] with a [SavedStateHandle] of current [Fragment] implementing [KatanaTrait] scoped to its [FragmentActivity].
@@ -236,5 +225,8 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelSavedStateNow(key: Str
  * @see ModuleBindingContext.viewModelSavedState
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModelSavedState(key: String? = null) where T : KatanaTrait, T : Fragment =
-    component.viewModelSavedState<VM, FragmentActivity>(owner = requireActivity(), key = key)
+    component.internalViewModelSavedState<VM, FragmentActivity>(
+        ownerProvider = { requireActivity() },
+        key = key
+    )
 //<editor-fold>
