@@ -12,5 +12,4 @@ dependencies {
     api(project(":core"))
     api(Dependencies.androidXFragment)
     api(Dependencies.androidXLifecycleViewModel)
-    api(Dependencies.androidXLifecycleExtensions)
 }

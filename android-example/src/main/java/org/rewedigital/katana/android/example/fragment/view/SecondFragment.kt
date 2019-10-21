@@ -14,7 +14,6 @@ import org.rewedigital.katana.android.example.fragment.model.SecondFragmentViewM
 import org.rewedigital.katana.android.example.fragment.secondFragmentModule
 import org.rewedigital.katana.android.fragment.KatanaFragment
 import org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedStateNow
-import org.rewedigital.katana.androidx.viewmodel.viewModelNow
 import org.rewedigital.katana.injectNow
 
 /**

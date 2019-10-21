@@ -4,8 +4,7 @@ object Versions {
     const val androidMavenPublishPlugin = "3.6.2"
     const val androidPlugin = "3.3.2"
     const val androidXCollection = "1.1.0"
-    const val androidXFragment = "1.0.0"
-    const val androidXLifecycleExtensions = "2.1.0"
+    const val androidXFragment = "1.1.0"
     const val androidXLifecycleViewModel = "2.1.0"
     const val androidXLifecycleViewModelSavedState = "1.0.0-beta01"
     const val gradleVersionsPlugin = "0.27.0"
@@ -22,8 +21,6 @@ object Dependencies {
     const val androidPlugin = "com.android.tools.build:gradle:${Versions.androidPlugin}"
     const val androidXCollection = "androidx.collection:collection:${Versions.androidXCollection}"
     const val androidXFragment = "androidx.fragment:fragment:${Versions.androidXFragment}"
-    const val androidXLifecycleExtensions =
-        "androidx.lifecycle:lifecycle-extensions:${Versions.androidXLifecycleExtensions}"
     const val androidXLifecycleViewModel =
         "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidXLifecycleViewModel}"
     const val androidXLifecycleViewModelSavedState =

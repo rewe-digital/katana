@@ -1,10 +1,12 @@
+@file:Suppress("unused")
+
 package org.rewedigital.katana.androidx.viewmodel
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelStoreOwner
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.ModuleBindingContext
@@ -33,22 +35,12 @@ internal inline fun <reified VM : ViewModel> ViewModelProvider.get(key: String?)
 internal object InternalViewModelProvider {
 
     inline fun <reified VM : ViewModel> of(
-        fragment: Fragment,
+        owner: ViewModelStoreOwner,
         key: String?,
         noinline viewModelProvider: () -> ViewModel
     ) =
-        ViewModelProviders.of(
-            fragment,
-            KatanaViewModelProviderFactory(viewModelProvider)
-        ).get<VM>(key)
-
-    inline fun <reified VM : ViewModel> of(
-        activity: FragmentActivity,
-        key: String?,
-        noinline viewModelProvider: () -> ViewModel
-    ) =
-        ViewModelProviders.of(
-            activity,
+        ViewModelProvider(
+            owner,
             KatanaViewModelProviderFactory(viewModelProvider)
         ).get<VM>(key)
 }
@@ -69,76 +61,72 @@ internal object InternalViewModelProvider {
 inline fun <reified VM : ViewModel> ModuleBindingContext.viewModel(
     key: String? = null,
     noinline body: ProviderDsl.() -> VM
-) {
+) =
     factory(name = viewModelName(modelClass = VM::class.java, key = key), body = body)
-}
 
 /**
- * Provides [Fragment] [ViewModel] instance declared in current injection context.
+ * Provides [ViewModel] instance of given [ViewModelStoreOwner] declared in current injection context.
  */
-inline fun <reified VM : ViewModel> ProviderDsl.viewModel(fragment: Fragment, key: String? = null) =
-    InternalViewModelProvider.of<VM>(fragment, key) {
+inline fun <reified VM : ViewModel> ProviderDsl.viewModel(owner: ViewModelStoreOwner, key: String? = null) =
+    InternalViewModelProvider.of<VM>(owner, key) {
         context.injectNow(name = viewModelName(VM::class.java, key))
     }
 
 /**
  * Provides [Fragment] [ViewModel] instance scoped to its [FragmentActivity] declared in current injection context.
  */
+@Deprecated(
+    message = "Use viewModel(ViewModelStoreOwner) passing the Activity",
+    replaceWith = ReplaceWith(
+        "viewModel(owner = fragment.requireActivity(), key = key)",
+        "org.rewedigital.katana.androidx.viewmodel.viewModel"
+    )
+)
 inline fun <reified VM : ViewModel> ProviderDsl.activityViewModel(fragment: Fragment, key: String? = null) =
-    InternalViewModelProvider.of<VM>(fragment.requireActivity(), key) {
-        context.injectNow(name = viewModelName(VM::class.java, key))
-    }
-
-/**
- * Provides [FragmentActivity] [ViewModel] instance declared in current injection context.
- */
-inline fun <reified VM : ViewModel> ProviderDsl.viewModel(activity: FragmentActivity, key: String? = null) =
-    InternalViewModelProvider.of<VM>(activity, key) {
-        context.injectNow(name = viewModelName(VM::class.java, key))
-    }
+    viewModel<VM>(owner = fragment.requireActivity(), key = key)
 //</editor-fold>
 
 //<editor-fold desc="Injection extension functions">
 /**
- * Immediately injects [ViewModel] of specified [Fragment].
+ * Immediately injects [ViewModel] of specified [ViewModelStoreOwner].
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
  * @see ModuleBindingContext.viewModel
  */
-inline fun <reified VM : ViewModel> Component.viewModelNow(fragment: Fragment, key: String? = null) =
-    InternalViewModelProvider.of<VM>(fragment, key) {
+inline fun <reified VM : ViewModel> Component.viewModelNow(owner: ViewModelStoreOwner, key: String? = null) =
+    InternalViewModelProvider.of<VM>(owner, key) {
         injectNow(name = viewModelName(VM::class.java, key))
     }
 
 /**
- * Injects [ViewModel] of specified [Fragment].
+ * Injects [ViewModel] of specified [ViewModelStoreOwner].
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
  * @see ModuleBindingContext.viewModel
  */
-inline fun <reified VM : ViewModel> Component.viewModel(fragment: Fragment, key: String? = null) =
-    lazy { viewModelNow<VM>(fragment, key) }
+inline fun <reified VM : ViewModel> Component.viewModel(owner: ViewModelStoreOwner, key: String? = null) =
+    lazy { viewModelNow<VM>(owner, key) }
 
 /**
- * Immediately injects [ViewModel] of current [Fragment] implementing [KatanaTrait] interface.
+ * Immediately injects [ViewModel] of current [ViewModelStoreOwner] implementing [KatanaTrait] interface.
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
  * @see ModuleBindingContext.viewModel
  */
-inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where T : KatanaTrait, T : Fragment =
+inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where T : KatanaTrait, T : ViewModelStoreOwner =
     component.viewModelNow<VM>(this, key)
 
 /**
- * Injects [ViewModel] of current [Fragment] implementing [KatanaTrait] interface.
+ * Injects [ViewModel] of current [ViewModelStoreOwner] implementing [KatanaTrait] interface.
  *
  * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
  *
  * @see ModuleBindingContext.viewModel
  */
-inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T : KatanaTrait, T : Fragment =
+inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T : KatanaTrait, T : ViewModelStoreOwner =
     component.viewModel<VM>(this, key)
 
 /**
@@ -148,10 +136,15 @@ inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T 
  *
  * @see ModuleBindingContext.viewModel
  */
+@Deprecated(
+    message = "Use viewModelNow(ViewModelStoreOwner) passing the Activity",
+    replaceWith = ReplaceWith(
+        "viewModelNow(owner = fragment.requireActivity(), key = key)",
+        "org.rewedigital.katana.androidx.viewmodel.viewModelNow"
+    )
+)
 inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fragment, key: String? = null) =
-    InternalViewModelProvider.of<VM>(fragment.requireActivity(), key) {
-        injectNow(name = viewModelName(VM::class.java, key))
-    }
+    viewModelNow<VM>(owner = fragment.requireActivity(), key = key)
 
 /**
  * Injects [ViewModel] of specified [Fragment] scoped to its [FragmentActivity].
@@ -160,6 +153,13 @@ inline fun <reified VM : ViewModel> Component.activityViewModelNow(fragment: Fra
  *
  * @see ModuleBindingContext.viewModel
  */
+@Deprecated(
+    message = "Use viewModel(ViewModelStoreOwner) passing the Activity",
+    replaceWith = ReplaceWith(
+        "viewModelNow(owner = fragment.requireActivity(), key = key)",
+        "org.rewedigital.katana.androidx.viewmodel.viewModel"
+    )
+)
 inline fun <reified VM : ViewModel> Component.activityViewModel(fragment: Fragment, key: String? = null) =
     lazy { activityViewModelNow<VM>(fragment, key) }
 
@@ -171,7 +171,7 @@ inline fun <reified VM : ViewModel> Component.activityViewModel(fragment: Fragme
  * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModelNow(key: String? = null) where T : KatanaTrait, T : Fragment =
-    component.activityViewModelNow<VM>(this, key)
+    component.viewModelNow<VM>(owner = requireActivity(), key = key)
 
 /**
  * Injects [ViewModel] of current [Fragment] implementing [KatanaTrait] scoped to its [FragmentActivity].
@@ -181,47 +181,5 @@ inline fun <reified VM : ViewModel, T> T.activityViewModelNow(key: String? = nul
  * @see ModuleBindingContext.viewModel
  */
 inline fun <reified VM : ViewModel, T> T.activityViewModel(key: String? = null) where T : KatanaTrait, T : Fragment =
-    component.activityViewModel<VM>(this, key)
-
-/**
- * Immediately injects [ViewModel] of specified [FragmentActivity].
- *
- * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
- *
- * @see ModuleBindingContext.viewModel
- */
-inline fun <reified VM : ViewModel> Component.viewModelNow(activity: FragmentActivity, key: String? = null) =
-    InternalViewModelProvider.of<VM>(activity, key) {
-        injectNow(name = viewModelName(VM::class.java, key))
-    }
-
-/**
- * Injects [ViewModel] of specified [FragmentActivity].
- *
- * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
- *
- * @see ModuleBindingContext.viewModel
- */
-inline fun <reified VM : ViewModel> Component.viewModel(activity: FragmentActivity, key: String? = null) =
-    lazy { viewModelNow<VM>(activity, key) }
-
-/**
- * Immediately injects [ViewModel] of current [FragmentActivity] implementing [KatanaTrait] interface.
- *
- * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
- *
- * @see ModuleBindingContext.viewModel
- */
-inline fun <reified VM : ViewModel, T> T.viewModelNow(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
-    component.viewModelNow<VM>(this, key)
-
-/**
- * Injects [ViewModel] of current [FragmentActivity] implementing [KatanaTrait] interface.
- *
- * @param key Optional key as required for `ViewModelProvider.get(String, Class)`
- *
- * @see ModuleBindingContext.viewModel
- */
-inline fun <reified VM : ViewModel, T> T.viewModel(key: String? = null) where T : KatanaTrait, T : FragmentActivity =
-    component.viewModel<VM>(this, key)
+    component.viewModel<VM>(owner = requireActivity(), key = key)
 //</editor-fold>
