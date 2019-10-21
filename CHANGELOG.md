@@ -1,3 +1,9 @@
+## Version 1.8.2
+
+_2019-10-21_
+
+* AndroidX ViewModel support: Remove usage of deprecated `lifecycle-extensions`
+
 ## Version 1.8.1
 
 _2019-10-18_
