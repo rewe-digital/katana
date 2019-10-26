@@ -56,9 +56,9 @@ A component is composed of one or more modules. It performs the actual injection
 instances of dependencies which have been declared as singletons. This concept is important to understand! As long as
 the same component reference is used, the same singleton instances will be provided by this component. The developer
 is responsible for holding component references and releasing them when necessary. Only when the component is eligible
-for garbage collection will it's singletons be GC'd, too. This applies for module instances which were passed to a 
+for garbage collection will its singletons be GC'd, too. This applies for module instances which were passed to a 
 component, too. Module instances should only be held by a component and not stored anywhere else. Especially when the
-module provides object instances outside of it's own scope which were passed to the module during creation.
+module provides object instances outside of its own scope which were passed to the module during creation.
 
 The component pattern has been introduced so that – especially in an Android environment – it is possible to inject
 objects that should be released when the view has been destroyed, like for example the current `Context`.
@@ -72,7 +72,7 @@ val myDependency: MyDependency by component.inject()
 By default injection is performed lazily with the `inject()` delegate. Dependencies can also be injected immediately 
 with `injectNow()`. Latter should rarely be used!
 
-Components can depend on other components. In this case the current component combines it's own dependency declarations
+Components can depend on other components. In this case the current component combines its own dependency declarations
 with those from the parent components. Parent components should always have a scope (lifetime) which is equal or greater
 than the current component or else memory leaks could be introduced. Imagine a component `A` and a component `B`. 
 Component `A` declares `B` as a dependent component. `B` should be released but if `A` has a greater scope and is still
