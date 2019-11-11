@@ -44,6 +44,7 @@ If you need help, visit our Slack [channel](https://kotlinlang.slack.com/message
 * [Dependency injection into Android ViewModels (with Savedstate)](https://medium.com/@caffeine81/dependency-injection-into-android-viewmodels-with-savedstate-78241dfe0147)
 * [Multibindings with Katana](https://medium.com/@caffeine81/multibindings-with-katana-5af7bcdf6377)
 * [Slides](https://drive.google.com/file/d/1hDslldu2vOa-sdIEjVAPY51ZYX_Imlt6/view) of a talk about Katana at the Kotlin User Group Cologne
+* More [Slides](https://drive.google.com/file/d/1vhhzERsgvseXPyIM1iQn9LT4iNd9j2Ag/view) (German) of a Katana talk held at the 2019 Kotlin/Everywhere event at REWE Digital in Cologne.
 
 ## License
 
