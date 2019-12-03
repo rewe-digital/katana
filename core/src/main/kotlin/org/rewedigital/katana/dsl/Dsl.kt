@@ -83,11 +83,11 @@ inline fun <reified T> ModuleBindingContext.eagerSingleton(
  * Declares an alias of type [A] with optional [name] of an already existing binding of type [T] with optional name
  * [originalName]. An alias is accomplished by and nothing else than a simple [factory] binding.
  *
- * A binding like `alias<MyClass, MyInterface>()` should be conceived as "alias MyClass as MyInterface".
+ * A binding like `alias<MyInterface, MyClass>()` should be conceived as "create alias MyInterface for MyClass".
  */
-inline fun <reified T : A, reified A> ModuleBindingContext.alias(
-    originalName: String? = null,
-    name: String? = null
+inline fun <reified A, reified T : A> ModuleBindingContext.alias(
+    name: String? = null,
+    originalName: String? = null
 ) {
     factory<A>(name = name) { get<T>(name = originalName) }
 }

@@ -16,7 +16,7 @@ object AliasTests : Spek(
 
                     singleton { MyComponentA() }
 
-                    alias<MyComponentA, MyComponent>()
+                    alias<MyComponent, MyComponentA>()
                 }
 
                 val component = Component(module)
@@ -33,9 +33,9 @@ object AliasTests : Spek(
 
                     singleton(name = "original name") { MyComponentA() }
 
-                    alias<MyComponentA, MyComponent>(
-                        originalName = "original name",
-                        name = "alias name"
+                    alias<MyComponent, MyComponentA>(
+                        name = "alias name",
+                        originalName = "original name"
                     )
                 }
 
