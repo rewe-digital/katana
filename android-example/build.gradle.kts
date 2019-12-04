@@ -8,8 +8,8 @@ buildscript {
 
 plugins {
     id("com.android.application") version "3.5.1"
-    kotlin("android") version "1.3.50"
-    kotlin("android.extensions") version "1.3.50"
+    kotlin("android") version "1.3.61"
+    kotlin("android.extensions") version "1.3.61"
     id("com.github.ben-manes.versions") version "0.27.0"
 }
 
@@ -33,7 +33,7 @@ dependencies {
     implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.9.0-beta01")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
