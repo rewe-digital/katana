@@ -1,3 +1,17 @@
+## Version 1.9.0
+
+_2019-12-04_
+
+With this release Santa Claus is bringing some premature Christmas presents 😉
+
+* Add `alias` keyword for binding an existing declaration under a different type and/or name
+* Add `get` keyword inside `set` declaration for assigning an existing dependency to a set 
+* Update Kotlin to 1.3.61
+* Remove deprecated functions &amp; features
+
+Special thanks to @dave08 for feature requests &amp; feedback 🙂  
+Wishing all users happy holidays &amp; a happy new year! 🎉
+
 ## Version 1.8.3
 
 _2019-10-21_
