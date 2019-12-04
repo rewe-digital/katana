@@ -172,7 +172,7 @@ object SetTests : Spek(
                 count2 shouldEqual 1
             }
 
-            it("should locate dependencies declared in outer scope") {
+            it("should locate dependencies declared in outer scope via factory") {
                 val module = Module {
                     factory(name = "outer scope") { "Hello world" }
 
@@ -185,6 +185,27 @@ object SetTests : Spek(
 
                 set shouldHaveSize 1
                 set shouldContain "Hello world"
+            }
+
+            it("should locate dependencies declared in outer scope via get") {
+                val module = Module {
+                    factory(name = "outer scope") { "Hello world" }
+                    singleton { "Another string" }
+                    factory<CharSequence> { "A char sequence" }
+
+                    set<CharSequence> {
+                        get<CharSequence, String>(name = "outer scope")
+                        get<CharSequence, String>()
+                        get()
+                    }
+                }
+                val component = Component(module)
+                val set: Set<String> = component.injectNow()
+
+                set shouldHaveSize 3
+                set shouldContain "Hello world"
+                set shouldContain "Another string"
+                set shouldContain "A char sequence"
             }
         }
     })

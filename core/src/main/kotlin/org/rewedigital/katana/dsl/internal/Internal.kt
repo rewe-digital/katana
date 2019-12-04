@@ -3,7 +3,7 @@ package org.rewedigital.katana.dsl.internal
 import org.rewedigital.katana.*
 
 @PublishedApi
-internal fun <CTX : BindingContext, T> moduleDeclaration(
+internal fun <CTX : BindingContext, T> declaration(
     context: CTX,
     clazz: Class<T>,
     name: Any?,

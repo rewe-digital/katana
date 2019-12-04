@@ -175,6 +175,8 @@ class Component(
      * @see inject
      * @throws InjectionException
      * @throws InstanceCreationException
+     *
+     * TODO: Rename to get()?
      */
     inline fun <reified T> injectNow(name: Any? = null) =
         context.injectNow<T>(name)
@@ -312,6 +314,7 @@ class ComponentContext private constructor(
         injectNow<T>(name = name, internal = internal)
     }
 
+    // TODO: Rename to get()?
     inline fun <reified T> injectNow(name: Any? = null, internal: Boolean = false) =
         injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
 
