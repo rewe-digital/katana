@@ -6,7 +6,7 @@ import org.rewedigital.katana.DefaultProvider
 import org.rewedigital.katana.ModuleBindingContext
 import org.rewedigital.katana.dsl.ModuleDslMarker
 import org.rewedigital.katana.dsl.ProviderDsl
-import org.rewedigital.katana.dsl.internal.moduleDeclaration
+import org.rewedigital.katana.dsl.internal.declaration
 
 /**
  * Declares a dependency binding.
@@ -52,7 +52,7 @@ class BindingDsl<T>(
         type: Type,
         body: ProviderDsl.() -> T
     ) =
-        moduleDeclaration(
+        declaration(
             context = context,
             clazz = clazz,
             name = name,

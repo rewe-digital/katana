@@ -27,6 +27,8 @@ inline fun <reified T> KatanaTrait.inject(name: Any? = null) =
 
 /**
  * @see Component.injectNow
+ *
+ * TODO: Rename to get()?
  */
 inline fun <reified T> KatanaTrait.injectNow(name: Any? = null) =
     withComponent { injectNow<T>(name) }

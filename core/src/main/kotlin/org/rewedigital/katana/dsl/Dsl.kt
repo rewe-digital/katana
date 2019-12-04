@@ -1,7 +1,7 @@
 package org.rewedigital.katana.dsl
 
 import org.rewedigital.katana.*
-import org.rewedigital.katana.dsl.internal.moduleDeclaration
+import org.rewedigital.katana.dsl.internal.declaration
 
 /**
  * Declares a dependency binding.
@@ -19,7 +19,7 @@ inline fun <reified T> ModuleBindingContext.factory(
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = name,
@@ -44,7 +44,7 @@ inline fun <reified T> ModuleBindingContext.singleton(
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = name,
@@ -70,7 +70,7 @@ inline fun <reified T> ModuleBindingContext.eagerSingleton(
     internal: Boolean = false,
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = name,
@@ -153,7 +153,7 @@ internal inline fun <reified T, reified S : Set<T>> ModuleBindingContext.interna
             module = module,
             key = Key.of(clazz = T::class.java, name = name)
         ).let { bindingContext ->
-            moduleDeclaration(
+            declaration(
                 context = this,
                 clazz = S::class.java,
                 name = name,
@@ -169,7 +169,7 @@ internal inline fun <reified T, reified S : Set<T>> ModuleBindingContext.interna
 inline fun <reified T> SetBindingContext<T>.factory(
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = null,
@@ -181,7 +181,7 @@ inline fun <reified T> SetBindingContext<T>.factory(
 inline fun <reified T> SetBindingContext<T>.singleton(
     noinline body: ProviderDsl.() -> T
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = null,
@@ -189,6 +189,26 @@ inline fun <reified T> SetBindingContext<T>.singleton(
         type = Declaration.Type.SINGLETON,
         provider = DefaultProvider(body)
     )
+
+/**
+ * Adds an already declared dependency in the context of the [Module] to this [Set].
+ *
+ * @param T type of the set
+ * @param V type of the value added to the set
+ */
+inline fun <T, reified V : T> SetBindingContext<T>.get(
+    name: String? = null
+) = declaration(
+    context = this,
+    clazz = V::class.java,
+    name = name,
+    internal = false,
+    type = Declaration.Type.CUSTOM,
+    provider = object : Provider<V> {
+        override fun invoke(context: ComponentContext, arg: Any?): V =
+            context.injectNow(name = name)
+    }
+)
 
 /**
  * Declares a custom binding with a custom implementation of [Provider].
@@ -203,7 +223,7 @@ inline fun <reified T> ModuleBindingContext.custom(
     internal: Boolean = false,
     provider: Provider<T>
 ) =
-    moduleDeclaration(
+    declaration(
         context = this,
         clazz = T::class.java,
         name = name,
