@@ -16,11 +16,3 @@ class ProviderDsl(val context: ComponentContext)
  */
 inline fun <reified T> ProviderDsl.get(name: Any? = null) =
     context.injectNow<T>(name = name, internal = true)
-
-/**
- * Provides a [Lazy] version of dependency. Should only be required to circumvent a circular dependency cycle.
- * Better solution is to structure classes in a way that circular dependencies are not necessary.
- */
-@Deprecated(message = "Use kotlin.lazy { get() }", replaceWith = ReplaceWith("kotlin.lazy { get(name) }"))
-inline fun <reified T> ProviderDsl.lazy(name: Any? = null) =
-    kotlin.lazy { get<T>(name) }

@@ -23,15 +23,6 @@ fun ApplicationModule(app: Application) = Module("ApplicationModule") {
     singleton<Context>(name = APPLICATION_CONTEXT) { app }
 }
 
-@Deprecated(
-    message = "Use ApplicationModule()",
-    replaceWith = ReplaceWith(
-        "ApplicationModule(app)",
-        "org.rewedigital.katana.android.modules.ApplicationModule"
-    )
-)
-fun createApplicationModule(app: Application) = ApplicationModule(app)
-
 const val ACTIVITY = "ACTIVITY"
 const val ACTIVITY_CONTEXT = "ACTIVITY_CONTEXT"
 
@@ -48,15 +39,6 @@ fun ActivityModule(activity: Activity) = Module("ActivityModule") {
     singleton<Context>(name = ACTIVITY_CONTEXT) { activity }
 }
 
-@Deprecated(
-    message = "Use ActivityModule()",
-    replaceWith = ReplaceWith(
-        "ActivityModule(activity)",
-        "org.rewedigital.katana.android.modules.ActivityModule"
-    )
-)
-fun createActivityModule(activity: Activity) = ActivityModule(activity)
-
 const val SUPPORT_FRAGMENT = "SUPPORT_FRAGMENT"
 const val SUPPORT_FRAGMENT_CONTEXT = "SUPPORT_FRAGMENT_CONTEXT"
 
@@ -70,12 +52,3 @@ fun SupportFragmentModule(fragment: Fragment) = Module("SupportFragmentModule") 
 
     factory(name = SUPPORT_FRAGMENT_CONTEXT) { fragment.context }
 }
-
-@Deprecated(
-    message = "Use SupportFragmentModule()",
-    replaceWith = ReplaceWith(
-        "SupportFragmentModule(fragment)",
-        "org.rewedigital.katana.android.modules.SupportFragmentModule"
-    )
-)
-fun createSupportFragmentModule(fragment: Fragment) = SupportFragmentModule(fragment)
