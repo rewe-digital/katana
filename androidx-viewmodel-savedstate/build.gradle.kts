@@ -8,7 +8,7 @@ configureBase(
     publicationComponent = components["android"]
 )
 
-version = "1.9.0-beta01"
+version = "1.10.0-beta01"
 
 dependencies {
     api(project(":core"))
