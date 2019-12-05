@@ -79,7 +79,7 @@ class Component(
     }
 
     @Suppress("UNCHECKED_CAST", "MemberVisibilityCanBePrivate")
-    internal fun <T> thisComponentInjectByKey(key: Key, internal: Boolean, arg: Any?): Instance<T>? {
+    internal fun <T> thisComponentFindInstance(key: Key, internal: Boolean, arg: Any?): Instance<T>? {
         val declaration = declarations[key]
         if (declaration == null || (declaration.internal && !internal)) {
             return null
@@ -310,7 +310,7 @@ class ComponentContext private constructor(
 
     @PublishedApi
     internal fun <T> findInstance(key: Key, internal: Boolean = false, arg: Any? = null): Instance<T>? {
-        val instance = thisComponent.thisComponentInjectByKey<T>(key, internal, arg)
+        val instance = thisComponent.thisComponentFindInstance<T>(key, internal, arg)
         return when {
             instance != null -> instance
             else -> {
