@@ -31,6 +31,6 @@ internal class SetProvider<T, S : Set<T>>(
     @Suppress("UNCHECKED_CAST")
     override fun invoke(context: ComponentContext, arg: Any?): S =
         context.findKeysForContext(key).map { contextKey ->
-            context.injectByKey<T>(contextKey)
+            context.findInstanceOrThrow<T>(contextKey).value
         }.toSet() as S
 }

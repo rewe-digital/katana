@@ -266,5 +266,49 @@ object InjectionTests : Spek(
 
                 component.custom<String>(name = "TEST", arg = "World") shouldEqual "Hello World"
             }
+
+            it("inject*OrNull functions should return null for non-declared bindings") {
+                val module = Module {
+
+                    factory { MyComponentA() }
+
+                    factory { MyComponentB<String>("value") }
+                }
+
+                val component = Component(module)
+
+                component.injectNowOrNull<MyComponentA>() shouldBeInstanceOf MyComponentA::class
+                component.injectNowOrNull<MyComponentB<String>>() shouldBeInstanceOf MyComponentB::class
+                component.injectNowOrNull<MyComponentC<Any, Any>>() shouldBe null
+
+                val myComponentA by component.injectOrNull<MyComponentA>()
+                val myComponentB by component.injectOrNull<MyComponentB<String>>()
+                val myComponentC by component.injectOrNull<MyComponentC<Any, Any>>()
+
+                myComponentA shouldBeInstanceOf MyComponentA::class
+                myComponentB shouldBeInstanceOf MyComponentB::class
+                myComponentC shouldBe null
+            }
+
+            it("getOrNull function should return null for non-declared bindings") {
+                class MyComponentD(
+                    val myComponentA: MyComponentA?,
+                    val myComponentB: MyComponentB<String>?
+                )
+
+                val module = Module {
+
+                    factory { MyComponentA() }
+
+                    factory { MyComponentD(getOrNull(), getOrNull()) }
+                }
+
+                val component = Component(module)
+
+                val myComponentD by component.inject<MyComponentD>()
+
+                myComponentD.myComponentA shouldBeInstanceOf MyComponentA::class
+                myComponentD.myComponentB shouldBe null
+            }
         }
     })

@@ -142,8 +142,8 @@ class Component(
     internal fun canInject(key: Key) =
         context.canInject(key)
 
-    internal fun <T> injectByKey(key: Key, arg: Any?) =
-        context.injectByKey<T>(key = key, arg = arg)
+    internal fun <T> findInstance(key: Key, arg: Any?) =
+        context.findInstance<T>(key = key, arg = arg)
 
     internal fun findKeysForContext(contextKey: Key): Iterable<Key> =
         declarations.keys.filter { key -> key.contextKey == contextKey }
@@ -163,6 +163,7 @@ class Component(
      * ```
      *
      * @see injectNow
+     * @see injectOrNull
      * @throws InjectionException
      * @throws InstanceCreationException
      */
@@ -170,9 +171,21 @@ class Component(
         context.inject<T>(name)
 
     /**
+     * Injects requested dependency lazily.
+     * Injects `null` if no binding could be found.
+     *
+     * @see inject
+     * @see injectNow
+     * @throws InstanceCreationException
+     */
+    inline fun <reified T> injectOrNull(name: Any? = null) =
+        context.injectOrNull<T>(name)
+
+    /**
      * Injects requested dependency immediately.
      *
      * @see inject
+     * @see injectNowOrNull
      * @throws InjectionException
      * @throws InstanceCreationException
      *
@@ -180,6 +193,18 @@ class Component(
      */
     inline fun <reified T> injectNow(name: Any? = null) =
         context.injectNow<T>(name)
+
+    /**
+     * Injects requested dependency immediately or returns `null` if no binding could be found.
+     *
+     * @see inject
+     * @see injectNow
+     * @throws InstanceCreationException
+     *
+     * TODO: Rename to getOrNull()?
+     */
+    inline fun <reified T> injectNowOrNull(name: Any? = null) =
+        context.injectNowOrNull<T>(name)
 
     /**
      * Injects requested dependency, passing custom arguments to [Provider].
@@ -284,17 +309,21 @@ class ComponentContext private constructor(
 ) {
 
     @PublishedApi
-    internal fun <T> injectByKey(key: Key, internal: Boolean = false, arg: Any? = null): T {
+    internal fun <T> findInstance(key: Key, internal: Boolean = false, arg: Any? = null): Instance<T>? {
         val instance = thisComponent.thisComponentInjectByKey<T>(key, internal, arg)
         return when {
-            instance != null -> instance.value
+            instance != null -> instance
             else -> {
                 val component = dependsOn.find { component -> component.canInject(key) }
-                    ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
-                component.injectByKey(key, arg) as T
+                component?.findInstance(key, arg)
             }
         }
     }
+
+    @PublishedApi
+    internal fun <T> findInstanceOrThrow(key: Key, internal: Boolean = false, arg: Any? = null): Instance<T> =
+        findInstance(key = key, internal = internal, arg = arg)
+            ?: throw InjectionException("No binding found for ${key.stringIdentifier}")
 
     @PublishedApi
     internal fun canInject(key: Key, internal: Boolean = false): Boolean =
@@ -314,12 +343,19 @@ class ComponentContext private constructor(
         injectNow<T>(name = name, internal = internal)
     }
 
+    inline fun <reified T> injectOrNull(name: Any? = null, internal: Boolean = false) = lazy {
+        injectNowOrNull<T>(name = name, internal = internal)
+    }
+
     // TODO: Rename to get()?
     inline fun <reified T> injectNow(name: Any? = null, internal: Boolean = false) =
-        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal)
+        findInstanceOrThrow<T>(key = Key.of(T::class.java, name), internal = internal).value
+
+    inline fun <reified T> injectNowOrNull(name: Any? = null, internal: Boolean = false) =
+        findInstance<T>(key = Key.of(T::class.java, name), internal = internal)?.value
 
     inline fun <reified T> custom(name: Any? = null, internal: Boolean = false, arg: Any? = null) =
-        injectByKey<T>(key = Key.of(T::class.java, name), internal = internal, arg = arg)
+        findInstanceOrThrow<T>(key = Key.of(T::class.java, name), internal = internal, arg = arg).value
 
     internal companion object {
 
@@ -347,4 +383,5 @@ private val Key.stringIdentifier
         is NameKey -> "name $name"
     }
 
+@PublishedApi
 internal class Instance<T>(val value: T)
