@@ -57,7 +57,10 @@ class Component(
     }
 
     private val instances = Katana.environmentContext.mapFactory().create<Key, Instance<*>>()
-    @PublishedApi internal val context = ComponentContext.of(this, dependsOn)
+    @PublishedApi internal val context = ComponentContext(
+        thisComponent = this,
+        dependsOn = dependsOn
+    )
 
     init {
         val componentDeclarations = dependsOn.map { component -> component.declarations }
@@ -303,7 +306,7 @@ operator fun Iterable<Component>.plus(module: Module) =
  * injections for the current context consisting of the current Component and all Components that have been specified
  * via `dependsOn`.
  */
-class ComponentContext private constructor(
+class ComponentContext internal constructor(
     private val thisComponent: Component,
     private val dependsOn: Iterable<Component>
 ) {
@@ -356,12 +359,6 @@ class ComponentContext private constructor(
 
     inline fun <reified T> custom(name: Any? = null, internal: Boolean = false, arg: Any? = null) =
         findInstanceOrThrow<T>(key = Key.of(T::class.java, name), internal = internal, arg = arg).value
-
-    internal companion object {
-
-        fun of(thisComponent: Component, dependsOn: Iterable<Component>) =
-            ComponentContext(thisComponent, dependsOn)
-    }
 }
 
 private fun Iterable<Declarations>.collect(each: ((Declaration<*>) -> Unit)? = null): Declarations =
