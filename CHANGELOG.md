@@ -1,3 +1,11 @@
+## Version 1.10.0
+
+_2020-01-03_
+
+Happy New Year 🎉
+
+* Add optional injection via injectOrNull() / getOrNull()
+
 ## Version 1.9.0
 
 _2019-12-04_
