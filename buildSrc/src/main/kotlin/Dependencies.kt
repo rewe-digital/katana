@@ -1,23 +1,20 @@
 object Versions {
     // Do not upgrade androidJunit5GradlePlugin and androidPlugin as this breaks ViewModel support (issue #7)
     const val androidJunit5GradlePlugin = "1.4.0.0"
-    const val androidMavenPublishPlugin = "3.6.2"
     const val androidPlugin = "3.3.2"
     const val androidXCollection = "1.1.0"
     const val androidXFragment = "1.1.0"
     const val androidXLifecycleViewModel = "2.1.0"
-    const val androidXLifecycleViewModelSavedState = "1.0.0-beta01"
+    const val androidXLifecycleViewModelSavedState = "1.0.0-rc03"
     const val gradleVersionsPlugin = "0.27.0"
-    const val kluent = "1.56"
+    const val kluent = "1.58"
     const val kotlin = "1.3.61"
-    const val spek = "2.0.8"
+    const val spek = "2.0.9"
 }
 
 object Dependencies {
     const val androidJunit5GradlePlugin =
         "de.mannodermaus.gradle.plugins:android-junit5:${Versions.androidJunit5GradlePlugin}"
-    const val androidMavenPublishPlugin =
-        "digital.wup:android-maven-publish:${Versions.androidMavenPublishPlugin}"
     const val androidPlugin = "com.android.tools.build:gradle:${Versions.androidPlugin}"
     const val androidXCollection = "androidx.collection:collection:${Versions.androidXCollection}"
     const val androidXFragment = "androidx.fragment:fragment:${Versions.androidXFragment}"

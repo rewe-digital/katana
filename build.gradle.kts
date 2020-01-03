@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath(Dependencies.androidPlugin)
         classpath(Dependencies.androidJunit5GradlePlugin)
-        classpath(Dependencies.androidMavenPublishPlugin)
     }
 }
 
