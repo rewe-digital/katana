@@ -307,7 +307,7 @@ operator fun Iterable<Component>.plus(module: Module) =
  * via `dependsOn`.
  */
 class ComponentContext internal constructor(
-    private val thisComponent: Component,
+    @PublishedApi internal val thisComponent: Component,
     private val dependsOn: Iterable<Component>
 ) {
 

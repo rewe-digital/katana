@@ -23,12 +23,13 @@ Katana consists of a core library and several additional libraries that extend
 Katana's functionality. All artifact are published in group 
 `org.rewedigital.katana`. Here's a quick overview of all available artifacts:
 
-| Artifact                                                                | Description                                                                             |
-| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| katana-core                                                             | Provides core functionality. Suitable for plain Kotlin (server side) and Android.       |
-| [katana-android](./android)                                             | Android-specific extensions like modules for Activity and Fragment, KatanaFragment etc. |
-| [katana-androidx-viewmodel](./androidx-viewmodel)                       | Enables dependency injection for AndroidX ViewModel.                                    |
-| [katana-androidx-viewmodel-savedstate](./androidx-viewmodel-savedstate) | Support for yet experimental AndroidX ViewModel with SavedState.                        |
+| Artifact                                                                | Description                                                                                   |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| katana-core                                                             | Provides core functionality. Suitable for plain Kotlin (server side) and Android.             |
+| [katana-android](./android)                                             | Android-specific extensions like modules for `Activity` and `Fragment`, `KatanaFragment` etc. |
+| [katana-androidx-fragment](./androidx-fragment)                         | Additional support for `androidx.fragment` providing a Katana-based `FragmentFactory`.        |
+| [katana-androidx-viewmodel](./androidx-viewmodel)                       | Enables dependency injection for AndroidX ViewModel.                                          |
+| [katana-androidx-viewmodel-savedstate](./androidx-viewmodel-savedstate) | Support for AndroidX ViewModel with SavedState.                                               |
 
 ## Help & Contribution
 

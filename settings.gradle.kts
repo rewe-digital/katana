@@ -1,6 +1,7 @@
 include(
     "core",
     "android",
+    "androidx-fragment",
     "androidx-viewmodel",
     "androidx-viewmodel-savedstate",
     "speed-comparison"

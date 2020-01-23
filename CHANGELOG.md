@@ -1,3 +1,11 @@
+## Version 1.11.0
+
+_2020-01-23_
+
+* Add support for Fragment instantiation through Katana with new artifact `katana-androidx-fragment` and 
+[KatanaFragmentFactory](./androidx-fragment/src/main/kotlin/org/rewedigital/katana/androidx/fragment/KatanaFragmentFactory.kt)
+(also see [FragmentFactory](https://developer.android.com/reference/androidx/fragment/app/FragmentFactory) of `androidx.fragment:fragment:1.2.0`) 
+
 ## Version 1.10.0
 
 _2020-01-03_

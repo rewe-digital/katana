@@ -1,5 +1,6 @@
 package org.rewedigital.katana.dsl
 
+import org.rewedigital.katana.Component
 import org.rewedigital.katana.ComponentContext
 import org.rewedigital.katana.InjectionException
 
@@ -31,3 +32,9 @@ inline fun <reified T> ProviderDsl.get(name: Any? = null) =
  */
 inline fun <reified T> ProviderDsl.getOrNull(name: Any? = null) =
     context.injectNowOrNull<T>(name = name, internal = true)
+
+/**
+ * Special property for providing the [Component] that this [Module] is associated with.
+ */
+val ProviderDsl.component: Component
+    get() = context.thisComponent

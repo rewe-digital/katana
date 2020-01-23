@@ -9,9 +9,9 @@ import kotlinx.android.synthetic.main.fragment_second.view.*
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
+import org.rewedigital.katana.android.example.fragment.SecondFragmentModule
 import org.rewedigital.katana.android.example.fragment.inject.Container
 import org.rewedigital.katana.android.example.fragment.model.SecondFragmentViewModel
-import org.rewedigital.katana.android.example.fragment.secondFragmentModule
 import org.rewedigital.katana.android.fragment.KatanaFragment
 import org.rewedigital.katana.androidx.viewmodel.savedstate.viewModelSavedStateNow
 import org.rewedigital.katana.injectNow
@@ -23,10 +23,12 @@ import org.rewedigital.katana.injectNow
  * Also this fragment showcases Katana's support for [androidx.lifecycle.ViewModel].
  *
  * @see FirstFragment
- * @see secondFragmentModule
+ * @see SecondFragmentModule
  * @see KatanaFragment
  */
-class SecondFragment : KatanaFragment(), KatanaTrait {
+class SecondFragment(
+    private val superComponent: Component
+) : KatanaFragment(), KatanaTrait {
 
     override lateinit var component: Component
     private lateinit var container: Container
@@ -45,7 +47,7 @@ class SecondFragment : KatanaFragment(), KatanaTrait {
         }
 
     override fun onInject(activity: Activity, savedInstanceState: Bundle?) {
-        component = (activity as KatanaTrait).component + secondFragmentModule
+        component = superComponent + SecondFragmentModule
 
         container = injectNow()
         viewModel = viewModelSavedStateNow()

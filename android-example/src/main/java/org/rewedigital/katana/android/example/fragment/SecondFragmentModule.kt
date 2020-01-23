@@ -9,7 +9,7 @@ import org.rewedigital.katana.dsl.get
 
 const val FRAGMENT_DEPENDENCY2 = "FRAGMENT_DEPENDENCY2"
 
-val secondFragmentModule = Module {
+val SecondFragmentModule = Module {
 
     factory(name = FRAGMENT_DEPENDENCY2) { "FRAGMENT_DEPENDENCY2" }
 

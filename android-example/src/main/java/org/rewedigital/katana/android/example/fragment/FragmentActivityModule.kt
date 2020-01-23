@@ -5,7 +5,7 @@ import org.rewedigital.katana.dsl.factory
 
 const val SOME_DEPENDENCY = "SOME_DEPENDENCY"
 
-val fragmentActivityModule = Module {
+val FragmentActivityModule = Module {
 
     factory(name = SOME_DEPENDENCY) { "SOME_DEPENDENCY" }
 }

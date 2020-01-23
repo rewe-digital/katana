@@ -10,8 +10,8 @@ import org.rewedigital.katana.Component
 import org.rewedigital.katana.KatanaTrait
 import org.rewedigital.katana.android.example.R
 import org.rewedigital.katana.android.example.fragment.FRAGMENT_DEPENDENCY1
+import org.rewedigital.katana.android.example.fragment.FirstFragmentModule
 import org.rewedigital.katana.android.example.fragment.SOME_DEPENDENCY
-import org.rewedigital.katana.android.example.fragment.firstFragmentModule
 import org.rewedigital.katana.android.fragment.KatanaFragmentDelegate
 import org.rewedigital.katana.android.fragment.fragmentDelegate
 import org.rewedigital.katana.injectNow
@@ -24,7 +24,9 @@ import org.rewedigital.katana.injectNow
  * @see KatanaFragmentDelegate
  * @see SecondFragment
  */
-class FirstFragment : Fragment(), KatanaTrait {
+class FirstFragment(
+    superComponent: Component
+) : Fragment(), KatanaTrait {
 
     private val fragmentDelegate: KatanaFragmentDelegate<FirstFragment>
 
@@ -33,8 +35,8 @@ class FirstFragment : Fragment(), KatanaTrait {
     private lateinit var fragmentDependency: String
 
     init {
-        fragmentDelegate = fragmentDelegate { activity, _ ->
-            component = (activity as KatanaTrait).component + firstFragmentModule
+        fragmentDelegate = fragmentDelegate { _, _ ->
+            component = superComponent + FirstFragmentModule
 
             activityDependency = injectNow(SOME_DEPENDENCY)
             fragmentDependency = injectNow(FRAGMENT_DEPENDENCY1)
