@@ -1,3 +1,10 @@
+## Version 1.12.0
+
+_2020-01-27_
+
+* Update `androidx.lifecycle:lifecycle-viewmodel` dependency to version 2.2.0
+* Update `androidx.lifecycle:lifecycle-viewmodel-savedstate` dependency to first stable version 1.0.0
+
 ## Version 1.11.0
 
 _2020-01-23_

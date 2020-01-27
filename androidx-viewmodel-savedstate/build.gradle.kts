@@ -8,8 +8,6 @@ configureBase(
     publicationComponent = components["android"]
 )
 
-version = "1.11.0-rc03"
-
 dependencies {
     api(project(":core"))
     api(project(":androidx-viewmodel")) {
