@@ -86,8 +86,8 @@ inline fun <reified T> ModuleBindingContext.eagerSingleton(
  * A binding like `alias<MyInterface, MyClass>()` should be conceived as "create alias MyInterface for MyClass".
  */
 inline fun <reified A, reified T : A> ModuleBindingContext.alias(
-    name: String? = null,
-    originalName: String? = null
+    name: Any? = null,
+    originalName: Any? = null
 ) {
     factory<A>(name = name) { get<T>(name = originalName) }
 }
@@ -197,7 +197,7 @@ inline fun <reified T> SetBindingContext<T>.singleton(
  * @param V type of the value added to the set
  */
 inline fun <T, reified V : T> SetBindingContext<T>.get(
-    name: String? = null
+    name: Any? = null
 ) = declaration(
     context = this,
     clazz = V::class.java,

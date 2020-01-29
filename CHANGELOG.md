@@ -1,3 +1,9 @@
+## Version 1.12.1
+
+_2020-01-29_
+
+* Bugfix: `alias()` & set-related `get()` name arguments were limited to `String` but should be `Any`
+
 ## Version 1.12.0
 
 _2020-01-27_

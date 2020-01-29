@@ -22,16 +22,16 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.12.0"
+        versionName = "1.12.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.12.0")
-    implementation("org.rewedigital.katana:katana-androidx-fragment:1.12.0")
-    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.12.0")
+    implementation("org.rewedigital.katana:katana-android:1.12.1")
+    implementation("org.rewedigital.katana:katana-androidx-fragment:1.12.1")
+    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.12.1")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
