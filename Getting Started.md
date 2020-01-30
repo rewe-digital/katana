@@ -157,8 +157,7 @@ provider function of `A` it will try to solve the transitive dependency `B` whic
 The solution to this problem is to structure the classes in a way that a circular dependency is not necessary.
 For instance by creating a third class `C` which holds the functionality which both `A` and `B` require.
 
-If there's no easy fix to this problem Katana provides a workaround. Instead of `get()` use `lazy()` to provide a 
-`Lazy` version of the dependency.
+If there's no easy fix to this problem provide one dependency as `Lazy` as follows. 
 
 ```kotlin
 class A2(b2: Lazy<B2>)
@@ -167,10 +166,9 @@ class B2(a2: A2)
 
 val module = Module {
 
-    // See how lazy() is used here instead of get()
-    singleton { A2(lazy()) }
+    singleton { A2(get("lazy B")) }
 
-    singleton { B2(get()) }
+    singleton(name = "lazy B") { lazy { B2(get()) } }
 }
 
 val component = Component(module)
