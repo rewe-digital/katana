@@ -1,7 +1,7 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContain
-import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldThrow
 import org.rewedigital.katana.dsl.factory
@@ -167,9 +167,9 @@ object SetTests : Spek(
                 val set1: Set<MyComponent> = component.injectNow()
                 val set2: Set<MyComponent> = component.injectNow()
 
-                (set1 === set2) shouldEqual false
-                count1 shouldEqual 1
-                count2 shouldEqual 1
+                (set1 === set2) shouldBeEqualTo false
+                count1 shouldBeEqualTo 1
+                count2 shouldBeEqualTo 1
             }
 
             it("should locate dependencies declared in outer scope via factory") {

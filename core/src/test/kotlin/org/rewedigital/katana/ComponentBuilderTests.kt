@@ -1,6 +1,6 @@
 package org.rewedigital.katana
 
-import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldBeEqualTo
 import org.rewedigital.katana.dsl.factory
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -25,8 +25,8 @@ object ComponentBuilderTests : Spek(
                     .addDependsOn(component1)
                     .build()
 
-                component2.injectNow<String>("TEST") shouldEqual "Hello"
-                component2.injectNow<String>("TEST2") shouldEqual "World"
+                component2.injectNow<String>("TEST") shouldBeEqualTo "Hello"
+                component2.injectNow<String>("TEST2") shouldBeEqualTo "World"
             }
 
             it("should build component with set functions") {
@@ -45,16 +45,16 @@ object ComponentBuilderTests : Spek(
                     .setDependsOn(component1)
                     .build()
 
-                component2.injectNow<String>("TEST") shouldEqual "Hello"
-                component2.injectNow<String>("TEST2") shouldEqual "World"
+                component2.injectNow<String>("TEST") shouldBeEqualTo "Hello"
+                component2.injectNow<String>("TEST2") shouldBeEqualTo "World"
 
                 component2 = Component.Builder()
                     .setModules(listOf(module2))
                     .setDependsOn(listOf(component1))
                     .build()
 
-                component2.injectNow<String>("TEST") shouldEqual "Hello"
-                component2.injectNow<String>("TEST2") shouldEqual "World"
+                component2.injectNow<String>("TEST") shouldBeEqualTo "Hello"
+                component2.injectNow<String>("TEST2") shouldBeEqualTo "World"
             }
         }
     })

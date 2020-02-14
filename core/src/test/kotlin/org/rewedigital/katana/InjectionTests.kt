@@ -1,9 +1,6 @@
 package org.rewedigital.katana
 
-import org.amshove.kluent.shouldBe
-import org.amshove.kluent.shouldBeInstanceOf
-import org.amshove.kluent.shouldEqual
-import org.amshove.kluent.shouldThrow
+import org.amshove.kluent.*
 import org.rewedigital.katana.dsl.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -45,10 +42,10 @@ object InjectionTests : Spek(
                 val myComponent2: MyComponent by component2.inject(name = "myComponent2")
                 val myComponent3: MyComponentB<String> by component2.inject()
 
-                string shouldEqual "Hello world"
+                string shouldBeEqualTo "Hello world"
                 myComponent shouldBeInstanceOf MyComponentA::class
                 myComponent2 shouldBeInstanceOf MyComponentB::class
-                myComponent3.value shouldEqual "Hello world"
+                myComponent3.value shouldBeEqualTo "Hello world"
             }
 
             it("should create singletons just once") {
@@ -60,12 +57,12 @@ object InjectionTests : Spek(
             }
 
             it("should provide injection possibility via canInject()") {
-                component1.canInject<String>() shouldEqual true
-                component2.canInject<MyComponent>() shouldEqual true
-                component2.canInject<MyComponent>("myComponent2") shouldEqual true
+                component1.canInject<String>() shouldBeEqualTo true
+                component2.canInject<MyComponent>() shouldBeEqualTo true
+                component2.canInject<MyComponent>("myComponent2") shouldBeEqualTo true
 
-                component2.canInject<String>() shouldEqual false
-                component2.canInject<MyComponent>("myComponent3") shouldEqual false
+                component2.canInject<String>() shouldBeEqualTo false
+                component2.canInject<MyComponent>("myComponent3") shouldBeEqualTo false
             }
 
             it("should provide dependencies across module boundaries") {
@@ -118,12 +115,12 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                timesSingletonCreated shouldEqual 1
+                timesSingletonCreated shouldBeEqualTo 1
 
                 val myComponent: MyComponentB<String> by component.inject()
-                myComponent.value shouldEqual "Hello world"
+                myComponent.value shouldBeEqualTo "Hello world"
 
-                timesSingletonCreated shouldEqual 1
+                timesSingletonCreated shouldBeEqualTo 1
             }
 
             it("transitive eager singletons should be initialized properly") {
@@ -145,11 +142,11 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                timesFirstSingletonCreated shouldEqual 1
-                timesSecondSingletonCreated shouldEqual 1
+                timesFirstSingletonCreated shouldBeEqualTo 1
+                timesSecondSingletonCreated shouldBeEqualTo 1
 
-                component.injectNow<String>("eagerSingleton1") shouldEqual "eagerSingleton1 eagerSingleton2"
-                component.injectNow<String>("eagerSingleton2") shouldEqual "eagerSingleton2"
+                component.injectNow<String>("eagerSingleton1") shouldBeEqualTo "eagerSingleton1 eagerSingleton2"
+                component.injectNow<String>("eagerSingleton2") shouldBeEqualTo "eagerSingleton2"
             }
 
             it("circular dependencies should fail") {
@@ -193,7 +190,7 @@ object InjectionTests : Spek(
 
                 val injection: A? = component.injectNow()
 
-                injection shouldEqual null
+                injection shouldBeEqualTo null
             }
 
             it("permit internal module bindings") {
@@ -206,13 +203,13 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                component.canInject<String>("internal") shouldEqual false
-                component.canInject<MyComponent>() shouldEqual true
+                component.canInject<String>("internal") shouldBeEqualTo false
+                component.canInject<MyComponent>() shouldBeEqualTo true
 
                 val injection = component.injectNow<MyComponent>()
 
                 injection shouldBeInstanceOf MyComponentB::class
-                (injection as MyComponentB<*>).value shouldEqual "Hello world"
+                (injection as MyComponentB<*>).value shouldBeEqualTo "Hello world"
 
                 val fn = {
                     component.injectNow<String>("internal")
@@ -230,11 +227,11 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                component.canInject<String?>("singleton") shouldEqual true
-                component.injectNow<String?>("singleton") shouldEqual null
-                component.injectNow<String?>("singleton") shouldEqual null
+                component.canInject<String?>("singleton") shouldBeEqualTo true
+                component.injectNow<String?>("singleton") shouldBeEqualTo null
+                component.injectNow<String?>("singleton") shouldBeEqualTo null
 
-                invocations shouldEqual 1
+                invocations shouldBeEqualTo 1
             }
 
             it("eagerSingleton injection should allow null values") {
@@ -246,11 +243,11 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                component.canInject<String?>("eagerSingleton") shouldEqual true
-                component.injectNow<String?>("eagerSingleton") shouldEqual null
-                component.injectNow<String?>("eagerSingleton") shouldEqual null
+                component.canInject<String?>("eagerSingleton") shouldBeEqualTo true
+                component.injectNow<String?>("eagerSingleton") shouldBeEqualTo null
+                component.injectNow<String?>("eagerSingleton") shouldBeEqualTo null
 
-                invocations shouldEqual 1
+                invocations shouldBeEqualTo 1
             }
 
             it("custom injection should pass arguments to custom provider") {
@@ -264,7 +261,7 @@ object InjectionTests : Spek(
 
                 val component = Component(module)
 
-                component.custom<String>(name = "TEST", arg = "World") shouldEqual "Hello World"
+                component.custom<String>(name = "TEST", arg = "World") shouldBeEqualTo "Hello World"
             }
 
             it("inject*OrNull functions should return null for non-declared bindings") {
@@ -309,6 +306,27 @@ object InjectionTests : Spek(
 
                 myComponentD.myComponentA shouldBeInstanceOf MyComponentA::class
                 myComponentD.myComponentB shouldBe null
+            }
+
+            it("provider() should return a provider function") {
+                val module = Module {
+
+                    factory(name = "factory") { Any() }
+
+                    singleton(name = "singleton") { Any() }
+
+                    factory<() -> Any>(name = "factory provider") { provider(name = "factory") }
+
+                    factory<() -> Any>(name = "singleton provider") { provider(name = "singleton") }
+                }
+
+                val component = Component(module)
+
+                val factoryProvider: () -> Any by component.inject(name = "factory provider")
+                val singletonProvider: () -> Any by component.inject(name = "singleton provider")
+
+                factoryProvider() shouldNotBeEqualTo factoryProvider()
+                singletonProvider() shouldBeEqualTo singletonProvider()
             }
         }
     })

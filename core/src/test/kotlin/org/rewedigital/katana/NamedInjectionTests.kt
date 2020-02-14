@@ -1,6 +1,6 @@
 package org.rewedigital.katana
 
-import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldBeEqualTo
 import org.rewedigital.katana.NamedInjectionTests.Key5
 import org.rewedigital.katana.NamedInjectionTests.Key6
 import org.rewedigital.katana.NamedInjectionTests.Key7
@@ -34,32 +34,32 @@ object NamedInjectionTests : Spek(
             context("with Kotlin objects") {
 
                 it("should work") {
-                    component.injectNow<String>(Key1) shouldEqual "First"
-                    component.injectNow<String>(Key2) shouldEqual "Second"
+                    component.injectNow<String>(Key1) shouldBeEqualTo "First"
+                    component.injectNow<String>(Key2) shouldBeEqualTo "Second"
                 }
             }
 
             context("with enum class") {
 
                 it("should work") {
-                    component.injectNow<String>(Keys.Key3) shouldEqual "Third"
-                    component.injectNow<String>(Keys.Key4) shouldEqual "Fourth"
+                    component.injectNow<String>(Keys.Key3) shouldBeEqualTo "Third"
+                    component.injectNow<String>(Keys.Key4) shouldBeEqualTo "Fourth"
                 }
             }
 
             context("with Strings") {
 
                 it("should work") {
-                    component.injectNow<String>(Key5) shouldEqual "Fifth"
-                    component.injectNow<String>(Key6) shouldEqual "Sixth"
+                    component.injectNow<String>(Key5) shouldBeEqualTo "Fifth"
+                    component.injectNow<String>(Key6) shouldBeEqualTo "Sixth"
                 }
             }
 
             context("with custom data class") {
 
                 it("should work") {
-                    component.injectNow<String>(Key7) shouldEqual "Seventh"
-                    component.injectNow<String>(Key8) shouldEqual "Eighth"
+                    component.injectNow<String>(Key7) shouldBeEqualTo "Seventh"
+                    component.injectNow<String>(Key8) shouldBeEqualTo "Eighth"
                 }
             }
         }

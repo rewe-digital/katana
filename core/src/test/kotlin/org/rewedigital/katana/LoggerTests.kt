@@ -1,7 +1,7 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldContain
-import org.amshove.kluent.shouldEqual
 import org.rewedigital.katana.internal.Logger
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -67,10 +67,10 @@ object LoggerTests : Spek(
                 Logger.warn { warnCalled = true; "Warn message" }
                 Logger.error { errorCalled = true; Pair("Error message", Exception()) }
 
-                debugCalled shouldEqual false
-                infoCalled shouldEqual false
-                warnCalled shouldEqual false
-                errorCalled shouldEqual false
+                debugCalled shouldBeEqualTo false
+                infoCalled shouldBeEqualTo false
+                warnCalled shouldBeEqualTo false
+                errorCalled shouldBeEqualTo false
             }
         }
     })
