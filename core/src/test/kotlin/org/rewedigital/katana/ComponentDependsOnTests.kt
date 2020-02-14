@@ -1,7 +1,7 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
-import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
 import org.rewedigital.katana.dsl.factory
 import org.rewedigital.katana.dsl.get
@@ -39,16 +39,16 @@ object ComponentDependsOnTests : Spek(
                     dependsOn = listOf(component1, component2)
                 )
 
-                component3.canInject<MyComponentC<String, Int>>() shouldEqual true
-                component3.canInject<Int>() shouldEqual true
-                component3.canInject<String>() shouldEqual true
-                component3.canInject<String>("another") shouldEqual true
-                component3.canInject<MyComponent>() shouldEqual false
+                component3.canInject<MyComponentC<String, Int>>() shouldBeEqualTo true
+                component3.canInject<Int>() shouldBeEqualTo true
+                component3.canInject<String>() shouldBeEqualTo true
+                component3.canInject<String>("another") shouldBeEqualTo true
+                component3.canInject<MyComponent>() shouldBeEqualTo false
 
                 val myComponent: MyComponentC<String, Int> by component3.inject()
 
-                myComponent.value shouldEqual "Hello world"
-                myComponent.value2 shouldEqual 1337
+                myComponent.value shouldBeEqualTo "Hello world"
+                myComponent.value2 shouldBeEqualTo 1337
             }
 
             it("should inject dependencies over multiple component tiers") {
@@ -72,13 +72,13 @@ object ComponentDependsOnTests : Spek(
                     dependsOn = listOf(component2)
                 )
 
-                component3.canInject<String>() shouldEqual true
-                component3.canInject<Int>() shouldEqual true
+                component3.canInject<String>() shouldBeEqualTo true
+                component3.canInject<Int>() shouldBeEqualTo true
                 val string: String by component3.inject()
                 val int: Int by component3.inject()
 
-                string shouldEqual "Hello world"
-                int shouldEqual 1337
+                string shouldBeEqualTo "Hello world"
+                int shouldBeEqualTo 1337
             }
 
             it("should throw override exception for overrides in components") {
@@ -124,7 +124,7 @@ object ComponentDependsOnTests : Spek(
 
                 val injection: MyComponent? = component2.injectNow()
 
-                injection shouldEqual null
+                injection shouldBeEqualTo null
             }
 
             it("should not inject internal bindings over multiple component tiers") {
@@ -138,8 +138,8 @@ object ComponentDependsOnTests : Spek(
                 val component = Component(module)
                 val component2 = Component(component)
 
-                component2.canInject<String>("internal") shouldEqual false
-                component2.canInject<MyComponent>() shouldEqual true
+                component2.canInject<String>("internal") shouldBeEqualTo false
+                component2.canInject<MyComponent>() shouldBeEqualTo true
 
                 component2.injectNow<MyComponent>() shouldBeInstanceOf MyComponentB::class
 
@@ -176,25 +176,25 @@ object ComponentDependsOnTests : Spek(
                 val component2 = component1 + listOf(module2)
                 val component3 = component1 + module2
 
-                component2.injectNow<String>() shouldEqual "Hello world"
-                component2.injectNow<Int>() shouldEqual 1234
+                component2.injectNow<String>() shouldBeEqualTo "Hello world"
+                component2.injectNow<Int>() shouldBeEqualTo 1234
 
-                component3.injectNow<String>() shouldEqual "Hello world"
-                component3.injectNow<Int>() shouldEqual 1234
+                component3.injectNow<String>() shouldBeEqualTo "Hello world"
+                component3.injectNow<Int>() shouldBeEqualTo 1234
 
                 val component4 = Component(module3)
                 val component5 = listOf(component2, component4) + listOf(module4)
                 val component6 = listOf(component2, component4) + module4
 
-                component5.injectNow<String>() shouldEqual "Hello world"
-                component5.injectNow<Int>() shouldEqual 1234
-                component5.injectNow<Int>("NAME") shouldEqual 4321
-                component5.injectNow<Int>("NAME2") shouldEqual 1337
+                component5.injectNow<String>() shouldBeEqualTo "Hello world"
+                component5.injectNow<Int>() shouldBeEqualTo 1234
+                component5.injectNow<Int>("NAME") shouldBeEqualTo 4321
+                component5.injectNow<Int>("NAME2") shouldBeEqualTo 1337
 
-                component6.injectNow<String>() shouldEqual "Hello world"
-                component6.injectNow<Int>() shouldEqual 1234
-                component6.injectNow<Int>("NAME") shouldEqual 4321
-                component6.injectNow<Int>("NAME2") shouldEqual 1337
+                component6.injectNow<String>() shouldBeEqualTo "Hello world"
+                component6.injectNow<Int>() shouldBeEqualTo 1234
+                component6.injectNow<Int>("NAME") shouldBeEqualTo 4321
+                component6.injectNow<Int>("NAME2") shouldBeEqualTo 1337
             }
 
             // TODO: Fix this
@@ -211,7 +211,7 @@ object ComponentDependsOnTests : Spek(
 
                 val injection: String = component3.injectNow()
 
-                injection shouldEqual "Hello world"
+                injection shouldBeEqualTo "Hello world"
             }
         }
     })

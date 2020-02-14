@@ -1,6 +1,6 @@
 package org.rewedigital.katana
 
-import org.amshove.kluent.shouldEqual
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldThrow
 import org.rewedigital.katana.dsl.factory
 import org.spekframework.spek2.Spek
@@ -44,8 +44,8 @@ object TypeErasureTests : Spek(
                 val myComponent1: MyComponentB<Int> by component.inject("int")
                 val myComponent2: MyComponentB<String> by component.inject("string")
 
-                myComponent1.value shouldEqual 1337
-                myComponent2.value shouldEqual "Hello world"
+                myComponent1.value shouldBeEqualTo 1337
+                myComponent2.value shouldBeEqualTo "Hello world"
             }
         }
     })

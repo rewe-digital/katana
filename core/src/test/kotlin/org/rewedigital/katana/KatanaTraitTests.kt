@@ -1,7 +1,7 @@
 package org.rewedigital.katana
 
+import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeInstanceOf
-import org.amshove.kluent.shouldEqual
 import org.amshove.kluent.shouldThrow
 import org.rewedigital.katana.dsl.singleton
 import org.spekframework.spek2.Spek
@@ -57,8 +57,8 @@ object KatanaTraitTests : Spek(
             context("canInject") {
 
                 it("should work") {
-                    trait.canInject<MyComponent>() shouldEqual true
-                    trait.canInject<String>() shouldEqual false
+                    trait.canInject<MyComponent>() shouldBeEqualTo true
+                    trait.canInject<String>() shouldBeEqualTo false
                 }
             }
         }
