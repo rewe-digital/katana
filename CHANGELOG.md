@@ -1,3 +1,9 @@
+## Version 1.13
+
+_2020-02-17_
+
+* Add `provider()` to `Module` DSL
+
 ## Version 1.12.1
 
 _2020-01-29_
