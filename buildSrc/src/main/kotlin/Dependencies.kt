@@ -3,11 +3,10 @@ object Versions {
     const val androidJunit5GradlePlugin = "1.4.0.0"
     const val androidPlugin = "3.3.2"
     const val androidXCollection = "1.1.0"
-    const val androidXFragment = "1.2.0"
-    const val androidXLifecycleViewModel = "2.2.0"
-    const val androidXLifecycleViewModelSavedState = "1.0.0"
+    const val androidXFragment = "1.2.1"
+    const val androidXLifecycle = "2.2.0"
     const val gradleVersionsPlugin = "0.27.0"
-    const val kluent = "1.59"
+    const val kluent = "1.60"
     const val kotlin = "1.3.61"
     const val spek = "2.0.9"
 }
@@ -19,9 +18,9 @@ object Dependencies {
     const val androidXCollection = "androidx.collection:collection:${Versions.androidXCollection}"
     const val androidXFragment = "androidx.fragment:fragment:${Versions.androidXFragment}"
     const val androidXLifecycleViewModel =
-        "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidXLifecycleViewModel}"
+        "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidXLifecycle}"
     const val androidXLifecycleViewModelSavedState =
-        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.androidXLifecycleViewModelSavedState}"
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.androidXLifecycle}"
     const val kluent = "org.amshove.kluent:kluent:${Versions.kluent}"
     const val spek2RunnerJunit5 = "org.spekframework.spek2:spek-runner-junit5:${Versions.spek}"
     const val spekApi = "org.spekframework.spek2:spek-dsl-jvm:${Versions.spek}"
