@@ -3,7 +3,12 @@ package org.rewedigital.katana
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * A module consists of dependency declarations and describes how dependencies are provided.
+ * Describes **how** dependencies are resolved by providing dependency declarations via `factory`, `singleton`, etc.
+ *
+ * A module is not responsible for holding instances of dependencies or for performing actual injection. It can be
+ * interpreted as a blueprint of dependency declarations which is applied to a [Component]. Therefore one module might
+ * be referenced by multiple components.
+ *
  * Each module should represent a logical unit. For instance there should be separate modules for each functionality
  * of your application.
  *
