@@ -5,11 +5,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(Android.compileSdkVersion)
 
     defaultConfig {
         minSdkVersion(19)
-        targetSdkVersion(29)
+        targetSdkVersion(Android.targetSdkVersion)
+        buildToolsVersion(Android.buildToolsVersion)
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1

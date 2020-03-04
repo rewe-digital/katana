@@ -14,6 +14,7 @@ configure<BaseExtension> {
     defaultConfig {
         minSdkVersion(Android.minSdkVersion)
         targetSdkVersion(Android.targetSdkVersion)
+        buildToolsVersion(Android.buildToolsVersion)
     }
 
     sourceSets {
