@@ -25,6 +25,10 @@ android {
         getByName("release").java.srcDirs("src/release/kotlin")
         getByName("test").java.srcDirs("src/test/kotlin")
     }
+
+    lintOptions {
+        isAbortOnError = false
+    }
 }
 
 dependencies {
