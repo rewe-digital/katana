@@ -1,16 +1,7 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
-buildscript {
-    repositories {
-        google()
-    }
-}
-
 plugins {
-    id("com.android.application") version "3.5.3"
-    kotlin("android") version "1.3.70"
-    kotlin("android.extensions") version "1.3.70"
-    id("com.github.ben-manes.versions") version "0.28.0"
+    id("com.android.application")
+    kotlin("android")
+    kotlin("android.extensions")
 }
 
 android {
@@ -22,16 +13,24 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.13.1"
+        versionName = Version.version
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+        getByName("main").java.srcDirs("src/main/kotlin")
+        getByName("debug").java.srcDirs("src/debug/kotlin")
+        getByName("release").java.srcDirs("src/release/kotlin")
+        getByName("test").java.srcDirs("src/test/kotlin")
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.13.1")
-    implementation("org.rewedigital.katana:katana-androidx-fragment:1.13.1")
-    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.13.1")
+    implementation(project(":android"))
+    implementation(project(":androidx-fragment"))
+    implementation(project(":androidx-viewmodel-savedstate"))
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.70")
@@ -52,24 +51,3 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.2.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
 }
-
-repositories {
-    mavenLocal()
-    google()
-    jcenter()
-}
-
-tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
-    fun isNonStable(version: String): Boolean {
-        val stableKeyword =
-            listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-        val regex = "^[0-9,.v-]+$".toRegex()
-        val isStable = stableKeyword || regex.matches(version)
-        return isStable.not()
-    }
-
-    rejectVersionIf {
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
-    }
-}
-

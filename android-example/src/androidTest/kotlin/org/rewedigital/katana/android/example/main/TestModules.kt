@@ -5,8 +5,8 @@ package org.rewedigital.katana.android.example.main
 import androidx.test.espresso.idling.CountingIdlingResource
 import org.rewedigital.katana.Module
 import org.rewedigital.katana.android.example.remote.*
-import org.rewedigital.katana.dsl.singleton
 import org.rewedigital.katana.dsl.get
+import org.rewedigital.katana.dsl.singleton
 
 val TestSuccessApiMockModule = Module("TestSuccessApiMockModule") {
 

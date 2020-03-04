@@ -1,6 +1,7 @@
 .gradle
 .idea
-!.idea/dictionaries
+!.idea/dictionaries/
+!.idea/runConfigurations/
 *.iml
 build
 out

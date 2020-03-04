@@ -4,7 +4,9 @@ include(
     "androidx-fragment",
     "androidx-viewmodel",
     "androidx-viewmodel-savedstate",
-    "speed-comparison"
+
+    "speed-comparison",
+    "android-example"
 )
 
 pluginManagement {

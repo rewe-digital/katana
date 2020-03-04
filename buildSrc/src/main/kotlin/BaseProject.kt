@@ -39,7 +39,7 @@ fun Project.configureBase(
     }
 
     group = "org.rewedigital.katana"
-    version = "1.13.1"
+    version = Version.version
 
     tasks.withType<Jar> {
         archiveBaseName.set(artifactName)
