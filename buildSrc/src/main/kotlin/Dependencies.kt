@@ -3,11 +3,11 @@ object Versions {
     const val androidJunit5GradlePlugin = "1.4.0.0"
     const val androidPlugin = "3.3.2"
     const val androidXCollection = "1.1.0"
-    const val androidXFragment = "1.2.1"
+    const val androidXFragment = "1.2.2"
     const val androidXLifecycle = "2.2.0"
-    const val gradleVersionsPlugin = "0.27.0"
+    const val gradleVersionsPlugin = "0.28.0"
     const val kluent = "1.60"
-    const val kotlin = "1.3.61"
+    const val kotlin = "1.3.70"
     const val spek = "2.0.9"
 }
 

@@ -188,9 +188,11 @@ Katana is published on [JCenter](https://bintray.com/bintray/jcenter). If you ha
 a repository to your project. Then add the following dependencies:
 
 ```gradle
+def katanaVersion = 'LATEST VERSION HERE'
+
 dependencies {
-    implementation 'org.rewedigital.katana:katana-core:1.13'
+    implementation "org.rewedigital.katana:katana-core:${katanaVersion}"
     // Use this artifact for Katana on Android
-    implementation 'org.rewedigital.katana:katana-android:1.13'
+    implementation "org.rewedigital.katana:katana-android:${katanaVersion}"
 }
 ```

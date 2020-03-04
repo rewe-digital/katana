@@ -8,9 +8,9 @@ buildscript {
 
 plugins {
     id("com.android.application") version "3.5.3"
-    kotlin("android") version "1.3.61"
-    kotlin("android.extensions") version "1.3.61"
-    id("com.github.ben-manes.versions") version "0.27.0"
+    kotlin("android") version "1.3.70"
+    kotlin("android.extensions") version "1.3.70"
+    id("com.github.ben-manes.versions") version "0.28.0"
 }
 
 android {
@@ -22,19 +22,19 @@ android {
 
         applicationId = "org.rewedigital.katana.android.example"
         versionCode = 1
-        versionName = "1.13"
+        versionName = "1.13.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation("org.rewedigital.katana:katana-android:1.13")
-    implementation("org.rewedigital.katana:katana-androidx-fragment:1.13")
-    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.13")
+    implementation("org.rewedigital.katana:katana-android:1.13.1")
+    implementation("org.rewedigital.katana:katana-androidx-fragment:1.13.1")
+    implementation("org.rewedigital.katana:katana-androidx-viewmodel-savedstate:1.13.1")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.70")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
