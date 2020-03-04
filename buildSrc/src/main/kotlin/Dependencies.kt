@@ -1,7 +1,6 @@
 object Versions {
-    // Do not upgrade androidJunit5GradlePlugin and androidPlugin as this breaks ViewModel support (issue #7)
-    const val androidJunit5GradlePlugin = "1.4.0.0"
-    const val androidPlugin = "3.3.2"
+    const val androidJunit5GradlePlugin = "1.6.0.0"
+    const val androidPlugin = "3.6.1"
     const val androidXCollection = "1.1.0"
     const val androidXFragment = "1.2.2"
     const val androidXLifecycle = "2.2.0"

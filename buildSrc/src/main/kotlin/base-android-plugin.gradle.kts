@@ -23,8 +23,12 @@ configure<BaseExtension> {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "../proguard-rules.pro")
+            // ProGuard disabled because of this issue: https://github.com/rewe-digital/katana/issues/7
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                rootProject.file("proguard-rules.pro")
+            )
             consumerProguardFiles("proguard-consumer-rules.pro")
         }
     }
