@@ -1,3 +1,11 @@
+## Version 1.13.2
+
+_2020-05-06_
+
+* Update dependencies
+  * Kotlin 1.3.72
+  * androidx.fragment 1.2.4
+
 ## Version 1.13.1
 
 _2020-03-04_
