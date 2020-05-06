@@ -25,13 +25,9 @@ allprojects {
 }
 
 tasks.named<DependencyUpdatesTask>("dependencyUpdates") {
-    fun isNonStable(version: String): Boolean {
-        val stableKeyword =
-            listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-        val regex = "^[0-9,.v-]+$".toRegex()
-        val isStable = stableKeyword || regex.matches(version)
-        return isStable.not()
-    }
+
+    fun isNonStable(version: String) =
+        listOf("alpha", "beta", "rc", "eap", "-m").any { version.toLowerCase().contains(it) }
 
     rejectVersionIf {
         isNonStable(candidate.version) && !isNonStable(currentVersion)
