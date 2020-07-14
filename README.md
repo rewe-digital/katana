@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.com/rewe-digital/katana.svg?branch=master)](https://travis-ci.com/rewe-digital/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.72-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
 
+‼️ This project is in **maintenance mode** and not actively developed anymore. For more information read [this statement](https://github.com/rewe-digital/katana/issues/22). ‼️
+
 # Katana
 
 Katana is a lightweight, minimalistic dependency injection library (similar to the service locator pattern) for Kotlin
