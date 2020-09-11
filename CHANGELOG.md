@@ -1,3 +1,13 @@
+## Version 1.14.0
+
+This is a maintenance release, just updating a few dependencies:
+
+* Kotlin 1.4.0
+* Android Gradle Plugin 4.0.1
+* Android (target|compile)SdkVersion 30 (Android 11)
+* Android build tools 30.0.2
+* `androidx.fragment:fragment` 1.2.5
+
 ## Version 1.13.2
 
 _2020-05-06_

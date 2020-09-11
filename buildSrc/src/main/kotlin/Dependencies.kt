@@ -1,13 +1,13 @@
 object Versions {
     const val androidJunit5GradlePlugin = "1.6.2.0"
-    const val androidPlugin = "3.6.3"
+    const val androidPlugin = "4.0.1"
     const val androidXCollection = "1.1.0"
-    const val androidXFragment = "1.2.4"
+    const val androidXFragment = "1.2.5"
     const val androidXLifecycle = "2.2.0"
-    const val gradleVersionsPlugin = "0.28.0"
+    const val gradleVersionsPlugin = "0.31.0"
     const val kluent = "1.61"
-    const val kotlin = "1.3.72"
-    const val spek = "2.0.10"
+    const val kotlin = "1.4.0"
+    const val spek = "2.0.12"
 }
 
 object Dependencies {
@@ -26,8 +26,8 @@ object Dependencies {
 }
 
 object Android {
-    const val compileSdkVersion = 29
-    const val targetSdkVersion = 29
+    const val compileSdkVersion = 30
+    const val targetSdkVersion = 30
     const val minSdkVersion = 14
-    const val buildToolsVersion = "29.0.3"
+    const val buildToolsVersion = "30.0.2"
 }

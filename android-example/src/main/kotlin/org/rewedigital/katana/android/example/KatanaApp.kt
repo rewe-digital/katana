@@ -2,7 +2,6 @@ package org.rewedigital.katana.android.example
 
 import android.app.Application
 import android.os.StrictMode
-import com.squareup.leakcanary.LeakCanary
 import org.rewedigital.katana.Component
 import org.rewedigital.katana.Katana
 import org.rewedigital.katana.android.AndroidKatanaLogger
@@ -24,11 +23,6 @@ class KatanaApp : Application() {
                 .penaltyDeath()
                 .build()
         )
-
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return
-        }
-        LeakCanary.install(this)
         //</editor-fold>
 
         // Installing logger for Katana
