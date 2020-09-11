@@ -2,6 +2,10 @@ os: linux
 dist: trusty
 language: android
 
+before_install:
+  - yes | sdkmanager "build-tools;30.0.2"
+  - yes | sdkmanager "platforms;android-30"
+
 android:
   components:
     - tools
