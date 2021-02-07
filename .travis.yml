@@ -29,7 +29,7 @@ script:
 
 deploy:
   provider: script
-  script: ./gradlew publishAllPublicationsToOssStagingRepository
+  script: ./gradlew publishAllPublicationsToOssStagingRepository closeAndReleaseRepository
   skip_cleanup: true
   on:
     branch: main
