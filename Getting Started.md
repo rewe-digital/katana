@@ -184,8 +184,7 @@ property of the `Katana` singleton.
 
 ## Installation & Setup
 
-Katana is published on [JCenter](https://bintray.com/bintray/jcenter). If you haven't already done it, add JCenter as
-a repository to your project. Then add the following dependencies:
+Katana is published to Maven Central via Sonatype OSSRH.
 
 ```gradle
 def katanaVersion = 'LATEST VERSION HERE'

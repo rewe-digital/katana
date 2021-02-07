@@ -1,8 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.jfrog.bintray.gradle.BintrayExtension
-import com.jfrog.bintray.gradle.BintrayExtension.PackageConfig
-import com.jfrog.bintray.gradle.BintrayExtension.VersionConfig
 import org.gradle.api.Project
 import org.gradle.api.component.SoftwareComponent
 import org.gradle.api.publish.PublishingExtension
@@ -17,7 +14,6 @@ fun Project.configureBase(
     sourcePath: Any,
     publicationComponent: SoftwareComponent
 ) {
-    apply(plugin = "com.jfrog.bintray")
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "org.gradle.maven-publish")
 
@@ -77,27 +73,16 @@ fun Project.configureBase(
                 addCommonPomAttributes()
             }
         }
-    }
 
-    configure<BintrayExtension> {
-        user = System.getenv("BINTRAY_USER")
-        key = System.getenv("BINTRAY_API_KEY")
-        override = false
-        publish = true
-
-        setPublications(artifactName)
-
-        pkg(delegateClosureOf<PackageConfig> {
-            repo = "katana"
-            name = artifactName
-            userOrg = "rewe-digital"
-            websiteUrl = "https://github.com/rewe-digital/katana"
-            vcsUrl = "https://github.com/rewe-digital/katana"
-            setLicenses("MIT")
-
-            version(delegateClosureOf<VersionConfig> {
-                name = "${project.version}"
-            })
-        })
+        repositories {
+            maven {
+                name = "ossStaging"
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = findProperty("SONATYPE_NEXUS_USERNAME")?.toString() ?: System.getenv("SONATYPE_NEXUS_USERNAME")
+                    password = findProperty("SONATYPE_NEXUS_PASSWORD")?.toString() ?: System.getenv("SONATYPE_NEXUS_PASSWORD")
+                }
+            }
+        }
     }
 }
