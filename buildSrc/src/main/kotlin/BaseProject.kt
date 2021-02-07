@@ -8,6 +8,7 @@ import org.gradle.api.tasks.bundling.Jar
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.*
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.gradle.plugins.signing.SigningExtension
 
 fun Project.configureBase(
     artifactName: String,
@@ -16,6 +17,7 @@ fun Project.configureBase(
 ) {
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "org.gradle.maven-publish")
+    apply(plugin = "org.gradle.signing")
 
     dependencies {
         "api"(kotlin(module = "stdlib", version = Versions.kotlin))
@@ -84,5 +86,20 @@ fun Project.configureBase(
                 }
             }
         }
+    }
+
+    configure<SigningExtension> {
+        val pub = extensions.findByType(PublishingExtension::class)!!
+
+        // For CI store signing key and password in environment variables
+        // ORG_GRADLE_PROJECT_signingKey and ORG_GRADLE_PROJECT_signingPassword
+        val signingKey: String? by project
+        val signingPassword: String? by project
+
+        if (signingKey != null) {
+            useInMemoryPgpKeys(signingKey, signingPassword)
+        }
+
+        sign(pub.publications[artifactName])
     }
 }
