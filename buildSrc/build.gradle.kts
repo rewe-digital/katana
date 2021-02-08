@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.20")
     implementation("com.android.tools.build:gradle:4.1.2")
     implementation("de.mannodermaus.gradle.plugins:android-junit5:1.7.0.0")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:0.9.18")

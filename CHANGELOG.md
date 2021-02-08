@@ -4,7 +4,7 @@ _2021-02-08_
 
 This is a maintenance release, just updating a few dependencies:
 
-* Kotlin 1.4.30
+* Kotlin 1.4.20
 * Android Gradle Plugin 4.1.2
 * Android build tools 30.0.3
 

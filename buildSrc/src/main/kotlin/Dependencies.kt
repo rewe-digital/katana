@@ -6,7 +6,7 @@ object Versions {
     const val androidXLifecycle = "2.2.0"
     const val gradleVersionsPlugin = "0.36.0"
     const val kluent = "1.65"
-    const val kotlin = "1.4.30"
+    const val kotlin = "1.4.20"
     const val spek = "2.0.15"
 }
 
