@@ -92,12 +92,12 @@ fun Project.configureBase(
         val pub = extensions.findByType(PublishingExtension::class)!!
 
         // For CI store signing key and password in environment variables
-        // ORG_GRADLE_PROJECT_signingKey and ORG_GRADLE_PROJECT_signingPassword
-        val signingKey: String? by project
-        val signingPassword: String? by project
+        // SIGNING_KEY and SIGNING_PASSWORD
+        val signingKey: String? = System.getenv("SIGNING_KEY")
+        val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
 
         if (signingKey != null) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
+            useInMemoryPgpKeys(signingKey, signingPassword.orEmpty())
         }
 
         sign(pub.publications[artifactName])
