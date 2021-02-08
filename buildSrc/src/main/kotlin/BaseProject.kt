@@ -46,8 +46,10 @@ fun Project.configureBase(
     }
 
     val dokka = tasks.withType(DokkaTask::class) {
-        outputFormat = "javadoc"
-        outputDirectory = "$buildDir/dokkaJavadoc"
+        dependencies {
+            plugins("org.jetbrains.dokka:kotlin-as-java-plugin:1.4.20")
+        }
+        outputDirectory.set(buildDir.resolve("dokkaJavadoc"))
     }
 
     val sourcesJar by tasks.registering(Jar::class) {

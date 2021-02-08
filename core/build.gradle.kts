@@ -13,7 +13,11 @@ configureBase(
 )
 
 tasks.withType(DokkaTask::class) {
-    includes = listOf("src/main/kotlin/org/rewedigital/katana/package.md")
+    dokkaSourceSets {
+        configureEach {
+            includes.from("src/main/kotlin/org/rewedigital/katana/package.md")
+        }
+    }
 }
 
 val jacoco = tasks.withType<JacocoReport> {
