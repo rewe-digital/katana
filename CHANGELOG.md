@@ -1,4 +1,16 @@
+## Version 1.14.1
+
+_2021-02-08_
+
+This is a maintenance release, just updating a few dependencies:
+
+* Kotlin 1.4.30
+* Android Gradle Plugin 4.1.2
+* Android build tools 30.0.3
+
 ## Version 1.14.0
+
+_2020-09-11_
 
 This is a maintenance release, just updating a few dependencies:
 
