@@ -16,7 +16,7 @@ buildscript {
 
 plugins {
     id("com.github.ben-manes.versions") version Versions.gradleVersionsPlugin
-    id("io.codearte.nexus-staging") version Versions.gradleNexusStagingPlugin
+    id("io.codearte.nexus-staging")
 }
 
 allprojects {
