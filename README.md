@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/rewe-digital/katana.svg?branch=main)](https://travis-ci.com/rewe-digital/katana) [![Release](https://img.shields.io/badge/Bintray-download-brightgreen.svg)](https://bintray.com/rewe-digital/katana) [![Kotlin](https://img.shields.io/badge/Kotlin-1.4.0-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
+[![Build Status](https://github.com/rewe-digital/katana/workflows/Build/badge.svg)](https://github.com/rewe-digital/katana/actions?query=workflow%3ABuild) [![Kotlin](https://img.shields.io/badge/Kotlin-1.4.20-brightgreen.svg)](https://kotlinlang.org) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Katana-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7365)
 
 ‼️ This project is in **maintenance mode** and not actively developed anymore. For more information read [this statement](https://github.com/rewe-digital/katana/issues/22). ‼️
 
@@ -53,7 +53,7 @@ If you need help, visit our Slack [channel](https://kotlinlang.slack.com/message
 
 The MIT license (MIT)
 
-Copyright (c) 2018-2020 REWE Digital GmbH
+Copyright (c) 2018-2021 REWE Digital GmbH
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
