@@ -2,7 +2,6 @@
 
 import de.marcphilipp.gradle.nexus.NexusPublishExtension
 import org.gradle.api.Project
-import org.gradle.api.component.SoftwareComponent
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
@@ -14,7 +13,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 fun Project.configureBase(
     artifactName: String,
     sourcePath: Any,
-    publicationComponent: SoftwareComponent
+    componentName: String
 ) {
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "org.gradle.maven-publish")
@@ -69,39 +68,47 @@ fun Project.configureBase(
         }
     }
 
-    configure<PublishingExtension> {
-        publications {
-            create<MavenPublication>(artifactName) {
-                from(publicationComponent)
-                artifact(sourcesJar.get())
-                artifact(javaDoc.get())
-                artifactId = artifactName
-                addCommonPomAttributes()
+    afterEvaluate {
+        configure<PublishingExtension> {
+            publications {
+                create<MavenPublication>(artifactName) {
+                    from(components[componentName])
+                    artifact(sourcesJar.get())
+                    artifact(javaDoc.get())
+                    artifactId = artifactName
+                    addCommonPomAttributes()
+                }
             }
         }
-    }
 
-    configure<SigningExtension> {
-        val pub = extensions.findByType(PublishingExtension::class)!!
+        configure<SigningExtension> {
+            val pub = extensions.findByType(PublishingExtension::class)!!
 
-        // For CI store signing key and password in environment variables
-        // SIGNING_KEY and SIGNING_PASSWORD
-        val signingKey: String? = System.getenv("SIGNING_KEY")
-        val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
+            // For CI store signing key and password in environment variables
+            // SIGNING_KEY and SIGNING_PASSWORD
+            val signingKey: String? = System.getenv("SIGNING_KEY")
+            val signingPassword: String? = System.getenv("SIGNING_PASSWORD")
 
-        if (signingKey != null) {
-            useInMemoryPgpKeys(signingKey, signingPassword.orEmpty())
+            if (signingKey != null) {
+                useInMemoryPgpKeys(signingKey, signingPassword.orEmpty())
+            }
+
+            sign(pub.publications[artifactName])
         }
 
-        sign(pub.publications[artifactName])
-    }
-
-    configure<NexusPublishExtension> {
-        repositories {
-            sonatype {
-                packageGroup.set("org.rewedigital")
-                username.set(project.findProperty("SONATYPE_NEXUS_USERNAME")?.toString() ?: System.getenv("SONATYPE_NEXUS_USERNAME"))
-                password.set(project.findProperty("SONATYPE_NEXUS_PASSWORD")?.toString() ?: System.getenv("SONATYPE_NEXUS_PASSWORD"))
+        configure<NexusPublishExtension> {
+            repositories {
+                sonatype {
+                    packageGroup.set("org.rewedigital")
+                    username.set(
+                        project.findProperty("SONATYPE_NEXUS_USERNAME")?.toString()
+                            ?: System.getenv("SONATYPE_NEXUS_USERNAME")
+                    )
+                    password.set(
+                        project.findProperty("SONATYPE_NEXUS_PASSWORD")?.toString()
+                            ?: System.getenv("SONATYPE_NEXUS_PASSWORD")
+                    )
+                }
             }
         }
     }

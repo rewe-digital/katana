@@ -4,7 +4,6 @@ import de.mannodermaus.gradle.plugins.junit5.junitPlatform
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("digital.wup.android-maven-publish")
     id("de.mannodermaus.android-junit5")
 }
 

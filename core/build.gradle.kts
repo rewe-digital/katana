@@ -9,7 +9,7 @@ plugins {
 configureBase(
     artifactName = "katana-core",
     sourcePath = sourceSets["main"].allSource,
-    publicationComponent = components["java"]
+    componentName = "java"
 )
 
 tasks.withType(DokkaTask::class) {

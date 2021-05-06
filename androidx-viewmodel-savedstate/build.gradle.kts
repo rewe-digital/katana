@@ -5,7 +5,7 @@ plugins {
 configureBase(
     artifactName = "katana-androidx-viewmodel-savedstate",
     sourcePath = android.sourceSets["main"].java.srcDirs,
-    publicationComponent = components["android"]
+    componentName = "release"
 )
 
 dependencies {

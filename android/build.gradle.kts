@@ -5,7 +5,7 @@ plugins {
 configureBase(
     artifactName = "katana-android",
     sourcePath = android.sourceSets["main"].java.srcDirs,
-    publicationComponent = components["android"]
+    componentName = "release"
 )
 
 dependencies {
