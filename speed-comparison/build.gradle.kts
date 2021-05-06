@@ -3,10 +3,10 @@ plugins {
 }
 
 dependencies {
-    compile(project(":core"))
-    compile("org.nield:kotlin-statistics:1.2.1")
-    compile("org.koin:koin-core:2.0.1")
-    compile("org.kodein.di:kodein-di-erased-jvm:6.3.3")
+    implementation(project(":core"))
+    implementation("org.nield:kotlin-statistics:1.2.1")
+    implementation("org.koin:koin-core:2.0.1")
+    implementation("org.kodein.di:kodein-di-erased-jvm:6.3.3")
 }
 
 val fatJar = task("fatJar", type = Jar::class) {
@@ -14,8 +14,10 @@ val fatJar = task("fatJar", type = Jar::class) {
     manifest {
         attributes["Main-Class"] = "org.rewedigital.katana.comparison.ComparisonKt"
     }
-    from(configurations.runtime.get().map { if (it.isDirectory) it else zipTree(it) })
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks["jar"] as CopySpec)
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks {

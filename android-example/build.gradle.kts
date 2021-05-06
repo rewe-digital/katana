@@ -47,19 +47,19 @@ dependencies {
     implementation(project(":androidx-viewmodel-savedstate"))
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.30")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
     implementation("org.jetbrains.anko:anko-coroutines:0.10.8")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation("com.squareup.moshi:moshi:1.11.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.11.0") {
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.12.0") {
         exclude(group = "org.jetbrains.kotlin")
     }
 
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.6")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
 
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
     androidTestImplementation("androidx.test:runner:1.3.0")
