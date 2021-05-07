@@ -95,20 +95,20 @@ fun Project.configureBase(
 
             sign(pub.publications[artifactName])
         }
+    }
 
-        configure<NexusPublishExtension> {
-            repositories {
-                sonatype {
-                    packageGroup.set("org.rewedigital")
-                    username.set(
-                        project.findProperty("SONATYPE_NEXUS_USERNAME")?.toString()
-                            ?: System.getenv("SONATYPE_NEXUS_USERNAME")
-                    )
-                    password.set(
-                        project.findProperty("SONATYPE_NEXUS_PASSWORD")?.toString()
-                            ?: System.getenv("SONATYPE_NEXUS_PASSWORD")
-                    )
-                }
+    configure<NexusPublishExtension> {
+        repositories {
+            sonatype {
+                packageGroup.set("org.rewedigital")
+                username.set(
+                    project.findProperty("SONATYPE_NEXUS_USERNAME")?.toString()
+                        ?: System.getenv("SONATYPE_NEXUS_USERNAME")
+                )
+                password.set(
+                    project.findProperty("SONATYPE_NEXUS_PASSWORD")?.toString()
+                        ?: System.getenv("SONATYPE_NEXUS_PASSWORD")
+                )
             }
         }
     }
