@@ -5,6 +5,7 @@ object Versions {
     const val androidXFragment = "1.3.3"
     const val androidXLifecycle = "2.3.1"
     const val gradleVersionsPlugin = "0.38.0"
+    const val gradleNexusPublishPlugin = "1.1.0"
     const val kluent = "1.65"
     const val kotlin = "1.5.0"
     const val spek = "2.0.15"

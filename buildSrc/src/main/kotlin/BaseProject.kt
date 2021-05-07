@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import de.marcphilipp.gradle.nexus.NexusPublishExtension
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
@@ -18,7 +17,6 @@ fun Project.configureBase(
     apply(plugin = "org.jetbrains.dokka")
     apply(plugin = "org.gradle.maven-publish")
     apply(plugin = "org.gradle.signing")
-    apply(plugin = "de.marcphilipp.nexus-publish")
 
     dependencies {
         "api"(kotlin(module = "stdlib", version = Versions.kotlin))
@@ -94,22 +92,6 @@ fun Project.configureBase(
             }
 
             sign(pub.publications[artifactName])
-        }
-    }
-
-    configure<NexusPublishExtension> {
-        repositories {
-            sonatype {
-                packageGroup.set("org.rewedigital")
-                username.set(
-                    project.findProperty("SONATYPE_NEXUS_USERNAME")?.toString()
-                        ?: System.getenv("SONATYPE_NEXUS_USERNAME")
-                )
-                password.set(
-                    project.findProperty("SONATYPE_NEXUS_PASSWORD")?.toString()
-                        ?: System.getenv("SONATYPE_NEXUS_PASSWORD")
-                )
-            }
         }
     }
 }
