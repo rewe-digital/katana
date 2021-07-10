@@ -34,22 +34,6 @@ Katana's functionality. All artifact are published in group
 | [katana-androidx-viewmodel](./androidx-viewmodel)                       | Enables dependency injection for AndroidX ViewModel.                                          |
 | [katana-androidx-viewmodel-savedstate](./androidx-viewmodel-savedstate) | Support for AndroidX ViewModel with SavedState.                                               |
 
-## Help & Contribution
-
-If you found a bug or want to suggest a feature, please create an [issue](https://github.com/rewe-digital/katana/issues/new).  
-If you need help, visit our Slack [channel](https://kotlinlang.slack.com/messages/katana).
-
-## Further Reading
-
-* [Why we need yet another dependency injection framework for Kotlin & Android](https://medium.com/@caffeine81/why-we-need-yet-another-dependency-injection-framework-for-kotlin-android-f8162174ea4)
-* [Leak free dependency injection in Android](https://medium.com/@caffeine81/leak-free-dependency-injection-in-android-adaf65643dbf)
-* [Android UI testing with Katana](https://medium.com/@caffeine81/android-ui-testing-with-katana-97e5301e5cda)
-* [Android Fragments & dependency injection](https://medium.com/@caffeine81/android-fragments-dependency-injection-c22b4c03142e)
-* [Dependency injection into Android ViewModels (with Savedstate)](https://medium.com/@caffeine81/dependency-injection-into-android-viewmodels-with-savedstate-78241dfe0147)
-* [Multibindings with Katana](https://medium.com/@caffeine81/multibindings-with-katana-5af7bcdf6377)
-* [Slides](https://drive.google.com/file/d/1hDslldu2vOa-sdIEjVAPY51ZYX_Imlt6/view) of a talk about Katana at the Kotlin User Group Cologne
-* More [Slides](https://drive.google.com/file/d/1vhhzERsgvseXPyIM1iQn9LT4iNd9j2Ag/view) (German) of a Katana talk held at the 2019 Kotlin/Everywhere event at REWE Digital in Cologne.
-
 ## License
 
 The MIT license (MIT)
